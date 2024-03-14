@@ -72,6 +72,10 @@ export class TestimonialComponent implements OnInit {
       t_role: ['', Validators.required],
       t_date: ['',Validators.required],
       t_msg: ['', Validators.required],
+      t_address:['', Validators.required],
+      t_city:['', Validators.required],
+      t_gender:['', Validators.required],
+      t_mail:['', Validators.required],
       active_status: [false, Validators.required],
     });
 
