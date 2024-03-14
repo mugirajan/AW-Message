@@ -85,7 +85,7 @@
                             <div class="mb-3">
                                 <label for="attestant-role" class="form-label">Phone Number <span
                                         class="text-danger">*</span></label>
-                                <input type="text" id="attestant-role" class="form-control" placeholder="e.g : Managing Director"
+                                <input type="text" id="attestant-role" class="form-control" placeholder="e.g : 9567..."
                                     required formControlName="t_role"
                                     [ngClass]="{  'is-invalid': addProduct.submitted && form1.t_role.invalid }">
                             </div>
@@ -94,7 +94,7 @@
                             <div class="mb-3">
                                 <label for="testimony-date" class="form-label">Mail Id<span
                                         class="text-danger">*</span></label>
-                                <input type="text" id="testimony-date" class="form-control" placeholder="e.g : 21-09-2023"
+                                <input type="text" id="testimony-date" class="form-control" placeholder="e.g : abc@gmail.com"
                                     required formControlName="t_date"
                                     [ngClass]="{  'is-invalid': addProduct.submitted && form1.t_date.invalid }">
                             </div>
@@ -148,16 +148,16 @@
                             <div class="mb-3">
                                 <label for="attestant-name" class="form-label"> Gender <span
                                         class="text-danger">*</span></label>
-                                <input type="text" id="attestant-name" class="form-control" placeholder="e.g : Ken Adams"
-                                    required formControlName="t_name"
+                                <input type="text" id="attestant-name" class="form-control" placeholder="e.g : male or female"
+                                    required formControlName="t_gender"
                                     [ngClass]="{ 'is-invalid': addProduct.submitted && form1.t_name.invalid }">
                             </div>
         
                             <div class="mb-3">
                                 <label for="attestant-role" class="form-label"> Address <span
                                         class="text-danger">*</span></label>
-                                <input type="text" id="attestant-role" class="form-control" placeholder="e.g : Managing Director"
-                                    required formControlName="t_role"
+                                <input type="text" id="attestant-role" class="form-control" placeholder="e.g : a/21,.."
+                                    required formControlName="t_address"
                                     [ngClass]="{  'is-invalid': addProduct.submitted && form1.t_role.invalid }">
                             </div>
 
@@ -165,8 +165,8 @@
                             <div class="mb-3">
                                 <label for="testimony-date" class="form-label">city<span
                                         class="text-danger">*</span></label>
-                                <input type="text" id="testimony-date" class="form-control" placeholder="e.g : 21-09-2023"
-                                    required formControlName="t_date"
+                                <input type="text" id="testimony-date" class="form-control" placeholder="e.g : chennai"
+                                    required formControlName="t_city"
                                     [ngClass]="{  'is-invalid': addProduct.submitted && form1.t_date.invalid }">
                             </div>
 

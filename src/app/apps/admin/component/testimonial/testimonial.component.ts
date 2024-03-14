@@ -118,16 +118,10 @@ export class TestimonialComponent implements OnInit {
         formatter: (order: Testimonial) => order.t_msg,
         width: 100
       },
-      {
-        name: 't_img',
-        label: 'Address',
-        formatter: this.testimonialImageFormatter.bind(this)
-      },
-       
       
       {
         name: 't_date',
-        label: 'Mail Id',
+        label: 'Date',
         formatter: this.testimonialDateFormatter.bind(this)
       },
       {
