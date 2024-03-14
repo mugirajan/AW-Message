@@ -274,17 +274,17 @@ export class TopbarComponent implements OnInit {
    */
   _fetchProfileOptions(): void {
     this.profileOptions = [
-      {
-        label: 'My Account',
-        icon: 'fe-user',
-        // redirectTo: '/apps/contacts/profile',
-        redirectTo: '[]',
-      },
-      {
-        label: 'Settings',
-        icon: 'fe-settings',
-        redirectTo: '[]',
-      },
+      // {
+      //   label: 'My Account',
+      //   icon: 'fe-user',
+      //   // redirectTo: '/apps/contacts/profile',
+      //   redirectTo: '[]',
+      // },
+      // {
+      //   label: 'Settings',
+      //   icon: 'fe-settings',
+      //   redirectTo: '[]',
+      // },
       // {
       //   label: 'Lock Screen',
       //   icon: 'fe-lock',

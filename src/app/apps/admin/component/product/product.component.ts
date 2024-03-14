@@ -66,7 +66,7 @@ export class ProductComponent implements OnInit {
     private notifyServ: NotificationService) { }
 
   ngOnInit(): void {
-    this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Manage product', path: '/', active: true }];
+    this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Custom Template', path: '/', active: true }];
     
     this.fetchCatgeory();
 

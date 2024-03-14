@@ -42,7 +42,7 @@ export class TestimonialComponent implements OnInit {
   requestData: any[]=[];
   @ViewChild('positionModal')
   positionModal!: TemplateRef<NgbModal>;
-
+  testimonialData: any = {};
   
   // Constructor
   constructor(
@@ -54,9 +54,10 @@ export class TestimonialComponent implements OnInit {
     private notifyServ: NotificationService
   ) { }
 
+  
   // OnInit 
   ngOnInit(): void {
-    this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Manage testimonial', path: '/', active: true }];
+    this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Manage Contacts', path: '/', active: true }];
     
     // get Testimonials
     this._fetchData();
@@ -76,6 +77,16 @@ export class TestimonialComponent implements OnInit {
 
     this.resetTestimonialForm();
 
+  }
+  submitForm() {
+    this.testServ.createTestimonial(this.testimonialData)
+      .subscribe(response => {
+        console.log('Testimonial added successfully:', response);
+        // Optionally, handle success response
+      }, error => {
+        console.error('Error adding testimonial:', error);
+        // Optionally, handle error response
+      });
   }
 
 
