@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map } from 'rxjs';
 import { Testimonial } from '../models/testimonial.model';
+import { Observable } from 'rxjs';
 import * as env from 'src/environments/environment'
 
 @Injectable({
@@ -43,8 +44,12 @@ export class TestimonialService {
     return this.http.post(this.apiUrl + "update", data);
   }
 
-  getTestimonials() {
-    return this.http.get(this.apiUrl + "getDetails");
+  // getTestimonials() {
+  //   return this.http.get(this.apiUrl + "getDetails");
+  // }
+
+  getTestimonials(): Observable<Testimonial[]> {
+    return this.http.get<Testimonial[]>(this.apiUrl);
   }
 
 

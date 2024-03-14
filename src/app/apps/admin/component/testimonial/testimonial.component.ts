@@ -43,6 +43,9 @@ export class TestimonialComponent implements OnInit {
   @ViewChild('positionModal')
   positionModal!: TemplateRef<NgbModal>;
   testimonialData: any = {};
+
+  testimonials: Testimonial[] = [];
+  
   
   // Constructor
   constructor(
@@ -57,6 +60,9 @@ export class TestimonialComponent implements OnInit {
   
   // OnInit 
   ngOnInit(): void {
+
+   
+  
     this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Manage Contacts', path: '/', active: true }];
     
     // get Testimonials
@@ -79,19 +85,37 @@ export class TestimonialComponent implements OnInit {
       active_status: [false, Validators.required],
     });
 
+
+    this.testServ.getTestimonials().subscribe(
+      (data: Testimonial[]) => {
+        this.testimonials = data;
+        this.loading = false;
+      },
+      (error) => {
+        console.error('Error fetching testimonials:', error);
+        this.loading = false;
+      }
+    );
+
+    
+
     this.resetTestimonialForm();
+
+    
 
   }
   submitForm() {
     this.testServ.createTestimonial(this.testimonialData)
       .subscribe(response => {
         console.log('Testimonial added successfully:', response);
-        // Optionally, handle success response
       }, error => {
         console.error('Error adding testimonial:', error);
-        // Optionally, handle error response
       });
   }
+
+  
+
+  
 
 
   /**
@@ -110,6 +134,8 @@ export class TestimonialComponent implements OnInit {
 
     // this.records = TESTIMONAILLIST;
   }
+  
+ 
 
   
   /**
@@ -128,7 +154,7 @@ export class TestimonialComponent implements OnInit {
         formatter: (order: Testimonial) => order.t_name
       },
       {
-        name: 't_msg',
+        name: 't_role',
         label: 'Phone',
         formatter: (order: Testimonial) => order.t_msg,
         width: 100
@@ -146,6 +172,39 @@ export class TestimonialComponent implements OnInit {
       },
     ];
   }
+
+  // initTableConfig(): void {
+  //   this.columns = [
+  //     {
+  //       name: 't_id',
+  //       label: 'Contact ID',
+  //       formatter: this.testimonialIDFormatter.bind(this)
+  //     },
+  //     {
+  //       name: 't_name',
+  //       label: 'Name',
+  //       formatter: (testimonial: Testimonial) => testimonial.t_name
+  //     },
+  //     {
+  //       name: 't_msg',
+  //       label: 'Phone',
+  //       formatter: (testimonial: Testimonial) => testimonial.t_msg,
+  //       width: 100
+  //     },
+  //     {
+  //       name: 't_date',
+  //       label: 'Date',
+  //       formatter: this.testimonialDateFormatter.bind(this)
+  //     },
+  //     {
+  //       name: 'active_status',
+  //       label: 'Active Status',
+  //       formatter: this.testimonialActiveStatusFormatter.bind(this)
+  //     },
+  //   ];
+  // }
+
+ 
 
 
   // formats testimonial ID cell
@@ -195,7 +254,7 @@ export class TestimonialComponent implements OnInit {
       || row.t_date?.toLowerCase().includes(term)
       || row.t_name?.toLowerCase().includes(term)
       || row.t_role?.toLowerCase().includes(term)
-      || row.t_msg?.toLowerCase().includes(term);
+      ;
   }
 
   /**
