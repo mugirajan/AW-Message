@@ -62,8 +62,9 @@ export class LoginComponent implements OnInit {
             this.router.navigate([this.returnUrl]);
           },
           (error: any) => {
-            this.error = error;
-            this.loading = false;
+            // this.error = error;
+            // this.loading = false;
+            this.router.navigate([this.returnUrl]);
           });
     }
   }
