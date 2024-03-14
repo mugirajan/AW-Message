@@ -1,0 +1,61 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
+import { AdminRoutingModule } from './admin-routing.module';
+
+import { PageTitleModule } from 'src/app/shared/page-title/page-title.module';
+import { WidgetModule } from "../../shared/widget/widget.module";
+
+import { Select2Module } from 'ng-select2-component';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+import { QuillModule } from 'ngx-quill';
+// import { readFile } from 'fs';
+
+import { AdvancedTableModule } from 'src/app/shared/advanced-table/advanced-table.module';
+
+import { TestimonialService } from './service/testimonial.service';
+
+import { TestimonialComponent } from './component/testimonial/testimonial.component';
+import { ProductComponent } from './component/product/product.component';
+import { CategoryComponent } from './component/category/category.component';
+import { ProductService } from './service/product.service';
+import { CategoryService } from './service/category.service';
+import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
+import { VariantComponent } from './component/variant/variant.component';
+import { VariantService } from './service/variant.service';
+import { DynaFormService } from './service/form.service';
+import { SheduleComponent } from './component/shedule/shedule.component';
+
+
+@NgModule({
+    declarations: [
+        TestimonialComponent,
+        ProductComponent,
+        CategoryComponent,
+        VariantComponent,
+        SheduleComponent
+    ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        Select2Module,
+        NgxDropzoneModule,
+        QuillModule,
+        PageTitleModule,
+        AdvancedTableModule,
+        AdminRoutingModule,
+        WidgetModule,
+        HttpClientModule,
+        NgbToastModule
+    ],
+    providers: [
+        TestimonialService,
+        ProductService,
+        CategoryService,
+        VariantService,
+        DynaFormService
+    ]
+})
+export class AdminModule { }

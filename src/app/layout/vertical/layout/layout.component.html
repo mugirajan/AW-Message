@@ -1,0 +1,34 @@
+<div id="wrapper">
+    <!-- topbar -->
+    <app-topbar (settingsButtonClicked)="onSettingsButtonClicked()" (mobileMenuButtonClicked)="onToggleMobileMenu()"
+        layoutType="vertical"></app-topbar>
+
+    <!-- left side bar-->
+    <app-left-sidebar [includeUserProfile]="showSidebarUserInfo">
+    </app-left-sidebar>
+
+    <div class="content-page">
+        
+        <div class="content">
+            <!-- content -->
+            <div class="container-fluid" *ngIf="reRender">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+
+        <!-- toast area -->
+        <div class="toast-container position-absolute p-3 bottom-5 start-50 translate-middle-x" >
+            <ngb-toast [ngClass]="{'bg-success text-white': item.level == 'success', 'bg-danger text-light': item.level == 'error' }" [autohide]="item.autohide" (hidden)="close()" *ngFor="let item of notificationList" (mouseenter)="item.autohide = false" (mouseleave)="item.autohide = true">
+                {{ item.text }}
+            </ngb-toast>
+        </div>
+
+        <!-- footer -->
+        <app-footer></app-footer>
+    </div>
+</div>
+<!-- right sidebar -->
+<app-right-sidebar layoutType="vertical" [layoutColor]="layoutColor" [layoutWidth]="layoutWidth"
+    [menuPosition]="menuPosition" [leftSidebarTheme]="leftSidebarTheme" [leftSidebarType]="leftSidebarType"
+    [topbarTheme]="topbarTheme" [showSidebarUserInfo]="showSidebarUserInfo">
+</app-right-sidebar>
