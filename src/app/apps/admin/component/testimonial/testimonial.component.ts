@@ -45,7 +45,12 @@ export class TestimonialComponent implements OnInit {
   testimonialData: any = {};
 
   testimonials: Testimonial[] = [];
+  testimonialToDelete: any;
+  testimonialId: string | null = null;
+
   
+
+
   
   // Constructor
   constructor(
@@ -97,7 +102,7 @@ export class TestimonialComponent implements OnInit {
       }
     );
 
-    
+  
 
     this.resetTestimonialForm();
 
@@ -156,21 +161,25 @@ export class TestimonialComponent implements OnInit {
       {
         name: 't_role',
         label: 'Phone',
-        formatter: (order: Testimonial) => order.t_msg,
+        formatter: (order: Testimonial) => order.t_role,
         width: 100
       },
       
       {
         name: 't_date',
         label: 'Date',
-        formatter: this.testimonialDateFormatter.bind(this)
+        formatter: (order: Testimonial) => order.t_date,
       },
       {
         name: 'active_status',
         label: 'Active Status',
-        formatter: this.testimonialActiveStatusFormatter.bind(this)
+        formatter: this.activeStatusFormatter.bind(this)
       },
     ];
+  }
+
+  activeStatusFormatter(tableData: Testimonial): string {
+    return tableData.active_status ? 'Active' : 'Inactive';
   }
 
   // initTableConfig(): void {
@@ -301,7 +310,26 @@ export class TestimonialComponent implements OnInit {
     this.testimoialDeleteID = record.id;
     this.openVerticallyCentered(this.positionModal);
   }
+ 
+  deleteTestimonial() {
+   if (this.testimonialId) {
+    this.testServ.deleteTestimonial(this.testimonialId).subscribe(
+      (response) => {
+        console.log('Delete successful', response);
+        // Additional logic after successful delete
+      },
+      (error) => {
+        console.error('Error deleting testimonial', error);
+        // Handle error if needed
+      }
+    );
+  } else {
+    console.error('Testimonial ID is missing.');
+    // Handle missing ID case
+  }
+  }
 
+  
   openVerticallyCentered(content: TemplateRef<NgbModal>): void {
     this.modalService.open(content, { centered: true });
   }
@@ -388,33 +416,20 @@ export class TestimonialComponent implements OnInit {
    * Edit form
    */
   editTestimonialForm(data: Testimonial) {
-    this.modalService.open(this.sizeableModal, { size: "xl" });
-    this.testimonialForm.setValue(
-      {
-        t_id:data.id,
-        t_name: data.t_name,
-        t_role: data.t_role,
-        t_date: data.t_date,
-        t_msg: data.t_msg,
-        active_status: data.active_status,
-      }
-    )
-    this.testimonial_img = data.t_img;
-    let testimg = this.srcToFile(
-              this.testimonial_img, 
-              this.testimonial_img.split('/').pop(),
-              'image/'+this.testimonial_img.split('/').pop().split('.')[1]);
-
-    testimg.then((value)=>{
-      this.files.push(value)
-    })
-
+    this.modalService.open(this.sizeableModal, { size: 'xl' });
+    this.testimonialData = { ...data }; 
   }
 
+  updateTestimonial() {
+    this.testServ.updateTestimonial(this.testimonialData).subscribe((response) => {
+      console.log('Update response:', response);
+      this.modalService.dismissAll();
+    }, (error) => {
+      console.error('Error updating testimonial:', error);
+    });
+  }
   
-  /**
-   * Form methods
-   */
+
   
   //  convenience getter for easy access to form fields
   get form1() { return this.testimonialForm.controls; }

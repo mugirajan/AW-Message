@@ -36,6 +36,7 @@
                 <app-advanced-table 
                     #advancedTable 
                     [tableData]="records"
+  
                     [columns]="columns" 
                     [pagination]="true" 
                     [pageSizeOptions]="pageSizeOptions"
@@ -201,17 +202,7 @@
                             </div>
 
                             <!-- error area -->
-                            <div *ngIf="addProduct.submitted" class="text-start position-relative">
-                                <div *ngIf="files.length > 1" class="invalid-feedback">
-                                    Please select only one image to proceed further.
-                                </div>
-                                <div *ngIf="files.length == 1" class="invalid-feedback">
-                                    Please .
-                                </div>
-                                <div *ngIf="files.length == 0" class="invalid-feedback">
-                                    Please select atleast on image file under these formats [.jpeg, .jpg, .png]
-                                </div>
-                            </div>
+                           
                                 
                         </div>
                     </div> <!-- end col-->

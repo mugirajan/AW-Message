@@ -19,6 +19,7 @@ const db = mongoose.connection;
 
 // Define a schema for the data
 const TestimonialSchema = new mongoose.Schema({
+  t_id: Number,
   t_name: String,
   t_role: String,
   t_date: String,
@@ -29,15 +30,13 @@ const TestimonialSchema = new mongoose.Schema({
   active_status: Boolean
 });
 
-// Create a model based on the schema
 const TestimonialModel = mongoose.model('Testimonial', TestimonialSchema);
 
-// Define a POST endpoint to add a new testimonial
 app.post('/testimonials/create', (req:any, res:any) => {
-  const { t_name, t_role, t_date, t_city, t_address, t_gender, t_mail, active_status } = req.body;
+  const { t_id,t_name, t_role, t_date, t_city, t_address, t_gender, t_mail, active_status } = req.body;
 
-  // Create a new testimonial instance
   const newTestimonial = new TestimonialModel({
+    t_id,
     t_name,
     t_role,
     t_date,
@@ -48,7 +47,6 @@ app.post('/testimonials/create', (req:any, res:any) => {
     active_status
   });
 
-  // Save the testimonial to the database
   newTestimonial.save()
     .then(() => {
       res.status(201).json({ message: 'Testimonial added successfully' });
@@ -59,7 +57,6 @@ app.post('/testimonials/create', (req:any, res:any) => {
     });
 });
 
-// Start the server
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
