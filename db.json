@@ -1,81 +1,32 @@
 {
-  "testimonials": [
+  "contacts": [
     {
-      "id": "d7bc",
-      "t_name": "mugi"
-    },
-    {
-      "id": "c015",
-      "t_name": "mugi",
-      "t_role": "9888124861",
-      "t_date": "fdadsaf"
-    },
-    {
-      "id": "b545",
-      "t_name": "mugi",
-      "t_role": "12432543799",
-      "t_date": "21-2-2024"
-    },
-    {
-      "id": "7dd8",
-      "t_name": "mugi",
-      "t_role": "9888124861",
-      "t_date": "fdadsaf"
-    },
-    {
-      "id": "3109",
-      "t_name": "mugi",
-      "t_role": "9888124861",
-      "t_date": "fdadsaf"
-    },
-    {
-      "id": "2411",
-      "t_name": "mugi",
-      "t_role": "9888124861",
-      "t_date": "fdadsaf"
-    },
-    {
-      "id": "2b42",
-      "t_name": "mugi",
-      "t_role": "9888124861",
-      "t_date": "abc@gmail.com"
-    },
-    {
-      "id": "c7f4",
-      "t_name": "mugi",
-      "t_role": "9888124861",
-      "t_date": "fdadsaf",
-      "t_address": "9888124861"
-    },
-    {
-      "id": "2204",
-      "t_name": "mugi",
-      "t_role": "9888124861",
+      "id": "2398",
+      "t_name": "mugilavathi",
+      "t_role": "23332r",
+      "t_date": "24-1-2024",
+      "t_msg": null,
+      "t_address": "2734892174",
+      "t_city": "djfdksf",
+      "t_gender": "male",
       "t_mail": "abc@gmail.com",
-      "t_date": "fdadsaf",
-      "t_gender": "mugi",
-      "t_address": "rajfk",
-      "t_city": "fdadsaf"
+      "t_dob": "21-3-2000",
+      "t_term": "One Year",
+      "active_status": "true"
     },
     {
-      "id": "ea57",
-      "t_name": "alpha",
-      "t_role": "0987654321",
-      "t_mail": "asd@fgh.com",
-      "t_date": "21-04-2024",
+      "id": "6007",
+      "t_name": "mugilavathi",
+      "t_role": "987654321",
+      "t_date": "24-1-2024",
+      "t_msg": null,
+      "t_address": "2734892174",
+      "t_city": "djfdksf",
       "t_gender": "male",
-      "t_address": "No 8a/30 nermai nagar 1st street kolathur",
-      "t_city": "Chennai"
-    },
-    {
-      "id": "be72",
-      "t_name": "alpha",
-      "t_role": "0987654321",
-      "t_mail": "asd@fgh.com",
-      "t_date": "21-04-2024",
-      "t_gender": "male",
-      "t_address": "No 8a/30 nermai nagar 1st street kolathur",
-      "t_city": "Chennai"
+      "t_mail": "abc@gmail.com",
+      "t_dob": "21-3-2000",
+      "t_term": null,
+      "active_status": "true"
     }
   ]
 }

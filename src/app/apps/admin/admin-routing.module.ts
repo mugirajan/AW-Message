@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TestimonialComponent } from './component/testimonial/testimonial.component';
+import { ContactComponent } from './component/testimonial/testimonial.component';
 import { CategoryComponent } from './component/category/category.component';
 import { ProductComponent } from './component/product/product.component';
 import { VariantComponent } from './component/variant/variant.component';
@@ -15,7 +15,7 @@ const routes: Routes = [
   },
   {
     path: "contact",
-    component: TestimonialComponent
+    component: ContactComponent
   },
   {
     path: "list",

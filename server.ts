@@ -18,7 +18,8 @@ mongoose.connect('mongodb://localhost:27017/mydatabase', {
 const db = mongoose.connection;
 
 // Define a schema for the data
-const TestimonialSchema = new mongoose.Schema({
+const ContactSchema = new mongoose.Schema({
+  t_id: Number,
   t_name: String,
   t_role: String,
   t_date: String,
@@ -26,18 +27,18 @@ const TestimonialSchema = new mongoose.Schema({
   t_address: String,
   t_gender: String,
   t_mail: String,
+  t_term: String,
+  t_dob: String,
   active_status: Boolean
 });
 
-// Create a model based on the schema
-const TestimonialModel = mongoose.model('Testimonial', TestimonialSchema);
+const ContactofModel = mongoose.model('Contact', ContactSchema);
 
-// Define a POST endpoint to add a new testimonial
-app.post('/testimonials/create', (req:any, res:any) => {
-  const { t_name, t_role, t_date, t_city, t_address, t_gender, t_mail, active_status } = req.body;
+app.post('/contacts/create', (req:any, res:any) => {
+  const { t_id,t_name,t_term, t_role,t_dob, t_date, t_city, t_address, t_gender, t_mail, active_status } = req.body;
 
-  // Create a new testimonial instance
-  const newTestimonial = new TestimonialModel({
+  const newContact = new ContactofModel({
+    t_id,
     t_name,
     t_role,
     t_date,
@@ -45,21 +46,21 @@ app.post('/testimonials/create', (req:any, res:any) => {
     t_address,
     t_gender,
     t_mail,
+    t_dob,
+    t_term,
     active_status
   });
 
-  // Save the testimonial to the database
-  newTestimonial.save()
+  newContact.save()
     .then(() => {
-      res.status(201).json({ message: 'Testimonial added successfully' });
+      res.status(201).json({ message: 'Contact added successfully' });
     })
     .catch((error:any) => {
-      console.error('Error saving testimonial:', error);
-      res.status(500).json({ error: 'Error saving testimonial' });
+      console.error('Error saving contact:', error);
+      res.status(500).json({ error: 'Error saving contact' });
     });
 });
 
-// Start the server
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

@@ -9,7 +9,7 @@ import { ServicesComponent } from './services/services.component';
 import { FeaturesComponent } from './features/features.component';
 import { PricingComponent } from './pricing/pricing.component';
 import { FaqComponent } from './faq/faq.component';
-import { TestimonialComponent } from './testimonial/testimonial.component';
+import { ContactComponent } from './testimonial/testimonial.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { FooterComponent } from './footer/footer.component';
 import { LayoutDemoComponent } from './layout-demo/layout-demo.component';
@@ -27,7 +27,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     FeaturesComponent,
     PricingComponent,
     FaqComponent,
-    TestimonialComponent,
+    ContactComponent,
     ContactUsComponent,
     FooterComponent,
     LayoutDemoComponent
