@@ -17,7 +17,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './testimonial.component.html',
   styleUrls: ['./testimonial.component.scss']
 })
-export class TestimonialComponent implements OnInit {
+export class ContactComponent implements OnInit {
 
   pageTitle: BreadcrumbItem[] = [];
   records: TestimonialModel2[] = [];
@@ -25,7 +25,7 @@ export class TestimonialComponent implements OnInit {
   loading: boolean = false;
   statusGroup: string = "All";
   pageSizeOptions: number[] = [10, 25, 50, 100];
-  testimonialForm!: FormGroup;
+  contactForm!: FormGroup;
   files: File[] = [];
   actionType: string = "Add New";
   val2!: Testimonial;
@@ -41,7 +41,7 @@ export class TestimonialComponent implements OnInit {
   requestData: any[]=[];
   @ViewChild('positionModal')
   positionModal!: TemplateRef<NgbModal>;
-  testimonialData: any = {};
+  contactData: any = {};
 
   testimonials: Testimonial[] = [];
   testimonialToDelete: any;
@@ -73,7 +73,7 @@ export class TestimonialComponent implements OnInit {
     this.initTableCofig();
 
     // product form
-    this.testimonialForm = this.fb.group({
+    this.contactForm = this.fb.group({
       t_id:[''],
       t_name: ['', Validators.required],
       t_role: ['', Validators.required],
@@ -87,30 +87,30 @@ export class TestimonialComponent implements OnInit {
     });
 
 
-    this.testServ.getTestimonials().subscribe(
+    this.testServ.getContacts().subscribe(
       (data: Testimonial[]) => {
         this.testimonials = data;
         this.loading = false;
       },
       (error) => {
-        console.error('Error fetching testimonials:', error);
+        console.error('Error fetching contacts:', error);
         this.loading = false;
       }
     );
 
   
 
-    this.resetTestimonialForm();
+    this.resetcontactForm();
 
     
 
   }
   submitForm() {
-    this.testServ.createTestimonial(this.testimonialData)
+    this.testServ.createContacts(this.contactData)
       .subscribe(response => {
-        console.log('Testimonial added successfully:', response);
+        console.log('Contact added successfully:', response);
       }, error => {
-        console.error('Error adding testimonial:', error);
+        console.error('contact adding testimonial:', error);
       });
   }
   
@@ -124,7 +124,7 @@ export class TestimonialComponent implements OnInit {
     // this.records$ = this.testServ._getAllListOfTestimonial();
     // this.testimonialSubscription = this.records$.subscribe( () => {
     // });
-    this.testServ.getTestimonials().subscribe((data: any) =>{
+    this.testServ.getContacts().subscribe((data: any) =>{
       if(data.length > 0) {
         this.records =  data;
       }
@@ -146,7 +146,7 @@ export class TestimonialComponent implements OnInit {
       {
         name: 't_id',
         label: 'Contact ID',
-        formatter: this.testimonialIDFormatter.bind(this)
+        formatter: this.contactsIDFormatter.bind(this)
       },
       {
         name: 't_name',
@@ -168,7 +168,7 @@ export class TestimonialComponent implements OnInit {
       {
         name: 'active_status',
         label: 'Active Status',
-        formatter: this.testimonialActiveStatusFormatter.bind(this)
+        formatter: this.contactsActiveStatusFormatter.bind(this)
       },
     ];
   }
@@ -184,7 +184,7 @@ export class TestimonialComponent implements OnInit {
   //     {
   //       name: 't_id',
   //       label: 'Contact ID',
-  //       formatter: this.testimonialIDFormatter.bind(this)
+  //       formatter: this.contactsIDFormatter.bind(this)
   //     },
   //     {
   //       name: 't_name',
@@ -200,12 +200,12 @@ export class TestimonialComponent implements OnInit {
   //     {
   //       name: 't_date',
   //       label: 'Date',
-  //       formatter: this.testimonialDateFormatter.bind(this)
+  //       formatter: this.contactsDateFormatter.bind(this)
   //     },
   //     {
   //       name: 'active_status',
   //       label: 'Active Status',
-  //       formatter: this.testimonialActiveStatusFormatter.bind(this)
+  //       formatter: this.contactsActiveStatusFormatter.bind(this)
   //     },
   //   ];
   // }
@@ -214,14 +214,14 @@ export class TestimonialComponent implements OnInit {
 
 
   // formats testimonial ID cell
-  testimonialIDFormatter(data: Testimonial): any {
+  contactsIDFormatter(data: Testimonial): any {
     return this.sanitizer.bypassSecurityTrustHtml(
       `<a href="javascript:void(0)" class="order text-body fw-bold" id="${data.id}">#${data.id}</a> `
     );
   }
 
   //formats testimonial image cell
-  testimonialImageFormatter(data: Testimonial): any {
+  contactsImageFormatter(data: Testimonial): any {
     let image: string = ``;
     // image = `<a href="javascript:void(0)"><img src="${data.t_img}" alt="attestant-img" height="32" /></a>`
     image = `<a href="javascript:void(0)"><img src="${"http://festasolar.com/"+data.t_img.replace("img/stock/", "")}" alt="attestant-img" height="32" /></a>`
@@ -229,14 +229,14 @@ export class TestimonialComponent implements OnInit {
   }
 
   // formats order date cell
-  testimonialDateFormatter(data: Testimonial): any {
+  contactsDateFormatter(data: Testimonial): any {
     return this.sanitizer.bypassSecurityTrustHtml(
       `${data.t_date}`
     );
   }
 
   // formats payment status cell
-  testimonialActiveStatusFormatter(data: Testimonial): any {
+  contactsActiveStatusFormatter(data: Testimonial): any {
     if (data.active_status) {
       return this.sanitizer.bypassSecurityTrustHtml(
         `<h5><span class="badge bg-soft-success text-success"><i class="mdi mdi-check"></i> Active </span></h5>`
@@ -289,11 +289,11 @@ export class TestimonialComponent implements OnInit {
     switch (event.action) {
       case "edit":
         this.actionType = "Edit";
-        this.editTestimonialForm(event.record);
+        this.editcontactForm(event.record);
         break;
       case "delete":
         this.actionType = "Delete";
-        this.deleteTestimonialForm(event.record);
+        this.deleteContactForm(event.record);
         break;
       default:
         this.actionType = "Add New";
@@ -303,14 +303,14 @@ export class TestimonialComponent implements OnInit {
 
 
   //To Confirm delete action
-  deleteTestimonialForm(record: any) {
+  deleteContactForm(record: any) {
     this.testimoialDeleteID = record.id;
     this.openVerticallyCentered(this.positionModal);
   }
  
-  deleteTestimonial() {
+  deleteCon() {
    if (this.testimonialId) {
-    this.testServ.deleteTestimonial(this.testimonialId).subscribe(
+    this.testServ.deleteCon(this.testimonialId).subscribe(
       (response) => {
         console.log('Delete successful', response);
         // Additional logic after successful delete
@@ -331,8 +331,8 @@ export class TestimonialComponent implements OnInit {
     this.modalService.open(content, { centered: true });
   }
 
-  deletedSeletedTestimonial(){
-    this.testServ.deleteTestimonial(this.testimoialDeleteID).subscribe( (val) => {
+  deletedSeletedContact(){
+    this.testServ.deleteCon(this.testimoialDeleteID).subscribe( (val) => {
       if(val['isSuccess'] == true) {
         this.notifyServ.addNotification(
           {
@@ -354,7 +354,7 @@ export class TestimonialComponent implements OnInit {
       this._fetchData();
     });
     this.testimoialDeleteID = -1;
-    this.closeTestimonialModal();
+    this.closeContactModal();
   }
 
   sample() {
@@ -391,49 +391,49 @@ export class TestimonialComponent implements OnInit {
    * Modal methods
    */
 
-  //  opens add modal
-  openAddTestimonialModal(content: TemplateRef<NgbModal>): void {
+ 
+  openAddContactModal(content: TemplateRef<NgbModal>): void {
     this.actionType = "Add New";
-    this.resetTestimonialForm();
-    this.openTestimonialModal(content);
+    this.resetcontactForm();
+    this.openconModal(content);
   }
 
-  //  Open testimonial modal
-  openTestimonialModal(content: TemplateRef<NgbModal>): void {
+ 
+  openconModal(content: TemplateRef<NgbModal>): void {
     this.modalService.open(content, { size: "xl" });
   }
 
-  //  close testimonial modal
-  closeTestimonialModal(): void {
+  
+  closeContactModal(): void {
     this.modalService.dismissAll();
-    this.resetTestimonialForm();
+    this.resetcontactForm();
   }
 
   /**
    * Edit form
    */
-  editTestimonialForm(data: Testimonial) {
+  editcontactForm(data: Testimonial) {
     this.modalService.open(this.sizeableModal, { size: 'xl' });
-    this.testimonialData = { ...data }; 
+    this.contactData = { ...data }; 
   }
 
 
 
 
 
-  updateTestimonial() {
-    this.testServ.updateTestimonial(this.testimonialData).subscribe((response) => {
+ updateContact() {
+    this.testServ.updateContact(this.contactData).subscribe((response) => {
       console.log('Update response:', response);
       this.modalService.dismissAll();
     }, (error) => {
-      console.error('Error updating testimonial:', error);
+      console.error('Error updating contact:', error);
     });
   }
   
 
   
   //  convenience getter for easy access to form fields
-  get form1() { return this.testimonialForm.controls; }
+  get form1() { return this.contactForm.controls; }
 
   //  adds new file in uploaded files
   onSelect(event: any) {
@@ -464,16 +464,16 @@ export class TestimonialComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustResourceUrl(encodeURI(URL.createObjectURL(f)));
   }
 
-  //  get testimonial form values
-  gettestimonialFormValue() {
-    return this.testimonialForm.value;
+ 
+  getcontactFormValue() {
+    return this.contactForm.value;
   }
 
   //  gets the form details
-  submittestimonialFormForm(modal: TemplateRef<NgbModal>) {
+  submitcontactFormForm(modal: TemplateRef<NgbModal>) {
     
     // prepping data for service
-    let data:Testimonial = this.testimonialForm.value;
+    let data:Testimonial = this.contactForm.value;
     data.t_img_file = this.files[0];
 
     if(this.actionType == "Add New")
@@ -499,8 +499,8 @@ export class TestimonialComponent implements OnInit {
         }
         this._fetchData();
       });
-      this.resetTestimonialForm();
-      this.closeTestimonialModal();
+      this.resetcontactForm();
+      this.closeContactModal();
     }
     else if(this.actionType == "Edit"){
       this.testServ.updateATestimonial(data).subscribe( (val) => {
@@ -524,8 +524,8 @@ export class TestimonialComponent implements OnInit {
         }
         this._fetchData();
       });
-      this.resetTestimonialForm();
-      this.closeTestimonialModal();
+      this.resetcontactForm();
+      this.closeContactModal();
     }
     
     // this._fetchData();
@@ -533,11 +533,11 @@ export class TestimonialComponent implements OnInit {
   }
 
   // reset form and file
-  resetTestimonialForm() {
+  resetcontactForm() {
     // files reset
     this.files = []
     // form reset
-    this.testimonialForm.reset()
+    this.contactForm.reset()
   }
 
   srcToFile(src:any, fileName:any, mimeType:any){

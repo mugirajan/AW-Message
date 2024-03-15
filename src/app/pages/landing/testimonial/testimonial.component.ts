@@ -6,7 +6,7 @@ import { Testimonial, TESTIMONIALS } from './data';
   templateUrl: './testimonial.component.html',
   styleUrls: ['./testimonial.component.scss']
 })
-export class TestimonialComponent implements OnInit {
+export class ContactComponent implements OnInit {
 
   testimonials: Testimonial[] = [];
 

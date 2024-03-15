@@ -18,14 +18,14 @@ export class ContactService {
 
   constructor(private http: HttpClient) { }
 
-  createTestimonial(data: any) {
+  createContacts(data: any) {
     return this.http.post(this.apiUrl, data);
   }
-  // createTestimonial(data: any) {
+  // createContacts(data: any) {
   //   return this.http.post(this.url + "create", data);
   // }
 
-  deleteTestimonial(id: string) {
+  deleteCon(id: string) {
     const deleteUrl = `${this.apiUrl}${id}`;  
     return this.http.delete(deleteUrl, {
       reportProgress: true,
@@ -40,17 +40,17 @@ export class ContactService {
   
   
 
-  updateTestimonial(id: any) {
+ updateContact(id: any) {
     const updateUrl = `${this.apiUrl}${id}`;
     return this.http.put(updateUrl, id);
   }
   
 
-  // getTestimonials() {
+  // getContacts() {
   //   return this.http.get(this.apiUrl + "getDetails");
   // }
 
-  getTestimonials(): Observable<Testimonial[]> {
+  getContacts(): Observable<Testimonial[]> {
     return this.http.get<Testimonial[]>(this.apiUrl);
   }
 

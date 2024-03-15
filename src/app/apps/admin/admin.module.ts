@@ -17,7 +17,7 @@ import { AdvancedTableModule } from 'src/app/shared/advanced-table/advanced-tabl
 
 import { ContactService } from './service/testimonial.service';
 
-import { TestimonialComponent } from './component/testimonial/testimonial.component';
+import { ContactComponent } from './component/testimonial/testimonial.component';
 import { ProductComponent } from './component/product/product.component';
 import { CategoryComponent } from './component/category/category.component';
 import { ProductService } from './service/product.service';
@@ -31,7 +31,7 @@ import { SheduleComponent } from './component/shedule/shedule.component';
 
 @NgModule({
     declarations: [
-        TestimonialComponent,
+        ContactComponent,
         ProductComponent,
         CategoryComponent,
         VariantComponent,
