@@ -36,7 +36,6 @@
                 <app-advanced-table 
                     #advancedTable 
                     [tableData]="records"
-  
                     [columns]="columns" 
                     [pagination]="true" 
                     [pageSizeOptions]="pageSizeOptions"
@@ -123,18 +122,16 @@
                                 <label class="mb-2">Active Status <span class="text-danger">*</span></label>
                                 <br />
                                 <div class="d-flex flex-wrap">
-                                    <div class="form-check me-2">
-                                        <input class="form-check-input" type="radio" value="true" name="active_status"
-                                            formControlName="active_status" id="inlineRadio1" checked>
-                                        <label class="form-check-label" for="inlineRadio1">Active </label>
-                                    </div>
-                                    <div class="form-check me-2">
-                                        <input class="form-check-input" type="radio" value="false" name="active_status"
-                                            formControlName="active_status" id="inlineRadio2">
-                                        <label class="form-check-label" for="inlineRadio2">In Active </label>
-                                    </div>
+                                  <div class="form-check me-2">
+                                    <input class="form-check-input" type="radio" value="true" [(ngModel)]="testimonialData.active_status" formControlName="active_status" id="activeRadio">
+                                    <label class="form-check-label" for="activeRadio">Active</label>
+                                  </div>
+                                  <div class="form-check me-2">
+                                    <input class="form-check-input" type="radio" value="false" [(ngModel)]="testimonialData.active_status" formControlName="active_status" id="inactiveRadio">
+                                    <label class="form-check-label" for="inactiveRadio">Inactive</label>
+                                  </div>
                                 </div>
-                            </div>
+                              </div>
         
                         </div>
                     </div> <!-- end card -->

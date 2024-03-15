@@ -32,7 +32,7 @@ const TestimonialSchema = new mongoose.Schema({
 
 const TestimonialModel = mongoose.model('Testimonial', TestimonialSchema);
 
-app.post('/testimonials/create', (req:any, res:any) => {
+app.post('/contacts/create', (req:any, res:any) => {
   const { t_id,t_name, t_role, t_date, t_city, t_address, t_gender, t_mail, active_status } = req.body;
 
   const newTestimonial = new TestimonialModel({
@@ -49,11 +49,11 @@ app.post('/testimonials/create', (req:any, res:any) => {
 
   newTestimonial.save()
     .then(() => {
-      res.status(201).json({ message: 'Testimonial added successfully' });
+      res.status(201).json({ message: 'Contact added successfully' });
     })
     .catch((error:any) => {
-      console.error('Error saving testimonial:', error);
-      res.status(500).json({ error: 'Error saving testimonial' });
+      console.error('Error saving contact:', error);
+      res.status(500).json({ error: 'Error saving contact' });
     });
 });
 

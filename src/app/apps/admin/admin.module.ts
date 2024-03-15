@@ -15,7 +15,7 @@ import { QuillModule } from 'ngx-quill';
 
 import { AdvancedTableModule } from 'src/app/shared/advanced-table/advanced-table.module';
 
-import { TestimonialService } from './service/testimonial.service';
+import { ContactService } from './service/testimonial.service';
 
 import { TestimonialComponent } from './component/testimonial/testimonial.component';
 import { ProductComponent } from './component/product/product.component';
@@ -51,7 +51,7 @@ import { SheduleComponent } from './component/shedule/shedule.component';
         NgbToastModule
     ],
     providers: [
-        TestimonialService,
+        ContactService,
         ProductService,
         CategoryService,
         VariantService,

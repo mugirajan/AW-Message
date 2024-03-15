@@ -8,9 +8,9 @@ import * as env from 'src/environments/environment'
 @Injectable({
   providedIn: 'root'
 })
-export class TestimonialService {
+export class ContactService {
 
-  private apiUrl = 'http://localhost:3000/testimonials/'; 
+  private apiUrl = 'http://localhost:3000/contacts/'; 
 
   
   private testimonial$ = new BehaviorSubject<Testimonial[]>([]);
@@ -38,6 +38,7 @@ export class TestimonialService {
   }
  
   
+  
 
   updateTestimonial(id: any) {
     const updateUrl = `${this.apiUrl}${id}`;
@@ -57,7 +58,6 @@ export class TestimonialService {
   public putATestiomonial(data: Testimonial) {
     let formData = new FormData();
     formData.append('t_img_file', data.t_img_file);
-    formData.append('t_msg', data.t_msg);
     formData.append('t_role', data.t_role);
     formData.append('t_name', data.t_name);
     formData.append('active_status', String(data.active_status));

@@ -1,24 +1,26 @@
 {
-  "testimonials": [
+  "contacts": [
     {
-      "id": "84b8",
-      "t_name": "m",
+      "id": "c7c1",
+      "t_name": "mugi",
       "t_role": "9888124861",
-      "t_mail": "abc@gmail.com",
-      "t_date": "21/2/2023",
+      "t_mail": "fdadsaf",
+      "t_date": "fdadsaf",
+      "active_status": "true",
       "t_gender": "mugi",
-      "t_address": "rajfk",
-      "t_city": "abc@gmail.com"
+      "t_address": "9888124861",
+      "t_city": "fdadsaf"
     },
     {
-      "id": "10a5",
+      "id": "d9d0",
       "t_name": "mugiraaa",
       "t_role": "9888124861",
       "t_mail": "abc@gmail.com",
-      "t_date": "12/1/2024",
+      "t_date": "fdadsaf",
       "t_gender": "female",
       "t_address": "rajfk",
-      "t_city": "chennai"
+      "t_city": "abc@gmail.com",
+      "active_status": "true"
     }
   ]
 }

@@ -7,7 +7,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { actionEvent } from '../../models';
 import { Testimonial, TestimonialModel2 } from '../../models/testimonial.model';
-import { TestimonialService } from '../../service/testimonial.service';
+import { ContactService } from '../../service/testimonial.service';
 import { Subscription } from 'rxjs';
 import { NotificationService } from 'src/app/layout/shared/service/notification.service';
 import { ToastrService } from 'ngx-toastr';
@@ -18,7 +18,6 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./testimonial.component.scss']
 })
 export class TestimonialComponent implements OnInit {
-
 
   pageTitle: BreadcrumbItem[] = [];
   records: TestimonialModel2[] = [];
@@ -48,8 +47,6 @@ export class TestimonialComponent implements OnInit {
   testimonialToDelete: any;
   testimonialId: string | null = null;
 
-  
-
 
   
   // Constructor
@@ -58,7 +55,7 @@ export class TestimonialComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private modalService: NgbModal,
     private fb: FormBuilder,
-    private testServ: TestimonialService,
+    private testServ: ContactService,
     private notifyServ: NotificationService
   ) { }
 
@@ -66,8 +63,7 @@ export class TestimonialComponent implements OnInit {
   // OnInit 
   ngOnInit(): void {
 
-   
-  
+
     this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Manage Contacts', path: '/', active: true }];
     
     // get Testimonials
@@ -87,7 +83,7 @@ export class TestimonialComponent implements OnInit {
       t_city:['', Validators.required],
       t_gender:['', Validators.required],
       t_mail:['', Validators.required],
-      active_status: [false, Validators.required],
+      active_status: ['', Validators.required],
     });
 
 
@@ -117,9 +113,6 @@ export class TestimonialComponent implements OnInit {
         console.error('Error adding testimonial:', error);
       });
   }
-
-  
-
   
 
 
@@ -145,7 +138,9 @@ export class TestimonialComponent implements OnInit {
   
   /**
    * initialize advanced table columns
+   * 
    */
+ 
   initTableCofig(): void {
     this.columns = [
       {
@@ -173,14 +168,16 @@ export class TestimonialComponent implements OnInit {
       {
         name: 'active_status',
         label: 'Active Status',
-        formatter: this.activeStatusFormatter.bind(this)
+        formatter: this.testimonialActiveStatusFormatter.bind(this)
       },
     ];
   }
 
-  activeStatusFormatter(tableData: Testimonial): string {
-    return tableData.active_status ? 'Active' : 'Inactive';
-  }
+  // activeStatusFormatter(tableData: Testimonial): string {
+  //   return tableData.active_status ? 'Active' : 'Inactive';
+  // }
+
+ 
 
   // initTableConfig(): void {
   //   this.columns = [
@@ -240,18 +237,18 @@ export class TestimonialComponent implements OnInit {
 
   // formats payment status cell
   testimonialActiveStatusFormatter(data: Testimonial): any {
-    if (data.active_status == "true") {
+    if (data.active_status) {
       return this.sanitizer.bypassSecurityTrustHtml(
         `<h5><span class="badge bg-soft-success text-success"><i class="mdi mdi-check"></i> Active </span></h5>`
       );
-    }
-    else {
+    } else {
       return this.sanitizer.bypassSecurityTrustHtml(
-        `<h5><span class="badge bg-soft-danger text-danger"><i class="mdi mdi-close"></i> In Active </span></h5>`
+        `<h5><span class="badge bg-soft-danger text-danger"><i class="mdi mdi-close"></i> Inactive </span></h5>`
       );
     }
-
   }
+  
+  
 
   /**
  * Match table data with search input
@@ -419,6 +416,10 @@ export class TestimonialComponent implements OnInit {
     this.modalService.open(this.sizeableModal, { size: 'xl' });
     this.testimonialData = { ...data }; 
   }
+
+
+
+
 
   updateTestimonial() {
     this.testServ.updateTestimonial(this.testimonialData).subscribe((response) => {
