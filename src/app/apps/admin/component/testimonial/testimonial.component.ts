@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 import { NotificationService } from 'src/app/layout/shared/service/notification.service';
 import { ToastrService } from 'ngx-toastr';
 
+
 @Component({
   selector: 'app-testimonial',
   templateUrl: './testimonial.component.html',
@@ -42,6 +43,7 @@ export class ContactComponent implements OnInit {
   @ViewChild('positionModal')
   positionModal!: TemplateRef<NgbModal>;
   contactData: any = {};
+ 
 
   testimonials: Testimonial[] = [];
   testimonialToDelete: any;
@@ -74,7 +76,6 @@ export class ContactComponent implements OnInit {
 
     // product form
     this.contactForm = this.fb.group({
-      t_id:[''],
       t_name: ['', Validators.required],
       t_role: ['', Validators.required],
       t_date: ['',Validators.required],
@@ -83,6 +84,8 @@ export class ContactComponent implements OnInit {
       t_city:['', Validators.required],
       t_gender:['', Validators.required],
       t_mail:['', Validators.required],
+      t_dob:['', Validators.required],
+      t_term:['', Validators.required],
       active_status: ['', Validators.required],
     });
 
@@ -106,12 +109,15 @@ export class ContactComponent implements OnInit {
 
   }
   submitForm() {
-    this.testServ.createContacts(this.contactData)
+
+    this.testServ.createContacts(this.contactForm.value)
       .subscribe(response => {
         console.log('Contact added successfully:', response);
       }, error => {
         console.error('contact adding testimonial:', error);
       });
+      this.closeContactModal();
+      this._fetchData();
   }
   
 
@@ -177,40 +183,6 @@ export class ContactComponent implements OnInit {
   //   return tableData.active_status ? 'Active' : 'Inactive';
   // }
 
- 
-
-  // initTableConfig(): void {
-  //   this.columns = [
-  //     {
-  //       name: 't_id',
-  //       label: 'Contact ID',
-  //       formatter: this.contactsIDFormatter.bind(this)
-  //     },
-  //     {
-  //       name: 't_name',
-  //       label: 'Name',
-  //       formatter: (testimonial: Testimonial) => testimonial.t_name
-  //     },
-  //     {
-  //       name: 't_msg',
-  //       label: 'Phone',
-  //       formatter: (testimonial: Testimonial) => testimonial.t_msg,
-  //       width: 100
-  //     },
-  //     {
-  //       name: 't_date',
-  //       label: 'Date',
-  //       formatter: this.contactsDateFormatter.bind(this)
-  //     },
-  //     {
-  //       name: 'active_status',
-  //       label: 'Active Status',
-  //       formatter: this.contactsActiveStatusFormatter.bind(this)
-  //     },
-  //   ];
-  // }
-
- 
 
 
   // formats testimonial ID cell
@@ -414,21 +386,21 @@ export class ContactComponent implements OnInit {
    */
   editcontactForm(data: Testimonial) {
     this.modalService.open(this.sizeableModal, { size: 'xl' });
-    this.contactData = { ...data }; 
+    this.contactForm.patchValue({ ...data }); // Use patchValue to update the form
   }
-
-
-
-
-
- updateContact() {
-    this.testServ.updateContact(this.contactData).subscribe((response) => {
-      console.log('Update response:', response);
-      this.modalService.dismissAll();
-    }, (error) => {
-      console.error('Error updating contact:', error);
-    });
+  
+  updateContact() {
+    this.testServ.updateContact(this.contactForm.value).subscribe(
+      (response) => {
+        console.log('Update response:', response);
+        this.modalService.dismissAll();
+      },
+      (error) => {
+        console.error('Error updating contact:', error);
+      }
+    );
   }
+  
   
 
   
