@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AdminRoutingModule } from './admin-routing.module';
@@ -27,6 +27,7 @@ import { VariantComponent } from './component/variant/variant.component';
 import { VariantService } from './service/variant.service';
 import { DynaFormService } from './service/form.service';
 import { SheduleComponent } from './component/shedule/shedule.component';
+import { MessageComponent } from './component/message/message.component';
 
 
 @NgModule({
@@ -35,11 +36,13 @@ import { SheduleComponent } from './component/shedule/shedule.component';
         ProductComponent,
         CategoryComponent,
         VariantComponent,
-        SheduleComponent
+        SheduleComponent,
+        MessageComponent
     ],
     imports: [
         CommonModule,
         FormsModule,
+        ReactiveFormsModule,
         Select2Module,
         NgxDropzoneModule,
         QuillModule,
