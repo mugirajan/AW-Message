@@ -75,7 +75,7 @@ export class CategoryComponent implements OnInit {
       active_status: [false, Validators.required],
     });
 
-    // this.resetTestimonialForm();
+    // this.resetcontactForm();
   }
   ListForm() {
     this.catServ.createCatergory(this.categoryForm.value)
@@ -254,7 +254,7 @@ export class CategoryComponent implements OnInit {
     this.modalService.open(content, { centered: true });
   }
 
-  deletedSeletedTestimonial(){
+  deletedSeletedContact(){
     this.catServ.deleteCategory(this.categoryDeleteID).subscribe( (val) => {
       if(val['isSuccess'] == true) {
         this.notifyServ.addNotification(
@@ -277,7 +277,7 @@ export class CategoryComponent implements OnInit {
       this._fetchData();
     });
     this.categoryDeleteID = -1;
-    this.closeTestimonialModal();
+    this.closeContactModal();
     
   }
 
@@ -298,7 +298,7 @@ export class CategoryComponent implements OnInit {
   }
 
   //  close testimonial modal
-  closeTestimonialModal(): void {
+  closeContactModal(): void {
     this.modalService.dismissAll();
     this.resetCategoryForm();
   }
@@ -368,7 +368,7 @@ export class CategoryComponent implements OnInit {
         this._fetchData();
       });
       this.resetCategoryForm();
-      this.closeTestimonialModal();
+      this.closeContactModal();
     }
     else if(this.actionType == "Edit"){
       this.catServ.updateCategory(data).subscribe( (val) => {
@@ -393,7 +393,7 @@ export class CategoryComponent implements OnInit {
         this._fetchData();
       });
       this.resetCategoryForm();
-      this.closeTestimonialModal();
+      this.closeContactModal();
     }
     
     // this._fetchData();

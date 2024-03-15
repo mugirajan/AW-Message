@@ -8,9 +8,9 @@ import * as env from 'src/environments/environment'
 @Injectable({
   providedIn: 'root'
 })
-export class TestimonialService {
+export class ContactService {
 
-  private apiUrl = 'http://localhost:3000/testimonials/'; 
+  private apiUrl = 'http://localhost:3000/contacts/'; 
 
   
   private testimonial$ = new BehaviorSubject<Testimonial[]>([]);
@@ -18,14 +18,14 @@ export class TestimonialService {
 
   constructor(private http: HttpClient) { }
 
-  createTestimonial(data: any) {
+  createContacts(data: any) {
     return this.http.post(this.apiUrl, data);
   }
-  // createTestimonial(data: any) {
+  // createContacts(data: any) {
   //   return this.http.post(this.url + "create", data);
   // }
 
-  deleteTestimonial(id: string) {
+  deleteCon(id: string) {
     const deleteUrl = `${this.apiUrl}${id}`;  
     return this.http.delete(deleteUrl, {
       reportProgress: true,
@@ -38,18 +38,19 @@ export class TestimonialService {
   }
  
   
+  
 
-  updateTestimonial(id: any) {
+ updateContact(id: any) {
     const updateUrl = `${this.apiUrl}${id}`;
     return this.http.put(updateUrl, id);
   }
   
 
-  // getTestimonials() {
+  // getContacts() {
   //   return this.http.get(this.apiUrl + "getDetails");
   // }
 
-  getTestimonials(): Observable<Testimonial[]> {
+  getContacts(): Observable<Testimonial[]> {
     return this.http.get<Testimonial[]>(this.apiUrl);
   }
 
@@ -57,7 +58,6 @@ export class TestimonialService {
   public putATestiomonial(data: Testimonial) {
     let formData = new FormData();
     formData.append('t_img_file', data.t_img_file);
-    formData.append('t_msg', data.t_msg);
     formData.append('t_role', data.t_role);
     formData.append('t_name', data.t_name);
     formData.append('active_status', String(data.active_status));
