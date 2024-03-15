@@ -68,7 +68,7 @@ const MENU_ITEMS: MenuItem[] = [
             {
                 key: 'app-manage-logout',
                 label: 'logout',
-                link: '/apps/admin/logout',
+                link: 'auth/logout',
                 icon: 'log-out'
 
                 // parentKey: 'manage-items'
