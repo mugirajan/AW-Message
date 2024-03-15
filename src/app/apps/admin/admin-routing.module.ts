@@ -10,23 +10,23 @@ import { MessageComponent } from './component/message/message.component';
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "testimonial",
+    redirectTo: "contact",
     pathMatch: "full",
   },
   {
-    path: "testimonial",
+    path: "contact",
     component: TestimonialComponent
   },
   {
-    path: "category",
+    path: "list",
     component: CategoryComponent
   },
   {
-    path: "product",
+    path: "custom",
     component: ProductComponent
   },
   {
-    path: "variant",
+    path: "logout",
     component: VariantComponent
   },
   {

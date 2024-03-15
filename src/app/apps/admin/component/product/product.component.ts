@@ -66,7 +66,7 @@ export class ProductComponent implements OnInit {
     private notifyServ: NotificationService) { }
 
   ngOnInit(): void {
-    this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Manage product', path: '/', active: true }];
+    this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Custom Template', path: '/', active: true }];
     
     this.fetchCatgeory();
 
@@ -128,7 +128,7 @@ export class ProductComponent implements OnInit {
     this.columns = [
       {
         name: 'p_id',
-        label: 'Product ID',
+        label: 'S.NO',
         formatter: this.productIDFormatter.bind(this)
       },
       {
@@ -136,43 +136,7 @@ export class ProductComponent implements OnInit {
         label: 'Name',
         formatter: (order: Product) => order.p_name
       }, 
-      {
-        name: 'p_shrt_desc',
-        label: 'Short Description',
-        formatter: (order: Product) => order.p_shrt_desc,
-        width: 100
-      },
-      {
-        name: 'p_category',
-        label: 'Categroy',
-        formatter: this.productcategoryFormatter.bind(this)
-      },
-      {
-        name: 'p_ftd_img',
-        label: 'Featured Image',
-        formatter: this.productFeaturedImageFormatter.bind(this)
-      },
-      {
-        name: 'p_catlog',
-        label: 'catlog',
-        formatter: this.productCatalogFormatter.bind(this)
-      },
-      {
-        name: 'p_datasheet',
-        label: 'datasheet',
-        formatter: this.productDatsheetFormatter.bind(this)
-      },
-      {
-        name: 'is_ft_prod',
-        label: 'Featured Image',
-        formatter: this.productFeaturedProductFormatter.bind(this)
-      },
-      {
-        name: 'p_order',
-        label: 'Prduct order',
-        formatter: (order: Product) => order.prod_order,
-        width: 100
-      },
+  
       {
         name: 'active_status',
         label: 'Active Status',

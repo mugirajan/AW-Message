@@ -34,16 +34,16 @@ const MENU_ITEMS: MenuItem[] = [
         // collapsed: true,
         // children: [
             {
-                key: 'app-manage-testimonial',
+                key: 'app-manage-contact',
                 label: 'Contacts',
-                link: '/apps/admin/testimonial',
+                link: '/apps/admin/contact',
                 icon: 'users'
                 // parentKey: 'manage-items'
             },
             {
-                key: 'app-manage-category',
+                key: 'app-manage-list',
                 label: 'List',
-                link: '/apps/admin/category',
+                link: '/apps/admin/list',
                 icon: 'list'
 
                 // parentKey: 'manage-items'
@@ -58,17 +58,17 @@ const MENU_ITEMS: MenuItem[] = [
                 // parentKey: 'manage-items'
             },
             {
-                key: 'app-manage-product',
+                key: 'app-manage-custom',
                 label: 'Custom Template',
-                link: '/apps/admin/product',
+                link: '/apps/admin/custom',
                 icon: 'package'
 
                 // parentKey: 'manage-items'
             },
             {
-                key: 'app-manage-variant',
+                key: 'app-manage-logout',
                 label: 'logout',
-                link: '/apps/admin/variant',
+                link: '/apps/admin/logout',
                 icon: 'log-out'
 
                 // parentKey: 'manage-items'
