@@ -31,6 +31,7 @@ export class CategoryComponent implements OnInit {
   val2!: Category;
   categorySubscription!: Subscription;
   categoryDeleteID:any;
+  roles: any[] = [];
 
 
   
@@ -41,6 +42,8 @@ export class CategoryComponent implements OnInit {
   requestData: any[]=[];
   @ViewChild('positionModal')
   positionModal!: TemplateRef<NgbModal>;
+  ListData: any = {};
+
 
 
   
@@ -66,23 +69,39 @@ export class CategoryComponent implements OnInit {
     this.categoryForm = this.fb.group({ 
       c_id:[''],
       c_name: ['', Validators.required],
-      unq_cat_name: ['', Validators.required],
+      // c_number: ['', Validators.required],
       c_desc: ['',Validators.required],
-      supr_cat: ['', Validators.required],
+      c_number: ['', Validators.required],
       active_status: [false, Validators.required],
     });
 
     // this.resetcontactForm();
   }
+  ListForm() {
+    this.catServ.createCatergory(this.categoryForm.value)
+      .subscribe(response => {
+        console.log('Testimonial added successfully:', response);
+      }, error => {
+        console.error('Error adding testimonial:', error);
+      });
+      // this.resetCategoryForm();
+      this.closeTestimonialModal();
+      this._fetchData();
 
+  }
   
   /**
    * fetches table records
    */
   _fetchData(): void {
+    // this.catServ.UpdateCategory().subscribe((data: any) =>{
+    //   this.records =  data;
+    // });;
     this.catServ.getCategory().subscribe((data: any) =>{
-      this.records =  data;
-    });;
+      if(data.length > 0) {
+        this.records =  data;
+      }
+    });
   }
 
 
@@ -102,10 +121,10 @@ export class CategoryComponent implements OnInit {
         formatter: (order: Category) => order.c_name
       }, 
       {
-        name: 'supr_cat',
-        label: 'Super Category',
-        formatter: (order: Category) => order.supr_cat,
-        width: 100
+        name: 'c_number',
+        label: 'Number',
+        formatter: (order: Category) => order.c_number,
+        
       },
       {
         name: 'active_status',
@@ -149,8 +168,8 @@ export class CategoryComponent implements OnInit {
       row.id?.toString().includes(term) ||
       row.c_name.toLowerCase().includes(term) ||
       row.c_desc.toLowerCase().includes(term) ||
-      row.unq_cat_name.toLowerCase().includes(term) ||
-      row.supr_cat.toLowerCase().includes(term) ||
+      // row.c_number.toLowerCase().includes(term) ||
+      row.c_number.toLowerCase().includes(term) ||
       this._matchesActiveStatus(row, term)
     );
   }
@@ -174,15 +193,15 @@ export class CategoryComponent implements OnInit {
     const matchesId = item.id?.toString().includes(term);
     const matchesCName = item.c_name.toLowerCase().includes(term);
     const matchesCDesc = item.c_desc.toLowerCase().includes(term);
-    const matchesUnqCatName = item.unq_cat_name.toLowerCase().includes(term);
-    const matchesSuprCat = item.supr_cat.toLowerCase().includes(term);
+    // const matchesUnqCatName = item.c_number.toLowerCase().includes(term);
+    const matchesSuprCat = item.c_number.toLowerCase().includes(term);
     const matchesActiveStatus = this._matchesActiveStatus(item, term);
   
     return (
       matchesId ||
       matchesCName ||
       matchesCDesc ||
-      matchesUnqCatName ||
+      // matchesUnqCatName ||
       matchesSuprCat ||
       matchesActiveStatus
     );
@@ -206,11 +225,13 @@ export class CategoryComponent implements OnInit {
    * @param action action type
    * @param data record info
    */
+
+
   actionTriggerd(event: actionEvent) {
     switch (event.action) {
       case "edit":
         this.actionType = "Edit";
-        this.editCategoryForm(event.record);
+        this.editCategoryName(event.record);
         break;
       case "delete":
         this.actionType = "Delete";
@@ -221,7 +242,7 @@ export class CategoryComponent implements OnInit {
         break;
     }
   }
-
+  
   
   //To Confirm delete action
   deleteCategoryForm(record: any) {
@@ -285,19 +306,27 @@ export class CategoryComponent implements OnInit {
   /**
    * Edit form
    */
-  editCategoryForm(data: Category) {
+  editCategoryName(data: Category) {
+    console.log("fghaskjd",data)
+
     this.modalService.open(this.sizeableModal, { size: "xl" });
     this.categoryForm.setValue(
       {
         c_id:data.id,
         c_name: data.c_name,
-        c_desc: data.c_desc,
-        supr_cat: data.supr_cat,
-        unq_cat_name: data.unq_cat_name,
+        c_number: data.c_number,
         active_status: data.active_status,
       }
     )
   }
+//   UpdateCategory() {
+//     this.catServ.UpdateCategory(this.ListData).subscribe((response) => {
+//       console.log('Update response:', response);
+//       this.modalService.dismissAll();
+//     }, (error) => {
+//       console.error('Error updating contact:', error);
+//     });
+//   }
 
   /**
    * Form methods
@@ -317,25 +346,25 @@ export class CategoryComponent implements OnInit {
 
     if(this.actionType == "Add New")
     {
-      this.catServ.createCategory(data).subscribe( (val) => {
-        if(val['isSuccess'] == true) {
-          this.notifyServ.addNotification(
-            {
-              text: "Category Created Successfully",
-              level: "success",
-              autohide: true,
-            }
-          );
-        }
-        else{
-          this.notifyServ.addNotification(
-            {
-              text: "Error while creating category",
-              level: "error",
-              autohide: true,
-            }
-          );
-        }
+      this.catServ.createCatergory(data).subscribe( (val) => {
+        // if(val['isSuccess'] == true) {
+        //   this.notifyServ.addNotification(
+        //     {
+        //       text: "Category Created Successfully",
+        //       level: "success",
+        //       autohide: true,
+        //     }
+        //   );
+        // }
+        // else{
+        //   this.notifyServ.addNotification(
+        //     {
+        //       text: "Error while creating category",
+        //       level: "error",
+        //       autohide: true,
+        //     }
+        //   );
+        // }
         this._fetchData();
       });
       this.resetCategoryForm();

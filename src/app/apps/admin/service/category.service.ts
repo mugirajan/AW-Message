@@ -1,37 +1,55 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import * as env from 'src/environments/environment';
+import { Category } from '../models/category.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoryService {
+  private apiUrl = 'http://localhost:3000/list/'; 
 
-  private url: string = env.environment.apiUrl + "category/";
+  // private url: string = env.environment.apiUrl + "category/";
 
   constructor(private http: HttpClient) { }
   
-  createCategory(data: any) {
-    return this.http
-      .post(this.url + 'create', data, {
-        reportProgress: true,
-        responseType: 'json',
-      })
-      .pipe(
-        map((response: any) => {
-          return response;
-        })
-      );
+  // createCategory(data: any) {
+  //   return this.http
+  //     .post(this.url + 'create', data, {
+  //       reportProgress: true,
+  //       responseType: 'json',
+  //     })
+  //     .pipe(
+  //       map((response: any) => {
+  //         return response;
+  //       })
+  //     );
+  // }
+  getRoles(): Observable<any[]> {
+    return this.http.get<any[]>('assets/db.json');
   }
 
-  deleteCategory(data: number) {
-    return this.http
-    .delete(this.url + "delete/"+data, {
+  createCatergory(data: any) {
+    return this.http.post(this.apiUrl, data);
+  }
+
+  getCategory(): Observable<Category[]> {
+    return this.http.get<Category[]>(this.apiUrl);
+    
+  }
+
+  editCategoryName(categoryId: number, newName: string): Observable<any> {
+    const url = `${this.apiUrl}/${categoryId}`;
+    return this.http.patch(url, { name: newName });
+  }
+
+  deleteCategory(id: string) {
+    const deleteUrl = `${this.apiUrl}${id}`;  
+    return this.http.delete(deleteUrl, {
       reportProgress: true,
       responseType: 'json',
-    })
-    .pipe(
+    }).pipe(
       map((response: any) => {
         return response;
       })
@@ -41,7 +59,7 @@ export class CategoryService {
   updateCategory(data: any) {
     data.id = data.c_id;
     return this.http
-    .post(this.url + "update", data, {
+    .post(this.apiUrl + "update", data, {
       reportProgress: true,
       responseType: 'json',
     })
@@ -52,7 +70,14 @@ export class CategoryService {
     );
   }
 
-  getCategory() {
-    return this.http.get(this.url + "getAllCategory");
-  }
+  // UpdateCategory() {
+  //   return this.http.get(this.apiUrl + "getAllCategory");
+    
+  // }
+//   UpdateCategory(id: any) {
+//     const updateUrl = ${this.apiUrl}${id};
+//     return this.http.put(updateUrl, id);
+//   }
+
+
 }

@@ -2,8 +2,8 @@ export interface Category {
     id?: number,
     c_name: string,
     c_desc: string,
-    unq_cat_name: string,
-    supr_cat: string,
+    // c_number: string,
+    c_number: string,
     active_status: string
 }
 
@@ -12,14 +12,14 @@ export interface Category {
 export class CategoryMOdel2 {
     c_name!: string;
     c_desc!: string;
-    unq_cat_name!: string;
-    supr_cat!: string;
+    // c_number!: string;
+    c_number!: string;
     active_status!: string;
 
-    constructor(c_name: string, c_desc: string, unq_cat_name: string, supr_cat: string, active_status: string) {
+    constructor(c_name: string, c_desc: string,  c_number: string, active_status: string) {
         this.c_name = c_name;
         this.c_desc = c_desc;
-        this.unq_cat_name = unq_cat_name;
+        // this.c_number = c_number;
         this.active_status = active_status;
     }
 }
