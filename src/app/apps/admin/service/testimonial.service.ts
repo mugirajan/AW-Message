@@ -18,6 +18,10 @@ export class ContactService {
 
   constructor(private http: HttpClient) { }
 
+  getTestimonials(): Observable<any[]> {
+    return this.http.get<any[]>('path/to/testimonials.json');
+  }
+
   createContacts(data: any) {
     return this.http.post(this.apiUrl, data);
   }

@@ -11,7 +11,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { actionEvent } from '../../models';
 import { NotificationService } from 'src/app/layout/shared/service/notification.service';
 import { Variant } from '../../models/variant.model';
-
+import { ContactService } from '../../service/testimonial.service';
+import { HttpClient } from '@angular/common/http';
+// import {  } from '../../models/testimonial.model';
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
@@ -32,6 +34,8 @@ export class CategoryComponent implements OnInit {
   categorySubscription!: Subscription;
   categoryDeleteID:any;
   roles: any[] = [];
+  testimonials: any[] = [];
+  contacts: any[] = [];
 
 
   
@@ -43,6 +47,7 @@ export class CategoryComponent implements OnInit {
   @ViewChild('positionModal')
   positionModal!: TemplateRef<NgbModal>;
   ListData: any = {};
+  
 
 
 
@@ -54,9 +59,22 @@ export class CategoryComponent implements OnInit {
     private modalService: NgbModal,
     private fb: FormBuilder,
     private catServ: CategoryService,
-    private notifyServ: NotificationService) { }
+    private conserv: ContactService,
+    private http: HttpClient,
 
+    private notifyServ: NotificationService) { }
+   
   ngOnInit(): void {
+
+    this.http.get<any>('http://localhost:3000/contacts.json').subscribe(data => {
+      this.contacts = data.contacts;
+    });
+  
+    this.conserv.getTestimonials().subscribe(data => {
+      this.testimonials = data;
+    });
+
+
     this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Manage category', path: '/', active: true }];
     
     // get Categories
@@ -85,7 +103,7 @@ export class CategoryComponent implements OnInit {
         console.error('Error adding testimonial:', error);
       });
       // this.resetCategoryForm();
-      this.closeTestimonialModal();
+      this.closeContactModal();
       this._fetchData();
 
   }

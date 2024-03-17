@@ -9,6 +9,9 @@ import { Category } from '../models/category.model';
 })
 export class CategoryService {
   private apiUrl = 'http://localhost:3000/list/'; 
+  // private apiUrl1 = 'http://localhost:3000/contacts/'; 
+
+
 
   // private url: string = env.environment.apiUrl + "category/";
 
@@ -29,6 +32,9 @@ export class CategoryService {
   getRoles(): Observable<any[]> {
     return this.http.get<any[]>('assets/db.json');
   }
+  // getoles(): Observable<any[]> {
+  //   return this.http.get<any[]>('assets/db.json');
+  // }
 
   createCatergory(data: any) {
     return this.http.post(this.apiUrl, data);
@@ -38,6 +44,10 @@ export class CategoryService {
     return this.http.get<Category[]>(this.apiUrl);
     
   }
+  // getcontacts(): Observable<Category[]> {
+  //   return this.http.get<Category[]>(this.apiUrl1);
+    
+  // }
 
   editCategoryName(categoryId: number, newName: string): Observable<any> {
     const url = `${this.apiUrl}/${categoryId}`;

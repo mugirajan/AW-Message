@@ -90,6 +90,14 @@
                                     required formControlName="c_number"
                                     [ngClass]="{ 'is-invalid': addProduct.submitted && form1.c_number.invalid }">
                             </div>
+                            <div class="mb-3">
+                                <label for="List-number" class="form-label">Number<span class="text-danger">*</span></label>
+                                <select id="List-number" class="form-select form-select my-1 my-lg-0" id="status-select" name="status" formControlName="c_desc">
+                                    <option *ngFor="let contact of contacts" [value]="contact.t_name">
+                                        {{ contact.t_name }}
+                                    </option>
+                                </select>
+                            </div>
         
                             <!-- <div class="mb-3">
                                 <label for="List-Gender" class="form-label">Gender <span
@@ -139,6 +147,7 @@
                     </div>
                 </div> <!-- end col -->
             </div>
+            
             <!-- end row -->
         
         </form>
@@ -157,7 +166,7 @@
         <p>Do you want to delete this Category?</p>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="deletedSeletedTestimonial()">Delete</button>
+        <button type="button" class="btn btn-primary" (click)="deletedSeletedContact()">Delete</button>
         <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Cancel</button>
     </div>
 </ng-template>
