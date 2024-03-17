@@ -304,6 +304,9 @@ export class ContactComponent implements OnInit {
     this.modalService.open(content, { centered: true });
   }
 
+ 
+  
+
   deletedSeletedContact(){
     this.testServ.deleteCon(this.testimoialDeleteID).subscribe( (val) => {
       if(val['isSuccess'] == true) {

@@ -27,20 +27,11 @@ export class ContactService {
       return this.http.post(this.apiUrl, data);
     }
   }
-  // createContacts(data: any) {
-  //   return this.http.post(this.url + "create", data);
-  // }
+  
 
-  deleteCon(id: string) {
-    const deleteUrl = `${this.apiUrl}${id}`;  
-    return this.http.delete(deleteUrl, {
-      reportProgress: true,
-      responseType: 'json',
-    }).pipe(
-      map((response: any) => {
-        return response;
-      })
-    );
+  deleteCon(id: string): Observable<any> {
+    const url = `${this.apiUrl}${id}`;
+    return this.http.delete(url);
   }
  
   
