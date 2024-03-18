@@ -15,6 +15,10 @@ export class WAMesssagingService {
   sendWACustomTemplateMessage(to: string, headerTxt: string, msg: string) {
 
     console.log("Parameter got:", to, headerTxt, msg)
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `${env.WAEnds.token}`
+    }
     let data = {
       "messaging_product": "whatsapp",
       "to": to,
@@ -47,6 +51,6 @@ export class WAMesssagingService {
       }
     }
 
-    this.http.post(this.url, data);
+    return this.http.post(this.url, data, { headers });
   }
 }
