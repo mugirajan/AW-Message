@@ -26,11 +26,11 @@ const routes: Routes = [
     component: ProductComponent
   },
   {
-    path: "logout",
+    path: "schedule",
     component: VariantComponent
   },
   {
-    path: "schedule",
+    path: "logout",
     component: SheduleComponent
   },
   {
