@@ -41,6 +41,20 @@
       "t_dob": null,
       "t_term": null,
       "active_status": "true"
+    },
+    {
+      "id": "2c23",
+      "t_name": "althameez",
+      "t_role": "9677220546",
+      "t_date": "21-09-2023",
+      "t_msg": null,
+      "t_address": "No 8a/30 nermai nagar 1st street kolathur",
+      "t_city": "Chennai",
+      "t_gender": "male",
+      "t_mail": "azemaltha@gmail.com",
+      "t_dob": "21-08-2002",
+      "t_term": "Six Month",
+      "active_status": "true"
     }
   ],
   "list": [
@@ -63,6 +77,13 @@
       "c_name": "deepak",
       "c_desc": null,
       "c_number": "123456787",
+      "active_status": "true"
+    },
+    {
+      "id": "89ca",
+      "c_name": "batch1",
+      "c_desc": null,
+      "c_number": "9677220546",
       "active_status": "true"
     }
   ]

@@ -59,7 +59,7 @@ const MENU_ITEMS: MenuItem[] = [
             },
             {
                 key: 'app-manage-custom',
-                label: 'Custom Template',
+                label: 'Marketting Template',
                 link: '/apps/admin/custom',
                 icon: 'package'
 
@@ -67,7 +67,7 @@ const MENU_ITEMS: MenuItem[] = [
             },
             {
                 key: 'app-message',
-                label: 'Custom Single Message Template',
+                label: 'Custom Message',
                 link: '/apps/admin/custom-single-message-template',
                 icon: 'package'
                 // parentKey: 'manage-items'

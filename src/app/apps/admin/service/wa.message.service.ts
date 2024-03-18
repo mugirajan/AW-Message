@@ -55,10 +55,14 @@ export class WAMesssagingService {
   }
 
   customTemplate(to: string, headerTxt: string, ){
-    console.log("Parameter got:", to, headerTxt,)
+    console.log("Parameter recieved:", to, headerTxt,)
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `${env.WAEnds.token}`
+    }
 
     let custom_Temp={
-       "messaging_product": "whatsapp",
+      "messaging_product": "whatsapp",
       "to": to,
       "type": "template",
         "template": {
@@ -84,14 +88,14 @@ export class WAMesssagingService {
                     "parameters": [
                         {
                             "type": "text",
-                            "text": "sadfgh"
+                            "text": headerTxt
                         }
                     ]
                 }
             ]
         }
     }
-    this.http.post(this.url, custom_Temp);
+    return this.http.post(this.url, custom_Temp,{headers});
 
     }
     
