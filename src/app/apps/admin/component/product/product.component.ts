@@ -9,8 +9,12 @@ import { ProductService } from '../../service/product.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Product, ProductModel2 } from '../../models/product.model';
 import { actionEvent } from '../../models';
-import { Select2Group } from "ng-select2-component";
+// import { Select2Group } from "ng-select2-component";
+import { WAMesssagingService } from "../../service/wa.message.service"
+
 import { NotificationService } from 'src/app/layout/shared/service/notification.service';
+import { Select2Group, Select2Option, Select2UpdateEvent } from 'ng-select2-component';
+
 
 @Component({
   selector: 'app-product',
@@ -34,6 +38,27 @@ export class ProductComponent implements OnInit {
   val2!: Category;
   productSubscription!: Subscription;
   productDeleteID:any;
+  TemplateForm!: FormGroup;
+  senderResource: Select2Group[] = [
+    {
+        label: 'Kamalraj Ganesan',
+        options: [
+          { value: "918056221146", label: "Kamalraj Ganesan" }
+        ]
+    },
+  ];
+  // message templates
+  messageResource: Select2Group[] = [
+    {
+        label: '',
+        options: [
+          { value: "custom_msg", label: "Custom Message Template 1" }
+        ]
+    },
+  ];
+  selectedSender: Select2Option[] = [];
+  selectedMessage: Select2Option[] = [];
+
   cat_resource: Category[]= [];
   categories : Select2Group[] = [
     {
@@ -63,6 +88,7 @@ export class ProductComponent implements OnInit {
     private modalService: NgbModal,
     private fb: FormBuilder,
     private prodServ: ProductService,
+    private msgServ: WAMesssagingService,
     private notifyServ: NotificationService) { }
 
   ngOnInit(): void {
@@ -72,6 +98,11 @@ export class ProductComponent implements OnInit {
 
     // get Testimonials
     this._fetchData();
+    this.TemplateForm = this.fb.group({
+			sender: ['', Validators.required],
+      headerTxt: ['', Validators.required],
+			message: ['', Validators.required],
+		});
 
     // initialize table configurations
     this.initTableCofig();
@@ -95,6 +126,21 @@ export class ProductComponent implements OnInit {
     this.resetProductForm();
   }
 
+
+  resetMessageForm() {
+    this.TemplateForm.reset()
+  }
+  // set sender details for WA message transfer
+	onSenderSelected(da: Select2UpdateEvent) {}
+
+	// set message template details for WA message transfer
+	onMessageTemplateSelected(da: Select2UpdateEvent) {}
+
+  // 
+  sendMessage() {
+
+    this.msgServ.sendWACustomTemplateMessage(this.TemplateForm.value['sender'], this.TemplateForm.value['headerTxt'], this.TemplateForm.value['message'])
+  }
 
   /**
    * fetches table records
