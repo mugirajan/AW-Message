@@ -66,6 +66,13 @@ const MENU_ITEMS: MenuItem[] = [
                 // parentKey: 'manage-items'
             },
             {
+                key: 'app-message',
+                label: 'Custom Single Message Template',
+                link: '/apps/admin/custom-single-message-template',
+                icon: 'package'
+                // parentKey: 'manage-items'
+            },
+            {
                 key: 'app-manage-logout',
                 label: 'logout',
                 link: 'auth/logout',

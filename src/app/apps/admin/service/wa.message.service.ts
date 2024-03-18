@@ -14,6 +14,7 @@ export class WAMesssagingService {
 
   sendWACustomTemplateMessage(to: string, headerTxt: string, msg: string) {
 
+    console.log("Parameter got:", to, headerTxt, msg)
     let data = {
       "messaging_product": "whatsapp",
       "to": to,
