@@ -13,6 +13,7 @@ import * as varConst from '../../constants/variant.constant'
 import { Select2UpdateEvent } from 'ng-select2-component'
 import { Category } from '../../models/category.model';
 import { DynaFormService } from '../../service/form.service';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -50,6 +51,7 @@ export class VariantComponent implements OnInit {
   selectedCategory: Select2Option[] = [];
   selectProduct: any;
   selectedProduct: Select2Option[] = [];
+  list:any[]=[];
 
   @ViewChild('sizeableModal')
   sizeableModal!: TemplateRef<NgbModal>;
@@ -66,13 +68,26 @@ export class VariantComponent implements OnInit {
     private fb: FormBuilder,
     private varServ: VariantService,
     private notifyServ: NotificationService,
-    private formServ: DynaFormService
+    private formServ: DynaFormService,
+    private http: HttpClient,
   ) { }
 
   // OnInit 
   ngOnInit(): void {
     this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Manage variant', path: '/', active: true }];
     
+    this.http.get<any>('http://localhost:3000/list').subscribe(data => {
+      this.list = data.list;
+    });
+  
+    this.varServ.getList().subscribe(list => {
+      this.list = list;
+    });
+    // getDate() {
+    //   this.varServ.getDate().subscribe(date => {
+    //     this.variantForm.patchValue({ selectedDate: date });
+    //   });
+    // }
     // get Variants
     this._fetchData();
 
@@ -85,6 +100,7 @@ export class VariantComponent implements OnInit {
       variant: ['', Validators.required],
       category: ['', Validators.required],
       product: ['', Validators.required],
+      selectedDate: ['', Validators.required],
       varnt_order: ['', Validators.required],
       specs: new FormArray([]),
       active_status: ['', Validators.required]
@@ -98,6 +114,10 @@ export class VariantComponent implements OnInit {
         this.categories[0].options.push({ value: e.id, label: e.c_name })
       });
     })
+
+    // this.varServ.getDate().subscribe(date => {
+    //   this.variantForm.patchValue({ selectedDate: date });
+    // });
 
   }
 
@@ -118,7 +138,25 @@ export class VariantComponent implements OnInit {
       }
     });
   }
-
+  saveVariant() {
+    if (this.variantForm.valid) {
+      const variantData = {
+        // varnt_order: this.variantForm.get('varnt_order').value,
+        selectedDate: this.variantForm.get('selectedDate')?.value
+      };
+      
+      this.varServ.saveVariant(variantData).subscribe(response => {
+        console.log('Variant saved successfully:', response);
+        // You can handle success scenario here
+      }, error => {
+        console.error('Error saving variant:', error);
+        // You can handle error scenario here
+      });
+    } else {
+      console.log('Form is invalid.');
+    }
+  }
+  
   
   /**
    * initialize advanced table columns

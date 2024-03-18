@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, map } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { Testimonial } from '../models/testimonial.model';
 import * as env from 'src/environments/environment'
 import { Variant } from '../models/variant.model';
@@ -9,6 +9,9 @@ import { Variant } from '../models/variant.model';
   providedIn: 'root'
 })
 export class VariantService {
+  private apiUrl = 'http://localhost:3000/variants';
+  private apiUrl1 = 'http://localhost:3000/list/'; 
+
 
   private url: string = env.environment.apiUrl;
   private catUrl: string = env.environment.apiUrl + "category/";
@@ -16,6 +19,20 @@ export class VariantService {
 
   constructor(private http: HttpClient) { }
 
+  getRoles(): Observable<any[]> {
+    return this.http.get<any[]>('assets/db.json');
+  }
+  getVariant(): Observable<Variant[]> {
+    return this.http.get<Variant[]>(this.apiUrl);
+    
+  }
+  getList(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl1);
+    
+  }
+  saveVariant(variantData: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl, variantData);
+  }
   createVariant(data: any) {
     let param: Variant = {
       v_name: data['variant'],
