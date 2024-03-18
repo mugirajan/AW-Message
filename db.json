@@ -45,25 +45,28 @@
   ],
   "list": [
     {
-      "id": "7ca3",
-      "c_name": "mugilavathi t",
-      "c_desc": "",
-      "c_number": "93284 78735",
-      "active_status": "true"
+      "id": "18d9",
+      "c_name": "mugi",
+      "c_desc": null,
+      "c_number": "1cd4",
+      "c_selected": "123456787,456789087",
+      "active_status": "true",
+      "selectedOptions": [
+        "f789",
+        "1cd4"
+      ]
     },
     {
-      "id": "4413",
-      "c_name": "mugilavathi",
+      "id": "0eaa",
+      "c_name": "mugirajan",
       "c_desc": null,
-      "c_number": "9514687174",
-      "active_status": "true"
-    },
-    {
-      "id": "6e3c",
-      "c_name": "deepak",
-      "c_desc": null,
-      "c_number": "123456787",
-      "active_status": "true"
+      "c_number": "1cd4",
+      "c_selected": "93284 78735,456789087",
+      "active_status": "true",
+      "selectedOptions": [
+        "bd23",
+        "1cd4"
+      ]
     }
   ]
 }
