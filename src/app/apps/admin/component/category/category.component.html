@@ -78,7 +78,7 @@
                                     required formControlName="c_number"
                                     [ngClass]="{ 'is-invalid': addProduct.submitted && form1.c_number.invalid }">
                             </div> -->
-
+                                <!-- 
                             <div class="mb-3">
                                 <label for="List-number" class="form-label">Number<span class="text-danger">*</span></label>
                                 <select id="List-number" class="form-select form-select my-1 my-lg-0" id="status-select" formControlName="c_number" name="status" >
@@ -86,14 +86,28 @@
                                         {{ contact.t_role }}
                                     </option>
                                 </select>
-                            </div>
-
+                            </div> -->
+                                
                             <div class="mb-3">
-                                <label for="selected-number" class="form-label">Selected Number:</label>
-                                <input type="text" id="selected-number" class="form-control" [value]="selectedNumber" disabled>
+                                <label for="List-number" class="form-label">Contact<span class="text-danger">*</span></label>
+                                <select class="form-select" id="List-number" (change)="onSelectionChange($event)" formControlName="c_number" >
+                                  <option *ngFor="let contact of contacts" [value]="contact.t_role">{{ contact.t_role }}</option>
+                                </select>
                               </div>
-        
-                           
+                              
+                            <div class="mb-3">
+                                <label for="List-option" class="form-label">selected contacts<span class="text-danger">*</span></label>
+                                <ul>
+                                    <li *ngFor="let option of selectedOptions">
+                                        {{ option }}
+                                        <button class="can-button" (click)="cancelSelection(option)">X</button>
+                                    </li>
+                                </ul>
+                            </div> 
+
+                            
+                              
+                        
                             <div class="mb-3">
                                 <label class="mb-2">Active Status <span class="text-danger">*</span></label>
                                 <br />

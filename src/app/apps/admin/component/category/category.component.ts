@@ -49,8 +49,7 @@ export class CategoryComponent implements OnInit {
   contacts: any[] =[];
 
 
-
-  
+  selectedOptions: string[] = [];
 
   constructor(
     private router: Router, 
@@ -63,6 +62,8 @@ export class CategoryComponent implements OnInit {
     private conserv: ContactService,
     private http: HttpClient
     ) { }
+
+   
 
   ngOnInit(): void {
     this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Manage category', path: '/', active: true }];
@@ -92,15 +93,22 @@ export class CategoryComponent implements OnInit {
       active_status: [false, Validators.required],
     });
 
-    const cNumberControl = this.categoryList.get('c_number');
-    if (cNumberControl) {
-      cNumberControl.valueChanges.subscribe(values => {
-        this.selectedNumber = values; 
-      });
-    }
-
+    
    
+  };
+
+  onSelectionChange(event: any): void {
+    const selectedValue = event.target.value;
+    if (!this.selectedOptions.includes(selectedValue)) {
+      this.selectedOptions.push(selectedValue);
+    }
   }
+
+  cancelSelection(option: string): void {
+    this.selectedOptions = this.selectedOptions.filter(item => item !== option);
+  }
+
+
   ListForm() {
     this.catServ.createCatergory(this.categoryList.value)
       .subscribe(response => {
@@ -115,9 +123,7 @@ export class CategoryComponent implements OnInit {
 
   }
   
-  /**
-   * fetches table records
-   */
+  
   _fetchData(): void {
     this.catServ.getCategory().subscribe((data: any) =>{
       if(data.length > 0) {
