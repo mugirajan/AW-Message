@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 
 // Initialize Express app
 const app = express();
+const list =express();
 
 // Configure bodyParser to parse incoming JSON data
 app.use(bodyParser.json());
@@ -65,3 +66,46 @@ const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+/**List Schema */
+const ListSchema = new mongoose.Schema({
+  c_id: Number,
+  c_name: String,
+  c_role: String,
+  c_date: String,
+  c_city: String,
+  c_address: String,
+  c_gender: String,
+  c_mail: String,
+  active_status: Boolean
+});
+
+const ListModel = mongoose.model('List', ListSchema);
+
+app.post('/Lists/create', (req:any, res:any) => {
+  const { c_id, c_name, c_number,  c_gender, c_mail, active_status } = req.body;
+
+  const newList = new ListModel({
+    c_id,
+    c_name,
+    c_number,
+    c_gender,
+    c_mail,
+    active_status
+  });
+
+  newList.save()
+    .then(() => {
+      res.status(201).json({ message: 'List added successfully' });
+    })
+    .catch((error:any) => {
+      console.error('Error saving List:', error);
+      res.status(500).json({ error: 'Error saving List' });
+    });
+});
+// const PORT = 3000;
+list.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
+
