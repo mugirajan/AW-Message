@@ -55,8 +55,6 @@ export class CategoryService {
 
   UpdateCategory(data: any) {
     let updateUrl = this.apiUrl  + data.id;
-    console.log("url: ", updateUrl)
-    console.log("Data: ", data)
     return this.http.put(updateUrl, data);
   }
 

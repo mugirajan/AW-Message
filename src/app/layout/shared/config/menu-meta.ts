@@ -69,7 +69,7 @@ const MENU_ITEMS: MenuItem[] = [
                 key: 'app-message',
                 label: 'Custom Message',
                 link: '/apps/admin/custom-single-message-template',
-                icon: 'package'
+                icon: 'message-square'
                 // parentKey: 'manage-items'
             },
             {

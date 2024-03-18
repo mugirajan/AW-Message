@@ -35,6 +35,7 @@ export class CategoryComponent implements OnInit {
   categoryDeleteID:any;
   roles: any[] = [];
   selectedNumber: string = '';
+ 
 
 
   
@@ -90,38 +91,67 @@ export class CategoryComponent implements OnInit {
       c_name: ['', Validators.required],
       c_desc: ['',Validators.required],
       c_number: ['', Validators.required],
+      c_selected:['', Validators.required],
       active_status: [false, Validators.required],
     });
 
+
+    
     
    
   };
 
+  // onSelectionChange(event: any): void {
+  //   const selectedValue = event.target.value; 
+  //   this.selectedOptions.push(selectedValue);
+  //   this.contacts = this.contacts.filter(contact => contact.t_role !== selectedValue);
+  // }
+
+  // cancelSelection(option: string): void {
+  //   this.selectedOptions = this.selectedOptions.filter(item => item !== option);
+  // }
   onSelectionChange(event: any): void {
     const selectedValue = event.target.value;
-    if (!this.selectedOptions.includes(selectedValue)) {
+    const selectedContact = this.contacts.find(contact => contact.id === selectedValue);
+    if (selectedContact && !this.selectedOptions.includes(selectedValue)) {
       this.selectedOptions.push(selectedValue);
     }
+    this.updateSelectedOptions();
   }
 
   cancelSelection(option: string): void {
     this.selectedOptions = this.selectedOptions.filter(item => item !== option);
+    this.updateSelectedOptions();
+  }
+
+  updateSelectedOptions(): void {
+    const selectedRoles = this.selectedOptions.map(option =>
+      this.contacts.find(contact => contact.id === option)?.t_role
+    );
+    this.categoryList.get('c_selected')?.setValue(selectedRoles.join(','));
+  }
+  
+  getNumberFromId(id: string): string {
+    const contact = this.contacts.find(contact => contact.id === id);
+    return contact ? contact.t_role : '';
   }
 
 
   ListForm() {
-    this.catServ.createCatergory(this.categoryList.value)
-      .subscribe(response => {
-        console.log('List added successfully:', response);
-      }, error => {
-        console.error('Error adding List:', error);
-      });
-
-      this.closeListModal();
-      this._fetchData();
-      
-
+    const formData = this.categoryList.value;
+    formData.selectedOptions = this.selectedOptions; 
+    this.catServ.createCatergory(formData).subscribe(response => {
+      console.log('List added successfully:', response);
+      this.categoryList.reset();
+      this.selectedOptions = [];
+    }, error => {
+      console.error('Error adding List:', error);
+    });
+  
+    this.closeListModal();
+    this._fetchData();
   }
+  
   
   
   _fetchData(): void {
@@ -153,9 +183,8 @@ export class CategoryComponent implements OnInit {
       }, 
       {
         name: 'c_number',
-        label: 'Number',
-        formatter: (order: Category) => order.c_number,
-        
+        label: 'Total contacts',
+        formatter: (order: Category) => `${order.c_selected.split(',').length}`,
       },
       {
         name: 'active_status',
@@ -163,6 +192,10 @@ export class CategoryComponent implements OnInit {
         formatter: this.categoryActiveStatusFormatter.bind(this)
       },
     ];
+  }
+
+  getTotalSelected(selectedOptions: any[]): string {
+    return selectedOptions ? selectedOptions.length.toString() : '0';
   }
 
   
@@ -201,6 +234,7 @@ export class CategoryComponent implements OnInit {
       row.c_desc.toLowerCase().includes(term) ||
       // row.c_number.toLowerCase().includes(term) ||
       row.c_number.toLowerCase().includes(term) ||
+      
       this._matchesActiveStatus(row, term)
     );
   }

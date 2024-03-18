@@ -77,18 +77,20 @@ const ListSchema = new mongoose.Schema({
   c_address: String,
   c_gender: String,
   c_mail: String,
-  active_status: Boolean
+  c_selected: String,
+  active_status: Boolean,
 });
 
 const ListModel = mongoose.model('List', ListSchema);
 
 app.post('/Lists/create', (req:any, res:any) => {
-  const { c_id, c_name, c_number,  c_gender, c_mail, active_status } = req.body;
+  const { c_id, c_name, c_number,  c_gender, c_mail,c_selected, active_status } = req.body;
 
   const newList = new ListModel({
     c_id,
     c_name,
     c_number,
+    c_selected,
     c_gender,
     c_mail,
     active_status
