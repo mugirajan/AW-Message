@@ -66,12 +66,12 @@ export class CategoryComponent implements OnInit {
    
   ngOnInit(): void {
 
-    this.http.get<any>('http://localhost:3000/contacts.json').subscribe(data => {
+    this.http.get<any>('http://localhost:3000/contacts').subscribe(data => {
       this.contacts = data.contacts;
     });
   
-    this.conserv.getTestimonials().subscribe(data => {
-      this.testimonials = data;
+    this.catServ.getcontacts().subscribe(contacts => {
+      this.contacts = contacts;
     });
 
 
@@ -95,6 +95,8 @@ export class CategoryComponent implements OnInit {
 
     // this.resetcontactForm();
   }
+
+  
   ListForm() {
     this.catServ.createCatergory(this.categoryForm.value)
       .subscribe(response => {
@@ -120,6 +122,12 @@ export class CategoryComponent implements OnInit {
         this.records =  data;
       }
     });
+    // this.catServ.getcontacts().subscribe((data: any) =>{
+    //   console.log("asdfghj")
+    //   if(data.length > 0) {
+    //     this.records =  data;
+    //   }
+    // });
   }
 
 
@@ -144,6 +152,12 @@ export class CategoryComponent implements OnInit {
         formatter: (order: Category) => order.c_number,
         
       },
+      // {
+      //   name: 'c_desc',
+      //   label: 'contacts',
+      //   formatter: (order: Category) => order.c_desc,
+        
+      // },
       {
         name: 'active_status',
         label: 'Active Status',

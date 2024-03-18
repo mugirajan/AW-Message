@@ -3,13 +3,12 @@ import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import * as env from 'src/environments/environment';
 import { Category } from '../models/category.model';
-
 @Injectable({
   providedIn: 'root'
 })
 export class CategoryService {
   private apiUrl = 'http://localhost:3000/list/'; 
-  // private apiUrl1 = 'http://localhost:3000/contacts/'; 
+  private apiUrl1 = 'http://localhost:3000/contacts/'; 
 
 
 
@@ -44,10 +43,10 @@ export class CategoryService {
     return this.http.get<Category[]>(this.apiUrl);
     
   }
-  // getcontacts(): Observable<Category[]> {
-  //   return this.http.get<Category[]>(this.apiUrl1);
+  getcontacts(): Observable<Category[]> {
+    return this.http.get<Category[]>(this.apiUrl1);
     
-  // }
+  }
 
   editCategoryName(categoryId: number, newName: string): Observable<any> {
     const url = `${this.apiUrl}/${categoryId}`;

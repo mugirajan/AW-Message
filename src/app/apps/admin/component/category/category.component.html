@@ -92,9 +92,9 @@
                             </div>
                             <div class="mb-3">
                                 <label for="List-number" class="form-label">Number<span class="text-danger">*</span></label>
-                                <select id="List-number" class="form-select form-select my-1 my-lg-0" id="status-select" name="status" formControlName="c_desc">
+                                <select id="List-number" class="form-select form-select my-1 my-lg-0" id="status-select" name="status" >
                                     <option *ngFor="let contact of contacts" [value]="contact.t_name">
-                                        {{ contact.t_name }}
+                                        {{ contact.t_role }}
                                     </option>
                                 </select>
                             </div>
