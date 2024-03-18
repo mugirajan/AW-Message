@@ -28,6 +28,7 @@ import { VariantService } from './service/variant.service';
 import { DynaFormService } from './service/form.service';
 import { SheduleComponent } from './component/shedule/shedule.component';
 import { MessageComponent } from './component/message/message.component';
+import { WAMesssagingService } from './service/wa.message.service';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { MessageComponent } from './component/message/message.component';
         ProductService,
         CategoryService,
         VariantService,
-        DynaFormService
+        DynaFormService,
+        WAMesssagingService
     ]
 })
 export class AdminModule { }

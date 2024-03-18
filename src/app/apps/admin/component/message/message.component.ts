@@ -92,7 +92,9 @@ export class MessageComponent implements OnInit {
   // 
   sendMessage() {
 
-    this.msgServ.sendWACustomTemplateMessage(this.messageForm.value['sender'], this.messageForm.value['headerTxt'], this.messageForm.value['message'])
+    this.msgServ.sendWACustomTemplateMessage(this.messageForm.value['sender'], this.messageForm.value['headerTxt'], this.messageForm.value['message']).subscribe( (resp: any) => {
+      console.log("Return output: ", resp)
+    })
   }
 
 
