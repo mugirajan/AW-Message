@@ -70,7 +70,7 @@
                                     required formControlName="c_name"
                                     [ngClass]="{ 'is-invalid': addProduct.submitted && form1.c_name.invalid }">
                             </div>
-<!-- 
+                            <!-- 
                             <div class="mb-3">
                                 <label for="List-number" class="form-label">Number <span
                                         class="text-danger">*</span></label>
@@ -82,11 +82,16 @@
                             <div class="mb-3">
                                 <label for="List-number" class="form-label">Number<span class="text-danger">*</span></label>
                                 <select id="List-number" class="form-select form-select my-1 my-lg-0" id="status-select" formControlName="c_number" name="status" >
-                                    <option *ngFor="let contact of contacts" [value]="contact.t_role">
+                                    <option *ngFor="let contact of contacts" [value]="contact.t_role" multiple>
                                         {{ contact.t_role }}
                                     </option>
                                 </select>
                             </div>
+
+                            <div class="mb-3">
+                                <label for="selected-number" class="form-label">Selected Number:</label>
+                                <input type="text" id="selected-number" class="form-control" [value]="selectedNumber" disabled>
+                              </div>
         
                            
                             <div class="mb-3">

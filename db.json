@@ -1,24 +1,10 @@
 {
   "contacts": [
     {
-      "id": "a1ef",
-      "t_name": "rajan",
-      "t_role": "9514687174",
-      "t_date": "18/9/1998",
-      "t_msg": null,
-      "t_address": "2734892174",
-      "t_city": "djfdksf",
-      "t_gender": "male",
-      "t_mail": "abc@gmail.com",
-      "t_dob": "21-3-2000",
-      "t_term": "Three Month",
-      "active_status": "true"
-    },
-    {
       "id": "bd23",
       "t_name": "mugilavathirajan",
-      "t_role": "93284 78737",
-      "t_date": "24-1-2024",
+      "t_role": "93284 78735",
+      "t_date": "24-1-2000",
       "t_msg": null,
       "t_address": "ereiqutfgyhr",
       "t_city": "djfdksf",
@@ -26,6 +12,20 @@
       "t_mail": "djfdksf",
       "t_dob": "21-3-2000",
       "t_term": "Three Month",
+      "active_status": "true"
+    },
+    {
+      "id": "1cd4",
+      "t_name": "a",
+      "t_role": "1",
+      "t_date": "24-1-2024",
+      "t_msg": null,
+      "t_address": "2734892174",
+      "t_city": "abc@gmail.com",
+      "t_gender": "female",
+      "t_mail": "aaaa",
+      "t_dob": "21-3-2000",
+      "t_term": "Six Month",
       "active_status": "true"
     }
   ],
@@ -42,6 +42,13 @@
       "c_name": "mugilavathi",
       "c_desc": null,
       "c_number": "9514687174",
+      "active_status": "true"
+    },
+    {
+      "id": "6e3c",
+      "c_name": "deepak",
+      "c_desc": null,
+      "c_number": "93284 78735",
       "active_status": "true"
     }
   ]

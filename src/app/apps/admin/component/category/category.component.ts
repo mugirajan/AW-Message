@@ -34,6 +34,7 @@ export class CategoryComponent implements OnInit {
   categorySubscription!: Subscription;
   categoryDeleteID:any;
   roles: any[] = [];
+  selectedNumber: string = '';
 
 
   
@@ -66,6 +67,7 @@ export class CategoryComponent implements OnInit {
   ngOnInit(): void {
     this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Manage category', path: '/', active: true }];
 
+   
 
     this.http.get<any>('http://localhost:3000/contacts').subscribe(data => {
       this.contacts = data.contacts;
@@ -90,7 +92,14 @@ export class CategoryComponent implements OnInit {
       active_status: [false, Validators.required],
     });
 
-    // this.resetcontactForm();
+    const cNumberControl = this.categoryList.get('c_number');
+    if (cNumberControl) {
+      cNumberControl.valueChanges.subscribe(values => {
+        this.selectedNumber = values; 
+      });
+    }
+
+   
   }
   ListForm() {
     this.catServ.createCatergory(this.categoryList.value)
