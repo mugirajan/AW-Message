@@ -5,6 +5,7 @@ import { CategoryComponent } from './component/category/category.component';
 import { ProductComponent } from './component/product/product.component';
 import { VariantComponent } from './component/variant/variant.component';
 import { SheduleComponent } from './component/shedule/shedule.component';
+import { MessageComponent } from './component/message/message.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
   {
     path: "schedule",
     component: SheduleComponent
+  },
+  {
+    path: "send-message",
+    component: MessageComponent
   }
 ];
 
