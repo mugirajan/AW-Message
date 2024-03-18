@@ -53,4 +53,50 @@ export class WAMesssagingService {
 
     return this.http.post(this.url, data, { headers });
   }
-}
+
+  customTemplate(to: string, headerTxt: string, ){
+    console.log("Parameter recieved:", to, headerTxt,)
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `${env.WAEnds.token}`
+    }
+
+    let custom_Temp={
+      "messaging_product": "whatsapp",
+      "to": to,
+      "type": "template",
+        "template": {
+            "name": "customized_gym_template",
+            "language": {
+                "code": "en"
+            },
+            "components": [
+                {
+                    "type": "header",
+                    "parameters": [
+                        {
+                            "type": "image",
+                            "image": {
+                                "link": "https://i.imgur.com/UlFinxp.jpeg"
+                            },
+                            "text": ""
+                        }
+                    ]
+                },
+                {
+                    "type": "body",
+                    "parameters": [
+                        {
+                            "type": "text",
+                            "text": headerTxt
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+    return this.http.post(this.url, custom_Temp,{headers});
+
+    }
+    
+  }
