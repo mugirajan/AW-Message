@@ -4,34 +4,35 @@ import { Observable, map } from 'rxjs';
 import * as env from 'src/environments/environment';
 import { Category } from '../models/category.model';
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class CategoryService {
   private apiUrl = 'http://localhost:3000/list/'; 
+  private apicontactUrl ='http://localhost:3000/contacts'
 
   // private url: string = env.environment.apiUrl + "category/";
 
   constructor(private http: HttpClient) { }
   
-  // createCategory(data: any) {
-  //   return this.http
-  //     .post(this.url + 'create', data, {
-  //       reportProgress: true,
-  //       responseType: 'json',
-  //     })
-  //     .pipe(
-  //       map((response: any) => {
-  //         return response;
-  //       })
-  //     );
-  // }
+ 
   getRoles(): Observable<any[]> {
     return this.http.get<any[]>('assets/db.json');
   }
 
   createCatergory(data: any) {
-    return this.http.post(this.apiUrl, data);
+    if(data.id != undefined){ 
+      return this.UpdateCategory(data)
+    } else {
+      delete data.id; 
+      return this.http.post(this.apiUrl, data);
+    }
+  }
+
+  getContacts(): Observable<any[]> {
+    return this.http.get<any[]>(this.apicontactUrl);
+    
   }
 
   getCategory(): Observable<Category[]> {
@@ -44,40 +45,22 @@ export class CategoryService {
     return this.http.patch(url, { name: newName });
   }
 
-  deleteCategory(id: string) {
-    const deleteUrl = `${this.apiUrl}${id}`;  
-    return this.http.delete(deleteUrl, {
-      reportProgress: true,
-      responseType: 'json',
-    }).pipe(
-      map((response: any) => {
-        return response;
-      })
-    );
+ 
+  deleteList(id: string): Observable<any> {
+    const url = `${this.apiUrl}${id}`;
+    return this.http.delete(url);
   }
 
-  updateCategory(data: any) {
-    data.id = data.c_id;
-    return this.http
-    .post(this.apiUrl + "update", data, {
-      reportProgress: true,
-      responseType: 'json',
-    })
-    .pipe(
-      map((response: any) => {
-        return response;
-      })
-    );
+
+
+  UpdateCategory(data: any) {
+    let updateUrl = this.apiUrl  + data.id;
+    console.log("url: ", updateUrl)
+    console.log("Data: ", data)
+    return this.http.put(updateUrl, data);
   }
 
-  // UpdateCategory() {
-  //   return this.http.get(this.apiUrl + "getAllCategory");
-    
-  // }
-//   UpdateCategory(id: any) {
-//     const updateUrl = ${this.apiUrl}${id};
-//     return this.http.put(updateUrl, id);
-//   }
+
 
 
 }

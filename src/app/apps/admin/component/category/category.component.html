@@ -8,19 +8,7 @@
             <div class="card-body">
                 
                 <div class="row mb-2 justify-content-end">
-                    <!-- <div class="col-lg-8">
-                        <form class="d-flex flex-wrap align-items-center">
-                            <label for="status-select" class="me-2">Status</label>
-                            <div class="me-sm-3">
-                                <select class="form-select form-select my-1 my-lg-0" id="status-select" name="status"
-                                    [(ngModel)]="statusGroup" (change)="changeStatusGroup(statusGroup)">
-                                    <option value="All">All</option>
-                                    <option value="true">Active</option>
-                                    <option value="false">In Active</option>
-                                </select>
-                            </div>
-                        </form>
-                    </div> -->
+                    
                     <div class="col-lg-4 col-12">
                         <div class="text-lg-end">
                             <button type="button" class="btn btn-primary" (click)="openAddCategoryModal(sizeableModal)">
@@ -67,7 +55,7 @@
     </div>
     <div class="modal-body">
 
-        <form   [formGroup]="categoryForm" #addProduct="ngForm">
+        <form   [formGroup]="categoryList" #addProduct="ngForm">
 
             <div class="row">
                 <div class="col">
@@ -90,23 +78,17 @@
                                     required formControlName="c_number"
                                     [ngClass]="{ 'is-invalid': addProduct.submitted && form1.c_number.invalid }">
                             </div>
-        
-                            <!-- <div class="mb-3">
-                                <label for="List-Gender" class="form-label">Gender <span
-                                        class="text-danger">*</span></label>
-                                <input type="text"[(ngModel)]="ListData.c_gender"  id="List-Gender" class="form-control" placeholder="Type your Gender"
-                                    required formControlName="c_desc"
-                                    [ngClass]="{  'is-invalid': addProduct.submitted && form1.c_desc.invalid }">
-                            </div> -->
 
-                            <!-- <div class="mb-3">
-                                <label for="List-mail" class="form-label">Mail<span
-                                        class="text-danger">*</span></label>
-                                <input type="text"[(ngModel)]="ListData.c_mail" id="List-mail" class="form-control" placeholder="xxx@xxx.xxx"
-                                    required formControlName="c_number"
-                                    [ngClass]="{  'is-invalid': addProduct.submitted && form1.c_number.invalid }">
-                            </div> -->
+                            <div class="mb-3">
+                                <label for="List-number" class="form-label">Number<span class="text-danger">*</span></label>
+                                <select id="List-number" class="form-select form-select my-1 my-lg-0" id="status-select" name="status" >
+                                    <option *ngFor="let contact of contacts" [value]="contact.t_name">
+                                        {{ contact.t_role }}
+                                    </option>
+                                </select>
+                            </div>
         
+                           
                             <div class="mb-3">
                                 <label class="mb-2">Active Status <span class="text-danger">*</span></label>
                                 <br />
@@ -134,7 +116,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="text-center mb-3">
-                        <button type="submit" class="btn w-sm btn-success waves-effect waves-light me-1"(click)="ListForm()">Save</button>
+                        <button type="submit" class="btn w-sm btn-success waves-effect waves-light me-1" (click)="ListForm()">Save</button>
                         <button type="button" class="btn w-sm btn-danger waves-effect" aria-label="Close" (click)="modal.dismiss('Cross click')">Cancel</button>
                     </div>
                 </div> <!-- end col -->
@@ -157,7 +139,7 @@
         <p>Do you want to delete this Category?</p>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="deletedSeletedTestimonial()">Delete</button>
+        <button type="button" class="btn btn-primary"  (click)="deletedSeletedContact()">Delete</button>
         <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Cancel</button>
     </div>
 </ng-template>

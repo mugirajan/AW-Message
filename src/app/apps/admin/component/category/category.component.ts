@@ -11,6 +11,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { actionEvent } from '../../models';
 import { NotificationService } from 'src/app/layout/shared/service/notification.service';
 import { Variant } from '../../models/variant.model';
+import { ContactService } from '../../service/testimonial.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-category',
@@ -25,7 +27,7 @@ export class CategoryComponent implements OnInit {
   loading: boolean = false;
   statusGroup: string = "All";
   pageSizeOptions: number[] = [10, 25, 50, 100];
-  categoryForm!: FormGroup;
+  categoryList!: FormGroup;
   files: File[] = [];
   actionType: string = "Add New";
   val2!: Category;
@@ -43,21 +45,35 @@ export class CategoryComponent implements OnInit {
   @ViewChild('positionModal')
   positionModal!: TemplateRef<NgbModal>;
   ListData: any = {};
+  contacts: any[] =[];
 
 
 
   
 
-  constructor(private router: Router, 
+  constructor(
+    private router: Router, 
     private route: ActivatedRoute, 
     private sanitizer: DomSanitizer,
     private modalService: NgbModal,
     private fb: FormBuilder,
     private catServ: CategoryService,
-    private notifyServ: NotificationService) { }
+    private notifyServ: NotificationService,
+    private conserv: ContactService,
+    private http: HttpClient
+    ) { }
 
   ngOnInit(): void {
     this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Manage category', path: '/', active: true }];
+
+
+    this.http.get<any>('http://localhost:3000/contacts').subscribe(data => {
+      this.contacts = data.contacts;
+    });
+  
+    this.catServ.getContacts().subscribe(contacts => {
+      this.contacts = contacts;
+    });
     
     // get Categories
     this._fetchData();
@@ -66,10 +82,9 @@ export class CategoryComponent implements OnInit {
     this.initTableCofig();
 
     // product form
-    this.categoryForm = this.fb.group({ 
-      c_id:[''],
+    this.categoryList = this.fb.group({ 
+      id:[''],
       c_name: ['', Validators.required],
-      // c_number: ['', Validators.required],
       c_desc: ['',Validators.required],
       c_number: ['', Validators.required],
       active_status: [false, Validators.required],
@@ -78,15 +93,16 @@ export class CategoryComponent implements OnInit {
     // this.resetcontactForm();
   }
   ListForm() {
-    this.catServ.createCatergory(this.categoryForm.value)
+    this.catServ.createCatergory(this.categoryList.value)
       .subscribe(response => {
-        console.log('Testimonial added successfully:', response);
+        console.log('List added successfully:', response);
       }, error => {
-        console.error('Error adding testimonial:', error);
+        console.error('Error adding List:', error);
       });
-      // this.resetCategoryForm();
-      this.closeTestimonialModal();
+
+      this.closeListModal();
       this._fetchData();
+      
 
   }
   
@@ -94,20 +110,20 @@ export class CategoryComponent implements OnInit {
    * fetches table records
    */
   _fetchData(): void {
-    // this.catServ.UpdateCategory().subscribe((data: any) =>{
-    //   this.records =  data;
-    // });;
     this.catServ.getCategory().subscribe((data: any) =>{
       if(data.length > 0) {
         this.records =  data;
       }
     });
+
+    // this.catServ.getContacts().subscribe((data: any) =>{
+    //   console.log("asdfghj")
+    //   if(data.length > 0) {
+    //     this.records =  data;
+    //   }
+    // });
   }
 
-
-  /**
-   * initialize advanced table columns
-   */
   initTableCofig(): void {
     this.columns = [
       {
@@ -134,14 +150,14 @@ export class CategoryComponent implements OnInit {
     ];
   }
 
-  // formats testimonial ID cell
+  
   categoryIDFormatter(data: Category): any {
     return this.sanitizer.bypassSecurityTrustHtml(
       `<a href="javascript:void(0)" class="order text-body fw-bold" id="${data.id}">#${data.id}</a> `
     );
   }
 
-    // formats payment status cell
+    
   categoryActiveStatusFormatter(data: Category): any {
     if (data.active_status == "true") {
       return this.sanitizer.bypassSecurityTrustHtml(
@@ -250,12 +266,27 @@ export class CategoryComponent implements OnInit {
     this.openVerticallyCentered(this.positionModal);
   }
 
+  deleteList() {
+    if (this.categoryDeleteID) {
+     this.catServ.deleteList(this.categoryDeleteID).subscribe(
+       (response) => {
+         console.log('Delete successful', response);
+       },
+       (error) => {
+         console.error('Error deleting testimonial', error);
+       }
+     );
+   } else {
+     console.error('Testimonial ID is missing.');
+   }
+   }
+
   openVerticallyCentered(content: TemplateRef<NgbModal>): void {
     this.modalService.open(content, { centered: true });
   }
 
   deletedSeletedContact(){
-    this.catServ.deleteCategory(this.categoryDeleteID).subscribe( (val) => {
+    this.catServ.deleteList(this.categoryDeleteID).subscribe( (val) => {
       if(val['isSuccess'] == true) {
         this.notifyServ.addNotification(
           {
@@ -266,147 +297,65 @@ export class CategoryComponent implements OnInit {
         );
       }
       else{
-        this.notifyServ.addNotification(
-          {
-            text: "Error while deleting category",
-            level: "error",
-            autohide: true,
-          }
-        );
+        // this.notifyServ.addNotification(
+        //   {
+        //     text: "",
+        //     level: "error",
+        //     autohide: true,
+        //   }
+        // );
       }
       this._fetchData();
     });
     this.categoryDeleteID = -1;
-    this.closeContactModal();
+    this.closeListModal();
     
   }
 
-  /**
-   * Modal methods
-  */
-
-  //  opens add modal
+ 
   openAddCategoryModal(content: TemplateRef<NgbModal>): void {
     this.actionType = "Add New";
     this.resetCategoryForm();
     this.openCategoryModal(content);
   }
 
-  //  Open testimonial modal
   openCategoryModal(content: TemplateRef<NgbModal>): void {
     this.modalService.open(content, { size: "xl" });
   }
 
-  //  close testimonial modal
-  closeContactModal(): void {
+  closeListModal(): void {
     this.modalService.dismissAll();
     this.resetCategoryForm();
   }
 
-  /**
-   * Edit form
-   */
-  editCategoryName(data: Category) {
-    console.log("fghaskjd",data)
-
-    this.modalService.open(this.sizeableModal, { size: "xl" });
-    this.categoryForm.setValue(
-      {
-        c_id:data.id,
-        c_name: data.c_name,
-        c_number: data.c_number,
-        active_status: data.active_status,
-      }
-    )
-  }
-//   UpdateCategory() {
-//     this.catServ.UpdateCategory(this.ListData).subscribe((response) => {
-//       console.log('Update response:', response);
-//       this.modalService.dismissAll();
-//     }, (error) => {
-//       console.error('Error updating contact:', error);
-//     });
-//   }
-
-  /**
-   * Form methods
-  */
   
-  //  convenience getter for easy access to form fields
-  get form1() { return this.categoryForm.controls; }
-
-
-
-  //  gets the form details
-  submitCategoryFormForm(modal: TemplateRef<NgbModal>) {
-    
-    // prepping data for service
-    let data:Category = this.categoryForm.value;
-    // data.t_img_file = this.files[0];
-
-    if(this.actionType == "Add New")
-    {
-      this.catServ.createCatergory(data).subscribe( (val) => {
-        // if(val['isSuccess'] == true) {
-        //   this.notifyServ.addNotification(
-        //     {
-        //       text: "Category Created Successfully",
-        //       level: "success",
-        //       autohide: true,
-        //     }
-        //   );
-        // }
-        // else{
-        //   this.notifyServ.addNotification(
-        //     {
-        //       text: "Error while creating category",
-        //       level: "error",
-        //       autohide: true,
-        //     }
-        //   );
-        // }
-        this._fetchData();
-      });
-      this.resetCategoryForm();
-      this.closeContactModal();
-    }
-    else if(this.actionType == "Edit"){
-      this.catServ.updateCategory(data).subscribe( (val) => {
-        if(val['isSuccess'] == true) {
-          this.notifyServ.addNotification(
-            {
-              text: "Category Updated Successfully",
-              level: "success",
-              autohide: true,
-            }
-          );
-        }
-        else{
-          this.notifyServ.addNotification(
-            {
-              text: "Error while updating category",
-              level: "error",
-              autohide: true,
-            }
-          );
-        }
-        this._fetchData();
-      });
-      this.resetCategoryForm();
-      this.closeContactModal();
-    }
-    
-    // this._fetchData();
-    
+  editCategoryName(data: Category) {
+    this.modalService.open(this.sizeableModal, { size: 'xl' });
+    this.categoryList.patchValue({ ...data });
   }
 
+  UpdateCategory() {
+    this.catServ.UpdateCategory(this.categoryList.value).subscribe(
+      (response) => {
+        console.log('Update response:', response);
+        this.modalService.dismissAll();
+      },
+      (error) => {
+        console.error('Error updating contact:', error);
+      }
+    );
+  }
+  
+  get form1() { return this.categoryList.controls; }
+
+ 
 
   // reset form and file
   resetCategoryForm() {
     // files reset
     this.files = []
     // form reset
-    this.categoryForm.reset()
+    this.categoryList.reset()
   }
 
 

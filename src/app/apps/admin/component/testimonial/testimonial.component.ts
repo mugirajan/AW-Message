@@ -286,16 +286,13 @@ export class ContactComponent implements OnInit {
     this.testServ.deleteCon(this.testimonialId).subscribe(
       (response) => {
         console.log('Delete successful', response);
-        // Additional logic after successful delete
       },
       (error) => {
         console.error('Error deleting testimonial', error);
-        // Handle error if needed
       }
     );
   } else {
     console.error('Testimonial ID is missing.');
-    // Handle missing ID case
   }
   }
 
@@ -319,13 +316,13 @@ export class ContactComponent implements OnInit {
         );
       }
       else{
-        this.notifyServ.addNotification(
-          {
-            text: "Error while deleting testimonial",
-            level: "error",
-            autohide: true,
-          }
-        );
+        // this.notifyServ.addNotification(
+        //   {
+        //     text: "",
+        //     level: "error",
+        //     autohide: true,
+        //   }
+        // );
       }
       this._fetchData();
     });
@@ -391,7 +388,7 @@ export class ContactComponent implements OnInit {
   editcontactForm(data: Testimonial) {
     console.log("Data edit: ", data);
     this.modalService.open(this.sizeableModal, { size: 'xl' });
-    this.contactForm.patchValue({ ...data }); // Use patchValue to update the form
+    this.contactForm.patchValue({ ...data }); 
   }
   
   updateContact() {
