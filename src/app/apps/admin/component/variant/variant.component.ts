@@ -28,7 +28,7 @@ export class VariantComponent implements OnInit {
   columns: Column[] = [];
   loading: boolean = false;
   pageSizeOptions: number[] = [10, 25, 50, 100];
-  variantForm!: FormGroup;
+  ScheduleList!: FormGroup;
   actionType: string = "Add New";
   variantDeleteID: any;
   categoryResource: any = [];
@@ -60,7 +60,7 @@ export class VariantComponent implements OnInit {
   @ViewChild('positionModal2')
   positionModal2!: TemplateRef<NgbModal>;
 
-  
+  selectedOptions: string[] = [];
   // Constructor
   constructor(
     private sanitizer: DomSanitizer,
@@ -85,7 +85,7 @@ export class VariantComponent implements OnInit {
     });
     // getDate() {
     //   this.varServ.getDate().subscribe(date => {
-    //     this.variantForm.patchValue({ selectedDate: date });
+    //     this.ScheduleList.patchValue({ selectedDate: date });
     //   });
     // }
     // get Variants
@@ -95,9 +95,9 @@ export class VariantComponent implements OnInit {
     this.initTableCofig();
 
     // product form
-    this.variantForm = this.fb.group({
+    this.ScheduleList = this.fb.group({
       id: [''],
-      variant: ['', Validators.required],
+      Body_Text: ['', Validators.required],
       category: ['', Validators.required],
       product: ['', Validators.required],
       selectedDate: ['', Validators.required],
@@ -106,7 +106,7 @@ export class VariantComponent implements OnInit {
       active_status: ['', Validators.required]
     });
 
-    this.resetVariantForm();
+    this.resetScheduleList();
 
     this.varServ.getallCategories().subscribe( (res: any) => {
       this.categoryResource = res;
@@ -116,7 +116,7 @@ export class VariantComponent implements OnInit {
     })
 
     // this.varServ.getDate().subscribe(date => {
-    //   this.variantForm.patchValue({ selectedDate: date });
+    //   this.ScheduleList.patchValue({ selectedDate: date });
     // });
 
   }
@@ -126,6 +126,11 @@ export class VariantComponent implements OnInit {
    * fetches table records
    */
   _fetchData(): void {
+    this.varServ.getSchedule().subscribe((data: any) =>{
+      if(data.length > 0) {
+        this.records =  data;
+      }
+    });
     
     this.varServ.getVariants().subscribe((data: any) =>{
       if(data.length > 0) {
@@ -139,10 +144,10 @@ export class VariantComponent implements OnInit {
     });
   }
   saveVariant() {
-    if (this.variantForm.valid) {
+    if (this.ScheduleList.valid) {
       const variantData = {
-        // varnt_order: this.variantForm.get('varnt_order').value,
-        selectedDate: this.variantForm.get('selectedDate')?.value
+        // varnt_order: this.ScheduleList.get('varnt_order').value,
+        selectedDate: this.ScheduleList.get('selectedDate')?.value
       };
       
       this.varServ.saveVariant(variantData).subscribe(response => {
@@ -169,25 +174,30 @@ export class VariantComponent implements OnInit {
         formatter: (a: Variant) => a.id
       },
       {
-        name: 'v_name',
+        name: 'category',
         label: 'Variant Name',
-        formatter: (a: Variant) => a.v_name
+        formatter: (a: Variant) => a.category
       },
       {
-        name: 'prod_id',
-        label: 'Product Id',
-        formatter: (a: Variant) => a.prod_id
+        name: 'Body_Text',
+        label: 'Body_Text',
+        formatter: (a: Variant) => a.Body_Text
       },
+      // {
+      //   name: 'varnt_order',
+      //   label: 'Variant Order',
+      //   formatter: (a: Variant) => a.varnt_order
+      // },
       {
-        name: 'varnt_order',
-        label: 'Variant Order',
-        formatter: (a: Variant) => a.varnt_order
+        name: 'Selected_Date',
+        label: 'Selected Date',
+        formatter: (a: Variant) => a.selectedDate
       },
-      {
-        name: 'cate_id',
-        label: 'Category',
-        formatter: this.variantCategoryFormatter.bind(this)
-      },
+      // {
+      //   name: 'cate_id',
+      //   label: 'Category',
+      //   formatter: this.variantCategoryFormatter.bind(this)
+      // },
       {
         name: 'active_status',
         label: 'Active Status',
@@ -235,8 +245,8 @@ export class VariantComponent implements OnInit {
  */
   matches(row: any, term: string) {
       return row.id?.toString().includes(term) || 
-      row.prod_id?.toString().toLowerCase().includes(term) || 
-      row.v_name?.toLowerCase().toString().includes(term) || 
+      row.Body_Text?.toString().toLowerCase().includes(term) || 
+      row.category?.toLowerCase().toString().includes(term) || 
       row.cate_id?.toString().toLowerCase().includes(term) ||
       row.active_status?.toString().toLowerCase().includes(term)
       
@@ -297,12 +307,12 @@ export class VariantComponent implements OnInit {
     switch (event.action) {
       case "edit":
         this.actionType = "Edit";
-        this.editVariantForm(event.record);
+        this.editScheduleList(event.record);
         // this.showEditDisabledDialogue();
         break;
       case "delete":
         this.actionType = "Delete";
-        this.deleteVariantForm(event.record);
+        this.deleteScheduleList(event.record);
         break;
       default:
         this.actionType = "Add New";
@@ -312,7 +322,7 @@ export class VariantComponent implements OnInit {
 
 
   //To Confirm delete action
-  deleteVariantForm(record: any) {
+  deleteScheduleList(record: any) {
     this.variantDeleteID = record.id;
     this.openVerticallyCentered(this.positionModal);
   }
@@ -373,7 +383,7 @@ export class VariantComponent implements OnInit {
   //  opens add modal
   openAddVariantModal(content: TemplateRef<NgbModal>): void {
     this.actionType = "Add New";
-    this.resetVariantForm();
+    this.resetScheduleList();
     this.openVariantModal(content);
   }
 
@@ -385,7 +395,7 @@ export class VariantComponent implements OnInit {
   //  close variant modal
   closeVariantModal(): void {
     this.modalService.dismissAll();
-    this.resetVariantForm();
+    this.resetScheduleList();
   }
 
 
@@ -393,18 +403,18 @@ export class VariantComponent implements OnInit {
   /**
    * Edit form  --- needs improvement
    */
-  editVariantForm(data: any) {
+  editScheduleList(data: any) {
     
-    this.resetVariantForm();
+    this.resetScheduleList();
     this.modalService.open(this.sizeableModal, { size: "xl" });
     
-    this.specLabels = this.setVariantForm(data.cate_id);
+    this.specLabels = this.setScheduleList(data.cate_id);
 
-    this.variantForm.patchValue({
+    this.ScheduleList.patchValue({
       id: data.id,
-      variant: data.v_name,
+      variant: data.category,
       category: data.cate_id,
-      product: data.prod_id,
+      product: data.Body_Text,
       specs: [],
       varnt_order: data.varnt_order,
       active_status: data.active_status=='active'? "true": "false"
@@ -414,9 +424,9 @@ export class VariantComponent implements OnInit {
       return a.value == data.cate_id
     })
     this.fetchProductsBasedOnCategory(data.cate_id)
-    this.selectProduct = data.prod_id;
-    this.variantForm.removeControl("specs");
-    this.variantForm.addControl("specs", this.formServ.generateFormWithValues(this.specLabels, JSON.parse(data.specs)));
+    this.selectProduct = data.Body_Text;
+    this.ScheduleList.removeControl("specs");
+    this.ScheduleList.addControl("specs", this.formServ.generateFormWithValues(this.specLabels, JSON.parse(data.specs)));
   }
 
   
@@ -425,15 +435,15 @@ export class VariantComponent implements OnInit {
    */
 
   //  get variant form values
-  getvariantFormValue(): any {
-    return this.variantForm.value;
+  getScheduleListValue(): any {
+    return this.ScheduleList.value;
   }
 
   //  gets the form details   - ---- need imp
-  submitvariantForm(modal: TemplateRef<NgbModal>) {
+  submitScheduleList(modal: TemplateRef<NgbModal>) {
     
     // prepping data for service
-    let data:any = this.getvariantFormValue();
+    let data:any = this.getScheduleListValue();
 
     let transData = data;
     var jsonSpec: any = [];
@@ -466,7 +476,7 @@ export class VariantComponent implements OnInit {
         }
         this._fetchData();
       });
-      this.resetVariantForm();
+      this.resetScheduleList();
       this.closeVariantModal();
     }
     else if(this.actionType == "Edit"){
@@ -492,7 +502,7 @@ export class VariantComponent implements OnInit {
         }
         this._fetchData();
       });
-      this.resetVariantForm();
+      this.resetScheduleList();
       this.closeVariantModal();
     }
     
@@ -502,20 +512,20 @@ export class VariantComponent implements OnInit {
 
 
   // get method for variant form's formarray
-  get getVariantFormFormArray() {
-    const frm = <FormArray>this.variantForm.get('specs');
+  get getScheduleListFormArray() {
+    const frm = <FormArray>this.ScheduleList.get('specs');
     return frm;
   }
 
   // get method for variant form's formarray
-  get getVariantFormItemFormArray() {
-    const frm = <FormArray>this.variantForm.get('specs');
+  get getScheduleListItemFormArray() {
+    const frm = <FormArray>this.ScheduleList.get('specs');
     return frm;
   }
 
 
   // set variant form
-  setVariantForm(value: any) {
+  setScheduleList(value: any) {
 
     /**
      *  Category mappings
@@ -565,15 +575,28 @@ export class VariantComponent implements OnInit {
       }
       // for ESS
       default:{
-        return this.setVariantFormESS(value)
+        return this.setScheduleListESS(value)
       }
     }
 
   }
+  ScheduleForm() {
+    const formData = this.ScheduleList.value;
+    formData.selectedOptions = this.selectedOptions; 
+    this.varServ.createSchedule(formData).subscribe(response => {
+      console.log('List added successfully:', response);
+      this.ScheduleList.reset();
+      this.selectedOptions = [];
+    }, error => {
+      console.error('Error adding List:', error);
+    });
   
+    this.closeVariantModal();
+    this._fetchData();
+  }
   // ESS variant form 
   // check for product
-  setVariantFormESS(value: any) {
+  setScheduleListESS(value: any) {
     
     switch(value) {
     
@@ -667,20 +690,20 @@ export class VariantComponent implements OnInit {
 
   // reset specs
   resetVariantSpecs() {
-    (this.variantForm.get("specs") as FormArray).clear();
+    (this.ScheduleList.get("specs") as FormArray).clear();
   }
 
 
   setCategoryForm(data: any) {
     
     this.specLabels = data;
-    this.variantForm.removeControl("specs");
-    this.variantForm.addControl("specs", this.formServ.generateForm(this.specLabels));
+    this.ScheduleList.removeControl("specs");
+    this.ScheduleList.addControl("specs", this.formServ.generateForm(this.specLabels));
   }
 
   // reset form and file
-  resetVariantForm() {
-    this.variantForm.reset()
+  resetScheduleList() {
+    this.ScheduleList.reset()
   }
 
   // dropdown listener for category
@@ -692,11 +715,11 @@ export class VariantComponent implements OnInit {
       if( da.value != 25 && da.value != 26 ) {
         
         this.idFormBasedOnCategory = true;
-        varConst = this.setVariantForm(da.value);
+        varConst = this.setScheduleList(da.value);
         this.setCategoryForm(varConst);
       } else{
         
-        varConst = this.setVariantForm(da.value);
+        varConst = this.setScheduleList(da.value);
         this.idFormBasedOnCategory = false;
       }
     }
@@ -707,7 +730,7 @@ export class VariantComponent implements OnInit {
 
     if(this.actionType != "Edit") {
       if(!this.idFormBasedOnCategory) {
-        this.setCategoryForm(this.setVariantForm(da.value));
+        this.setCategoryForm(this.setScheduleList(da.value));
       }
     }
   }

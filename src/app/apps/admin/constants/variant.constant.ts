@@ -349,8 +349,8 @@ export const ConstVariant8 = [
 // variant model
 export interface Variant {
     id?: number,
-    v_name: string,
-    prod_id: number,
+    category: string,
+    Body_Text: number,
     cate_id: number,
     specs: string,
     active_status: boolean;

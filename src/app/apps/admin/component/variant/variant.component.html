@@ -58,7 +58,7 @@
     </div>
     <div class="modal-body">
 
-        <form [formGroup]="variantForm" #addProduct="ngForm">
+        <form [formGroup]="ScheduleList" #addProduct="ngForm">
 
             <div class="row">
                 <div class="col-12">
@@ -70,7 +70,7 @@
                                 <div class="col-6"> 
                                     <div class="mb-3">
                                         <label for="List-number" class="form-label">Number<span class="text-danger">*</span></label>
-                                        <select id="List-number" class="form-select form-select my-1 my-lg-0" id="category" name="status" >
+                                        <select id="List-number" class="form-select form-select my-1 my-lg-0" id="category" formControlName="category" >
                                             <option *ngFor="let list of list" [value]="list.c_name">
                                                 {{list.c_name }}
                                             </option>
@@ -107,8 +107,8 @@
                                         <label for="variant" class="form-label">
                                             Variant name
                                         </label>
-                                        <input type="text" id="variant" class="form-control" placeholder="eg: SUN-4K-G04, ..."
-                                            required formControlName="variant" />
+                                        <input type="text" id="Body_Text" class="form-control" placeholder="eg: SUN-4K-G04, ..."
+                                            required formControlName="Body_Text" />
 
                                     </div>
                                 </div>
@@ -193,7 +193,8 @@
             <div class="row">
                 <div class="col-12">
                     <div class="text-center mb-3">
-                        <button type="submit" class="btn w-sm btn-success waves-effect waves-light me-1" (click)="submitvariantForm(modal)" [disabled]="!variantForm.valid">Save</button>
+                        <button type="submit" class="btn w-sm btn-success waves-effect waves-light me-1" (click)="ScheduleForm()">Save</button>
+
                         <button type="button" class="btn w-sm btn-danger waves-effect" aria-label="Close" (click)="closeVariantModal()">Cancel</button>
                     </div>
                 </div> <!-- end col -->
@@ -221,7 +222,7 @@
     </div>
 </ng-template>
 
-<ng-template #positionModal2 let-modal2>
+<!-- <ng-template #positionModal2 let-modal2>
     <div class="modal-header">
         <h4 class="modal-title" id="topModalLabel">Edit Variant</h4>
         <button type="button" class="btn-close" aria-label="Close" (click)="modal2.dismiss('Cross click')">
@@ -234,4 +235,4 @@
     <div class="modal-footer">
         <button type="button" class="btn btn-light" (click)="modal2.close('Close click')"> Okay </button>
     </div>
-</ng-template>
+</ng-template> -->

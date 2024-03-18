@@ -21,7 +21,21 @@ export class VariantService {
 
   getRoles(): Observable<any[]> {
     return this.http.get<any[]>('assets/db.json');
+
   }
+  createSchedule(data: any) {
+    if(data.id != undefined){ 
+      return this.UpdateSchedule(data)
+    } else {
+      delete data.id; 
+      return this.http.post(this.apiUrl, data);
+    }
+  }
+  getSchedule(): Observable<Variant[]> {
+    return this.http.get<Variant[]>(this.apiUrl);
+    
+  }
+
   getVariant(): Observable<Variant[]> {
     return this.http.get<Variant[]>(this.apiUrl);
     
@@ -35,9 +49,10 @@ export class VariantService {
   }
   createVariant(data: any) {
     let param: Variant = {
-      v_name: data['variant'],
+      category: data['variant'],
       cate_id: data['category'],
-      prod_id: data['product'],
+      Body_Text: data['product'],
+      selectedDate:data['Date'],
       specs: data['specs'],
       varnt_order: data['v_order'],
       active_status: (data['active_status'] == "true")? 'true' : 'false',
@@ -70,7 +85,10 @@ export class VariantService {
     return this.http.get(this.prodUrl+"getProducts/"+data)
   }
 
-
+  UpdateSchedule(data: any) {
+    let updateUrl = this.apiUrl  + data.id;
+    return this.http.put(updateUrl, data);
+  }
 
 }
 

@@ -360,8 +360,10 @@ export interface Variant8 {
 // variant model
 export interface Variant {
     id?: number,
-    v_name: string,
-    prod_id: number,
+    category: string,
+    Body_Text: string,
+    selectedDate:string,
+    // Body_Text: number,
     cate_id: number,
     varnt_order: number,
     specs: string,
