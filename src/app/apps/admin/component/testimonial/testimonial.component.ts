@@ -76,6 +76,7 @@ export class ContactComponent implements OnInit {
 
     // product form
     this.contactForm = this.fb.group({
+      id: [''],
       t_name: ['', Validators.required],
       t_role: ['', Validators.required],
       t_date: ['',Validators.required],
@@ -303,6 +304,9 @@ export class ContactComponent implements OnInit {
     this.modalService.open(content, { centered: true });
   }
 
+ 
+  
+
   deletedSeletedContact(){
     this.testServ.deleteCon(this.testimoialDeleteID).subscribe( (val) => {
       if(val['isSuccess'] == true) {
@@ -385,6 +389,7 @@ export class ContactComponent implements OnInit {
    * Edit form
    */
   editcontactForm(data: Testimonial) {
+    console.log("Data edit: ", data);
     this.modalService.open(this.sizeableModal, { size: 'xl' });
     this.contactForm.patchValue({ ...data }); // Use patchValue to update the form
   }

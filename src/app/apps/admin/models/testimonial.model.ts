@@ -1,5 +1,5 @@
 export interface Testimonial {
-    id?: number,
+    id?: any,
     t_name: string,
     t_role: string,
     t_date: string,

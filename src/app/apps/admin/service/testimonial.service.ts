@@ -19,30 +19,29 @@ export class ContactService {
   constructor(private http: HttpClient) { }
 
   createContacts(data: any) {
-    return this.http.post(this.apiUrl, data);
+    
+    if(data.id != undefined){ 
+      return this.updateContact(data)
+    } else {
+      delete data.id; 
+      return this.http.post(this.apiUrl, data);
+    }
   }
-  // createContacts(data: any) {
-  //   return this.http.post(this.url + "create", data);
-  // }
+  
 
-  deleteCon(id: string) {
-    const deleteUrl = `${this.apiUrl}${id}`;  
-    return this.http.delete(deleteUrl, {
-      reportProgress: true,
-      responseType: 'json',
-    }).pipe(
-      map((response: any) => {
-        return response;
-      })
-    );
+  deleteCon(id: string): Observable<any> {
+    const url = `${this.apiUrl}${id}`;
+    return this.http.delete(url);
   }
  
   
   
 
- updateContact(id: any) {
-    const updateUrl = `${this.apiUrl}${id}`;
-    return this.http.put(updateUrl, id);
+ updateContact(data: any) {
+    let updateUrl = this.apiUrl  + data.id;
+    console.log("url: ", updateUrl)
+    console.log("Data: ", data)
+    return this.http.put(updateUrl, data);
   }
   
 
