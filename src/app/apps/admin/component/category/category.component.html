@@ -70,19 +70,19 @@
                                     required formControlName="c_name"
                                     [ngClass]="{ 'is-invalid': addProduct.submitted && form1.c_name.invalid }">
                             </div>
-
+<!-- 
                             <div class="mb-3">
                                 <label for="List-number" class="form-label">Number <span
                                         class="text-danger">*</span></label>
                                 <input type="text"  id="List-number" class="form-control" placeholder="987654678"
                                     required formControlName="c_number"
                                     [ngClass]="{ 'is-invalid': addProduct.submitted && form1.c_number.invalid }">
-                            </div>
+                            </div> -->
 
                             <div class="mb-3">
                                 <label for="List-number" class="form-label">Number<span class="text-danger">*</span></label>
-                                <select id="List-number" class="form-select form-select my-1 my-lg-0" id="status-select" name="status" >
-                                    <option *ngFor="let contact of contacts" [value]="contact.t_name">
+                                <select id="List-number" class="form-select form-select my-1 my-lg-0" id="status-select" formControlName="c_number" name="status" >
+                                    <option *ngFor="let contact of contacts" [value]="contact.t_role">
                                         {{ contact.t_role }}
                                     </option>
                                 </select>
