@@ -1,5 +1,5 @@
 <!-- page title -->
-<app-page-title [breadcrumbItems]="pageTitle" title="Send Message"></app-page-title>
+<app-page-title [breadcrumbItems]="pageTitle" title="Send Single Custom WA Message"></app-page-title>
 
 <div class="row">
     <div class="col-12">
@@ -15,7 +15,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">Send a Prepared Message </h5>
+                                    <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">Send a Prepared Custom Message </h5>
                                     
                                     <div class="row">
                                         <div class="col-6"> 
@@ -28,12 +28,12 @@
                                                 <select2 
                                                     *ngIf="actionType != 'Edit'; else categoryElseBlock"
                                                     [data]="senderResource" 
-                                                    placeholder="Select Category" 
-                                                    id="category" 
+                                                    placeholder="select sender contact" 
+                                                    id="sender" 
                                                     #mySelect
                                                     class="form-control"
                                                     (update)='onSenderSelected($event)'
-                                                    formControlName="category"
+                                                    formControlName="sender"
                                                 >
                                                 </select2>
         
@@ -46,26 +46,21 @@
                                         <div class="col-6"> 
                                             <div class="mb-3">
                                                 
-                                                <label for="template" class="form-label">
-                                                    Message template
-                                                </label>
-                                                
-                                                <select2 
-                                                    *ngIf="actionType != 'Edit'; else productElseBlock"
-                                                    [data]="messageResource" 
-                                                    placeholder="Select message template" 
-                                                    #product1
-                                                    id="template" 
-                                                    class="form-control"
-                                                    (update)='onMessageTemplateSelected($event)'
-                                                    formControlName="template"
-                                                >
-                                                </select2>
-                                                <ng-template #productElseBlock>
-                                                    <h4> {{ (selectedMessage.length > 0)? selectedMessage[0].label: "" }} </h4>
-                                                </ng-template>
                                             </div>
                                         </div>
+
+                                        <div class="col-6"> 
+                                            <div class="mb-3">
+        
+                                                <label for="header_text" class="form-label">
+                                                    Header text:
+                                                </label>
+                                                <input type="text" id="header_text" class="form-control" placeholder="the person name, e.g. Brock Lesner"
+                                                    required formControlName="headerTxt" />
+        
+                                            </div>
+                                        </div>
+
                                         <div class="col-6"> 
                                             <div class="mb-3">
         
@@ -76,7 +71,18 @@
                                                     required formControlName="message" />
         
                                             </div>
-                                        </div>                                
+                                        </div>
+
+                                        <div class="col-6"> 
+                                            <div class="mb-3">
+        
+                                                <button class="btn btn-primary" (click)="sendMessage()">
+                                                    send message
+                                                </button>
+        
+                                            </div>
+                                        </div>
+
                                     </div>
                 
                                 </div>

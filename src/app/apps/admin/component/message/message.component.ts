@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Select2Group, Select2Option, Select2UpdateEvent } from 'ng-select2-component';
 import { BreadcrumbItem } from 'src/app/shared/page-title/page-title.model';
+import { WAMesssagingService } from "../../service/wa.message.service"
 
 @Component({
   selector: 'app-message',
@@ -18,8 +19,9 @@ export class MessageComponent implements OnInit {
   // senders
   senderResource: Select2Group[] = [
     {
-        label: '',
+        label: 'Kamalraj Ganesan',
         options: [
+          { value: "918056221146", label: "Kamalraj Ganesan" }
         ]
     },
   ];
@@ -28,6 +30,7 @@ export class MessageComponent implements OnInit {
     {
         label: '',
         options: [
+          { value: "custom_msg", label: "Custom Message Template 1" }
         ]
     },
   ];
@@ -44,8 +47,8 @@ export class MessageComponent implements OnInit {
   
 
   constructor(
-    private modalService: NgbModal,
     private fb: FormBuilder,
+    private msgServ: WAMesssagingService
   ) { 
 
   }
@@ -59,21 +62,24 @@ export class MessageComponent implements OnInit {
 
 		// product form
 		this.messageForm = this.fb.group({
-			id: [''],
+			sender: ['', Validators.required],
+      headerTxt: ['', Validators.required],
 			message: ['', Validators.required],
-			template: ['', Validators.required],
-			sender: ['', Validators.required]
 		});
-		this.resetVariantForm();
+		this.resetMessageForm();
   }
 
 
 	// used to get data from db.json file
-	_fetchData() {}
+	_fetchData() {
+
+    // load the senderContact to senderResource variable
+    // this.senderResource = ?
+  }
 
 
 	// reset form and file
-  resetVariantForm() {
+  resetMessageForm() {
     this.messageForm.reset()
   }
 
@@ -82,6 +88,12 @@ export class MessageComponent implements OnInit {
 
 	// set message template details for WA message transfer
 	onMessageTemplateSelected(da: Select2UpdateEvent) {}
+
+  // 
+  sendMessage() {
+
+    this.msgServ.sendWACustomTemplateMessage(this.messageForm.value['sender'], this.messageForm.value['headerTxt'], this.messageForm.value['message'])
+  }
 
 
 }

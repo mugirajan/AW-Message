@@ -34,7 +34,7 @@ const routes: Routes = [
     component: SheduleComponent
   },
   {
-    path: "send-message",
+    path: "custom-single-message-template",
     component: MessageComponent
   }
 ];

@@ -10,6 +10,16 @@ export const environment = {
   GOOGLE_MAPS_API_KEY: 'AIzaSyDpgQMpcfx1QU-8SM-ljcgjG4xrYtIYby4'
 };
 
+export const WAEnds = {
+  WABI: "231667113353605",
+  // url: "https://graph.facebook.com/v18.0/214842615044313/messages",
+  url: "https://graph.facebook.com/",
+  // to be added in the post URL
+  token: "Bearer EAANBTnz5WGwBOwWYTNnbLxTJNg72Mk3IZCZCMKdE7zwZA9TftRJdSg6Pk1kbY9gwZAbuBsHRMZADiTDBT3zYTAFTZBzyY9R5YK4DMOvTSJjsECULA72ohuunk78uHTAaW7PmKHNn47qZBnt6gZCDCxTeF3YEL6vhbEYcSl5clrPXTWUelHy5L4uaLrlZBOJ7ZA6TtikyhIlQmFoVmMJiEO",
+  PhnID: "214842615044313",
+  version: "v18.0"
+}
+
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
