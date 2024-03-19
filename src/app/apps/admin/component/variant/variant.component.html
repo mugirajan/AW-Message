@@ -1,0 +1,168 @@
+<!-- page title -->
+<app-page-title [breadcrumbItems]="pageTitle" title="Manage Schedule"></app-page-title>
+
+<div class="row">
+    <div class="col-12">
+        
+        <div class="card">
+            <div class="card-body">
+                
+                <div class="row mb-2 justify-content-end">
+                    
+                    <div class="col-lg-4 col-12">
+                        
+                        <div class="text-lg-end">
+                            <button type="button" class="btn btn-primary" (click)="openAddVariantModal(sizeableModal)">
+                                <i class="mdi mdi-plus me-1"></i> Add New
+                            </button>
+                        </div>
+                        
+                    </div><!-- end col-->
+                    
+                </div>
+                
+                <app-ui-preloader [display]="loading"></app-ui-preloader>
+                
+                <!-- order table -->
+                <app-advanced-table 
+                    #advancedTable 
+                    [tableData]="records"
+                    [columns]="columns" 
+                    [pagination]="true" 
+                    [pageSizeOptions]="pageSizeOptions"
+                    [hasRowSelection]="false" 
+                    [isSearchable]="true"
+                    [isSortable]="false" 
+                    [hasActionColumn]="true"
+                    (actionTrigger)="actionTriggerd($event)"
+                    (search)="searchData($event)"
+                    tableClasses="table-centered"
+                    theadClasses="table-light">
+                </app-advanced-table>
+
+            </div> 
+        </div>
+        
+    </div>
+</div>
+
+<ng-template #sizeableModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modalLabel"> {{ actionType }} Schedule </h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <form [formGroup]="ScheduleList" #addProduct="ngForm">
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">General</h5>                        
+                            <div class="row">
+                                <div class="col-6"> 
+                                    <div class="mb-3">
+                                        <label for="List-number" class="form-label">Group Name<span class="text-danger">*</span></label>
+                                        <select id="List-number" class="form-select form-select my-1 my-lg-0" id="g_name" formControlName="g_name" >
+                                            <option *ngFor="let list of list" [value]="list.c_name">
+                                                {{list.c_name }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    
+                                </div>
+                                <!-- <div class="col-6"> 
+                                    <div class="mb-3">
+                                        
+                                        <label for="product1" class="form-label">
+                                            Product
+                                        </label>
+                                        
+                                        <select2 
+                                            *ngIf="actionType != 'Edit'; else productElseBlock"
+                                            [data]="products" 
+                                            placeholder="Select Product" 
+                                            #product1
+                                            id="product" 
+                                            class="form-control"
+                                            (update)='onProductSelected($event)'
+                                            formControlName="product"
+                                        >
+                                        </select2>
+                                        <ng-template #productElseBlock>
+                                            <h4> {{ (selectedProduct.length > 0)? selectedProduct[0].label: "" }} </h4>
+                                        </ng-template>
+                                    </div>
+                                </div> -->
+                                <div class="col-6"> 
+                                    <div class="mb-3">
+
+                                        <label for="variant" class="form-label">
+                                            Body Text
+                                        </label>
+                                        <input type="text" id="Body_Text" class="form-control" placeholder="eg: SUN-4K-G04, ..."
+                                            required formControlName="Body_Text" />
+
+                                    </div>
+                                </div> 
+                                <div class="col-6"> 
+                                    <div class="mb-3">
+                                        <label for="selectedDate" class="form-label">Select Date</label>
+                                        <input type="date" id="selectedDate" class="form-control" required formControlName="selectedDate" />
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label class="mb-2">Active Status <span class="text-danger">*</span></label>
+                                        <br />
+                                        <div class="d-flex flex-wrap">
+                                          <div class="form-check me-2">
+                                            <input class="form-check-input" type="radio" value="true"  formControlName="active_status" id="activeRadio">
+                                            <label class="form-check-label" for="activeRadio">Active</label>
+                                          </div>
+                                          <div class="form-check me-2">
+                                            <input class="form-check-input" type="radio" value="false" formControlName="active_status" id="inactiveRadio">
+                                            <label class="form-check-label" for="inactiveRadio">Inactive</label>
+                                          </div>
+                                        </div>
+                                      </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                </div> 
+
+               
+            </div>
+        
+            <div class="row">
+                <div class="col-12">
+                    <div class="text-center mb-3">
+                        <button type="submit" class="btn w-sm btn-success waves-effect waves-light me-1" (click)="ScheduleForm()">Save</button>
+
+                        <button type="button" class="btn w-sm btn-danger waves-effect" aria-label="Close" (click)="closeVariantModal()">Cancel</button>
+                    </div>
+                </div> 
+            </div>
+           
+        </form>
+
+    </div>
+</ng-template>
+
+<ng-template #positionModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="topModalLabel">Delete Variant</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <p>Do you want to delete this variant?</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="deletedSeletedVariant()">Delete</button>
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Cancel</button>
+    </div>
+</ng-template>

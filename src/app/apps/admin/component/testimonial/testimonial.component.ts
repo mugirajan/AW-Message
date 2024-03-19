@@ -68,13 +68,13 @@ export class ContactComponent implements OnInit {
 
     this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Manage Contacts', path: '/', active: true }];
     
-    // get Testimonials
+    
     this._fetchData();
 
-    // initialize table configurations
+    
     this.initTableCofig();
 
-    // product form
+    
     this.contactForm = this.fb.group({
       id: [''],
       t_name: ['', Validators.required],

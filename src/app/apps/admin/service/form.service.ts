@@ -4,7 +4,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@ang
 @Injectable()
 export class DynaFormService {
 
-  variantForm!: FormGroup;
+  ScheduleList!: FormGroup;
 
 
   constructor(
@@ -22,7 +22,7 @@ export class DynaFormService {
 
     console.log("Called you")
 
-    this.variantForm = this._fb.group({
+    this.ScheduleList = this._fb.group({
         specs: new FormArray([])
     });    
     param.forEach((element: any, indx: number) => {
@@ -31,11 +31,11 @@ export class DynaFormService {
         this.getSpecGroup(indx).push(this.newSpecGrpItem());
       });
     });
-    return this.variantForm.get('specs') as FormArray;
+    return this.ScheduleList.get('specs') as FormArray;
   }
   // entire specs array
   get specs(): FormArray {
-    return this.variantForm.get("specs") as FormArray;
+    return this.ScheduleList.get("specs") as FormArray;
   }
   // one spec group - like Input Side
   newSpecGroup(): FormGroup {
@@ -67,7 +67,7 @@ export class DynaFormService {
    */
   generateFormWithValues(param: any, values: any): FormArray {
 
-    this.variantForm = this._fb.group({
+    this.ScheduleList = this._fb.group({
         specs: new FormArray([])
     });
 
@@ -81,11 +81,11 @@ export class DynaFormService {
         this.getSpecGroupWithValue(indx).push(this.newSpecGrpItemWithValue(values[indx][ind]['val']));
       });
     });
-    return this.variantForm.get("specs") as FormArray;
+    return this.ScheduleList.get("specs") as FormArray;
   }
   // entire specs array
   get specsWithValue(): FormArray {
-    return this.variantForm.get("specs") as FormArray;
+    return this.ScheduleList.get("specs") as FormArray;
   }
   // one spec group - like Input Side
   newSpecGroupWithValue(): FormGroup {

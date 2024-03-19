@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, map } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { Testimonial } from '../models/testimonial.model';
 import * as env from 'src/environments/environment'
 import { Variant } from '../models/variant.model';
@@ -9,51 +9,46 @@ import { Variant } from '../models/variant.model';
   providedIn: 'root'
 })
 export class VariantService {
+  private apiUrl = 'http://localhost:3000/variants';
+  private apiUrl1 = 'http://localhost:3000/list/'; 
 
-  private url: string = env.environment.apiUrl;
-  private catUrl: string = env.environment.apiUrl + "category/";
-  private prodUrl: string = env.environment.apiUrl + "product/";
+
 
   constructor(private http: HttpClient) { }
 
-  createVariant(data: any) {
-    let param: Variant = {
-      v_name: data['variant'],
-      cate_id: data['category'],
-      prod_id: data['product'],
-      specs: data['specs'],
-      varnt_order: data['v_order'],
-      active_status: (data['active_status'] == "true")? 'true' : 'false',
-    };
-    return this.http.post(this.url + "variant/create", param);
+  
+  createSchedule(data: any) {
+    if(data.id != undefined){ 
+      return this.UpdateSchedule(data)
+    } else {
+      delete data.id; 
+      return this.http.post(this.apiUrl, data);
+    }
   }
 
-  deleteVariant(data: number) {
-    return this.http
-      .delete(this.url + "variant/delete/" + data).pipe(
-        map((response: any) => {
-          return response;
-        })
-      );
+  deleteVariant(variantId: any): Observable<any> {
+    const deleteUrl = `${this.apiUrl}/${variantId}`;
+    return this.http.delete(deleteUrl);
   }
 
-  updateAVariant(data: any) {
-    return this.http.post(this.url + "variant/update", data);
+  getSchedule(): Observable<Variant[]> {
+    return this.http.get<Variant[]>(this.apiUrl);  
   }
 
-  getVariants() {
-    return this.http.get(this.url + "variant/getAllVariants");
+  getVariant(): Observable<Variant[]> {
+    return this.http.get<Variant[]>(this.apiUrl);
+    
   }
-
-  getallCategories() {
-    return this.http.get(this.catUrl + "getAllCategory");
+  getList(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl1);
+    
   }
-
-  getProducts(data: any) {
-    return this.http.get(this.prodUrl+"getProducts/"+data)
+  
+   UpdateSchedule(data: any): Observable<any> {
+    const updateUrl = `${this.apiUrl}/${data.id}`;
+    return this.http.put(updateUrl, data);
   }
-
-
+  
 
 }
 
