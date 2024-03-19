@@ -82,5 +82,39 @@
         "b3ff"
       ]
     }
+  ],
+  "variants":[
+    {
+      "id": "845c",
+      "Body_Text": "uytr",
+      "category": "alpha",
+      "product": null,
+      "selectedDate": null,
+      "varnt_order": null,
+      "specs": [],
+      "active_status": "true",
+      "selectedOptions": []
+    },
+    {
+      "id": "7514",
+      "Body_Text": "ioiuyuty",
+      "category": "alpha",
+      "product": null,
+      "selectedDate": "2024-03-27",
+      "varnt_order": null,
+      "active_status": "true",
+      "selectedOptions": []
+    },
+    {
+      "id": "a3ff",
+      "Body_Text": "iujyht",
+      "category": "beta",
+      "product": null,
+      "selectedDate": "2024-03-21",
+      "varnt_order": null,
+      "specs": [],
+      "active_status": "true",
+      "selectedOptions": []
+    }
   ]
 }
