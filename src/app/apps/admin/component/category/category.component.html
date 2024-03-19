@@ -75,7 +75,7 @@
                             <div class="mb-3">
                                 <label for="List-number" class="form-label">Contact<span class="text-danger">*</span></label>
                                 <select class="form-select" id="List-number" (change)="onSelectionChange($event)" formControlName="c_number">
-                                  <option *ngFor="let contact of contacts" [value]="contact.id">{{ contact.t_role }}</option>
+                                  <option *ngFor="let contact of contacts" [value]="contact.id">{{ contact.t_name }} - {{ contact.t_role }}</option>
                                 </select>
                               </div>
                               

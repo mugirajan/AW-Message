@@ -15,6 +15,9 @@ import { WAMesssagingService } from "../../service/wa.message.service"
 import { NotificationService } from 'src/app/layout/shared/service/notification.service';
 import { Select2Group, Select2Option, Select2UpdateEvent } from 'ng-select2-component';
 
+import { ContactService } from '../../service/testimonial.service';
+import { HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-product',
@@ -39,23 +42,23 @@ export class ProductComponent implements OnInit {
   productSubscription!: Subscription;
   productDeleteID:any;
   TemplateForm!: FormGroup;
+  contacts: any[] =[];
   senderResource: Select2Group[] = [
     {
         label: 'Kamalraj Ganesan',
         options: [
-          { value: "918056221146", label: "Kamalraj Ganesan" }
+          // { value: "918056221146", label: "Kamalraj Ganesan" }
         ]
     },
   ];
-  // message templates
-  messageResource: Select2Group[] = [
-    {
-        label: '',
-        options: [
-          { value: "custom_msg", label: "Custom Message Template 1" }
-        ]
-    },
-  ];
+  // messageResource: Select2Group[] = [
+  //   {
+  //       label: '',
+  //       options: [
+  //         { value: "custom_msg", label: "Custom Message Template 1" }
+  //       ]
+  //   },
+  // ];
   selectedSender: Select2Option[] = [];
   selectedMessage: Select2Option[] = [];
 
@@ -87,13 +90,27 @@ export class ProductComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private modalService: NgbModal,
     private fb: FormBuilder,
+    private conserv: ContactService,
     private prodServ: ProductService,
     private msgServ: WAMesssagingService,
-    private notifyServ: NotificationService) { }
+    private notifyServ: NotificationService,
+    private http: HttpClient) { }
 
   ngOnInit(): void {
     this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Custom Template', path: '/', active: true }];
     
+
+    this.http.get<any>('http://localhost:3000/contacts').subscribe(data => {
+      data.forEach( (con: any, ind: number) => {
+        this.senderResource[0].options.push( 
+          { label: con.t_name, value: con.t_role } 
+        )
+      });;
+    });
+
+    this.msgServ.getContacts().subscribe(contacts => {
+      this.contacts = contacts;
+    });
     // this.fetchCatgeory();
 
     // get Testimonials

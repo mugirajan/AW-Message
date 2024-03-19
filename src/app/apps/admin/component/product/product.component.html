@@ -22,11 +22,11 @@
                                             <div class="mb-3">
         
                                                 <label for="category" class="form-label">
-                                                    Choose the sender:
+                                                    Choose the receiver:
                                                 </label>
         
                                                 <select2 
-                                                    *ngIf="actionType != 'Edit'; else categoryElseBlock"
+                                                
                                                     [data]="senderResource" 
                                                     placeholder="select sender contact" 
                                                     id="sender" 
@@ -37,9 +37,9 @@
                                                 >
                                                 </select2>
         
-                                                <ng-template #categoryElseBlock>
+                                                <!-- <ng-template #categoryElseBlock>
                                                     <h4> {{ selectedSender[0].label }} </h4>
-                                                </ng-template>
+                                                </ng-template> -->
                                                 
                                             </div>
                                         </div>

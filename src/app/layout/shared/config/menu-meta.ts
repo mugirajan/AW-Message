@@ -59,7 +59,7 @@ const MENU_ITEMS: MenuItem[] = [
             },
             {
                 key: 'app-manage-custom',
-                label: 'Marketting Template',
+                label: 'Default Message',
                 link: '/apps/admin/custom',
                 icon: 'package'
 

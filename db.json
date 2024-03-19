@@ -1,0 +1,83 @@
+{
+  "contacts": [
+    {
+      "id": "0280",
+      "t_name": "Anirudh",
+      "t_role": "919344025402",
+      "t_date": "18-03-2024",
+      "t_msg": null,
+      "t_address": "Chennai",
+      "t_city": "Chennai",
+      "t_gender": "male",
+      "t_mail": "anirudh@blackitechs.com",
+      "t_dob": "25-11-1999",
+      "t_term": "One Year",
+      "active_status": "true"
+    },
+    {
+      "id": "c23f",
+      "t_name": "mugilavathi",
+      "t_role": "919344025402",
+      "t_date": "20-1-2024",
+      "t_msg": null,
+      "t_address": "2734892174",
+      "t_city": "djfdksf",
+      "t_gender": "female",
+      "t_mail": "abc@gmail.com",
+      "t_dob": "21-3-2000",
+      "t_term": "Three Month",
+      "active_status": "false"
+    },
+    {
+      "id": "b3ff",
+      "t_name": "kamalraj",
+      "t_role": "918056221146",
+      "t_date": "24-1-2024",
+      "t_msg": null,
+      "t_address": "2734892174",
+      "t_city": "chennai",
+      "t_gender": "male",
+      "t_mail": "abc@gmail.com",
+      "t_dob": "21-3-2000",
+      "t_term": "Three Month",
+      "active_status": "true"
+    },
+    {
+      "id": "b61d",
+      "t_name": "Venkatesh",
+      "t_role": "919677220546",
+      "t_date": "19-03-2024",
+      "t_msg": null,
+      "t_address": "Cehanni",
+      "t_city": "Chennai",
+      "t_gender": "male",
+      "t_mail": "venkatesh@blackitechs.com",
+      "t_dob": "07-11-2000",
+      "t_term": "Three Month",
+      "active_status": "true"
+    }
+  ],
+  "list": [
+    {
+      "id": "b6b6",
+      "c_name": "Kick Boxing Team",
+      "c_desc": null,
+      "c_number": "0280",
+      "c_selected": "9677220546,8807310429",
+      "active_status": "true",
+      "selectedOptions": [
+        "2c23",
+        "0280"
+      ]
+    },
+    {
+      "id": "626c",
+      "c_name": "mrng5gym",
+      "c_desc": null,
+      "c_number": "0280",
+      "c_selected": "919344025402,919344025402",
+      "active_status": "true",
+      "selectedOptions": []
+    }
+  ]
+}

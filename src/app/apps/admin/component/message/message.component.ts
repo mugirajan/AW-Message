@@ -3,7 +3,9 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Select2Group, Select2Option, Select2UpdateEvent } from 'ng-select2-component';
 import { BreadcrumbItem } from 'src/app/shared/page-title/page-title.model';
-import { WAMesssagingService } from "../../service/wa.message.service"
+import { WAMesssagingService } from "../../service/wa.message.service";
+import { ContactService } from '../../service/testimonial.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-message',
@@ -16,24 +18,28 @@ export class MessageComponent implements OnInit {
   loading: boolean = false;
   messageForm!: FormGroup;
   actionType: string = "Add New";
+
+  contacts: any[] =[];
+
   // senders
+
   senderResource: Select2Group[] = [
     {
-        label: 'Kamalraj Ganesan',
+        label: 'Select receivers...',
         options: [
-          { value: "918056221146", label: "Kamalraj Ganesan" }
+          // { value: "918056221146", label: "Kamalraj Ganesan" }
         ]
     },
   ];
-  // message templates
-  messageResource: Select2Group[] = [
-    {
-        label: '',
-        options: [
-          { value: "custom_msg", label: "Custom Message Template 1" }
-        ]
-    },
-  ];
+ 
+  // messageResource: Select2Group[] = [
+  //   {
+  //       label: '',
+  //       options: [
+  //         { value: "custom_msg", label: "Custom Message Template 1" }
+  //       ]
+  //   },
+  // ];
   selectedSender: Select2Option[] = [];
   selectedMessage: Select2Option[] = [];
 
@@ -48,7 +54,9 @@ export class MessageComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private msgServ: WAMesssagingService
+    private msgServ: WAMesssagingService,
+    private conserv: ContactService,
+    private http: HttpClient
   ) { 
 
   }
@@ -56,6 +64,19 @@ export class MessageComponent implements OnInit {
   ngOnInit(): void {
     
     this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Manage variant', path: '/', active: true }];
+
+
+    this.http.get<any>('http://localhost:3000/contacts').subscribe(data => {
+      data.forEach( (con: any, ind: number) => {
+        this.senderResource[0].options.push( 
+          { label: con.t_name, value: con.t_role } 
+        )
+      });;
+    });
+
+    this.msgServ.getContacts().subscribe(contacts => {
+      this.contacts = contacts;
+    });
 
     // get Variants
     this._fetchData();

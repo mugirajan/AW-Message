@@ -2,15 +2,23 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import * as env from 'src/environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WAMesssagingService {
 
+  private apicontactUrl ='http://localhost:3000/contacts'
+
   url = env.WAEnds.url + env.WAEnds.version + "/" + env.WAEnds.PhnID + "/messages";
 
   constructor(private http: HttpClient) { }
+
+  getContacts(): Observable<any[]> {
+    return this.http.get<any[]>(this.apicontactUrl);
+    
+  }
 
   sendWACustomTemplateMessage(to: string, headerTxt: string, msg: string) {
 
