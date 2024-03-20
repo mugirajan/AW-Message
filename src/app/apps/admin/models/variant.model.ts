@@ -1,8 +1,9 @@
 
 export interface Variant {
     id?: number,
-    g_name: string,
+    group_id: string,
     Body_Text: string,
     selectedDate: Date,
-    active_status: string;
+    group_name:string,
+    active_status: boolean;
 }

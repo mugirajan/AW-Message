@@ -64,16 +64,15 @@
                             <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">General</h5>                        
                             <div class="row">
                                 <div class="col-6"> 
-                                    <div class="mb-3">
+                                    <div class="mb-2">
                                         <label for="List-number" class="form-label">Group Name<span class="text-danger">*</span></label>
-                                        <select id="List-number" class="form-select form-select my-1 my-lg-0" id="g_name" formControlName="g_name" >
-                                            <option *ngFor="let list of list" [value]="list.c_name">
-                                                {{list.c_name }}
-                                            </option>
+                                        <select id="List-number" class="form-select form-select my-1 my-lg-0" id="group_id" formControlName="group_id" (change)="onGroupNameSelect($event)">
+                                            <option  *ngFor="let list of list" [value]="list.id">{{list.c_name }}</option>
                                         </select>
-                                    </div>
-                                    
+                                    </div>
+                                    <input id="selected-group" class="form-control" type="text" [value]="selectedGroupName" formControlName="group_name">
                                 </div>
+                                
                                 <!-- <div class="col-6"> 
                                     <div class="mb-3">
                                         

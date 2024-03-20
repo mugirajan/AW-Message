@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, map } from 'rxjs';
-import { Testimonial } from '../models/testimonial.model';
-import * as env from 'src/environments/environment'
 import { Variant } from '../models/variant.model';
 
 @Injectable({
@@ -10,7 +8,7 @@ import { Variant } from '../models/variant.model';
 })
 export class VariantService {
   private apiUrl = 'http://localhost:3000/variants';
-  private apiUrl1 = 'http://localhost:3000/list/'; 
+  private apiUrl1 = 'http://localhost:3000/list'; 
 
 
 

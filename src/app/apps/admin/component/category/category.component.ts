@@ -101,15 +101,6 @@ export class CategoryComponent implements OnInit {
    
   };
 
-  // onSelectionChange(event: any): void {
-  //   const selectedValue = event.target.value; 
-  //   this.selectedOptions.push(selectedValue);
-  //   this.contacts = this.contacts.filter(contact => contact.t_role !== selectedValue);
-  // }
-
-  // cancelSelection(option: string): void {
-  //   this.selectedOptions = this.selectedOptions.filter(item => item !== option);
-  // }
   onSelectionChange(event: any): void {
     const selectedValue = event.target.value;
     const selectedContact = this.contacts.find(contact => contact.id === selectedValue);

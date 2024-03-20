@@ -258,7 +258,6 @@ export class ContactComponent implements OnInit {
    * @param data record info
    */
   actionTriggerd(event: actionEvent) {
-    // console.log("Event: ", event)
     switch (event.action) {
       case "edit":
         this.actionType = "Edit";
@@ -386,7 +385,6 @@ export class ContactComponent implements OnInit {
    * Edit form
    */
   editcontactForm(data: Testimonial) {
-    console.log("Data edit: ", data);
     this.modalService.open(this.sizeableModal, { size: 'xl' });
     this.contactForm.patchValue({ ...data }); 
   }
