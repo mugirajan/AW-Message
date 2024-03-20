@@ -32,20 +32,20 @@ export class VariantComponent implements OnInit {
   actionType: string = "Add New";
   variantDeleteID: any;
   categoryResource: any = [];
-  categories: Select2Group[] = [
-    {
-        label: '',
-        options: [
-        ]
-    },
-  ];
-  products: Select2Group[] = [
-    {
-        label: '',
-        options: [
-        ]
-    },
-  ];
+  // categories: Select2Group[] = [
+  //   {
+  //       label: '',
+  //       options: [
+  //       ]
+  //   },
+  // ];
+  // products: Select2Group[] = [
+  //   {
+  //       label: '',
+  //       options: [
+  //       ]
+  //   },
+  // ];
   specLabels: any = [];
   idFormBasedOnCategory!: boolean;
   selectedCategory: Select2Option[] = [];
