@@ -29,20 +29,6 @@
       "active_status": "true"
     },
     {
-      "id": "8834",
-      "t_name": "Aniruth",
-      "t_role": "9514687174",
-      "t_date": "24-1-2024",
-      "t_msg": null,
-      "t_address": "porur",
-      "t_city": "chennai",
-      "t_gender": "male",
-      "t_mail": "abc@gmail.com",
-      "t_dob": "21-3-2000",
-      "t_term": "Six Month",
-      "active_status": "true"
-    },
-    {
       "id": "f329",
       "t_name": "kamal",
       "t_role": "918056221146",
@@ -54,7 +40,7 @@
       "t_mail": "abc@gmail.com",
       "t_dob": "21-3-2000",
       "t_term": "Six Month",
-      "active_status": "true"
+      "active_status": "false"
     },
     {
       "id": "11bd",
@@ -71,16 +57,44 @@
       "active_status": "true"
     },
     {
-      "id": "867d",
-      "t_name": "alpha",
-      "t_role": "91 9840892730",
-      "t_date": "21-09-2003",
+      "id": "a71c",
+      "t_name": "Anirudh",
+      "t_role": "918807310429",
+      "t_date": "20-03-2024",
+      "t_msg": null,
+      "t_address": "Chennai",
+      "t_city": "Chennai",
+      "t_gender": "male",
+      "t_mail": "anirudh@blackitechs.com",
+      "t_dob": "25-11-1999",
+      "t_term": "One Year",
+      "active_status": "true"
+    },
+    {
+      "id": "0c35",
+      "t_name": "manda",
+      "t_role": "32456789",
+      "t_date": "2024-03-03",
+      "t_msg": null,
+      "t_address": "NO 8A/30 NERMAI NAGAR 1ST STREET",
+      "t_city": "jh",
+      "t_gender": "male",
+      "t_mail": "sdfghjk@njh",
+      "t_dob": "2024-03-17",
+      "t_term": "Three Month",
+      "active_status": "true"
+    },
+    {
+      "id": "675f",
+      "t_name": "k",
+      "t_role": "k",
+      "t_date": "2024-01-01",
       "t_msg": null,
       "t_address": "No 8a/30 nermai nagar 1st street kolathur",
       "t_city": "Chennai",
-      "t_gender": null,
-      "t_mail": "azemaltha@gmail.com",
-      "t_dob": "21-09-2023",
+      "t_gender": "male",
+      "t_mail": "k",
+      "t_dob": "2024-01-01",
       "t_term": "Six Month",
       "active_status": "true"
     }
@@ -110,21 +124,51 @@
         "8834",
         "f329"
       ]
+    },
+    {
+      "id": "2ccf",
+      "c_name": "Special batch",
+      "c_desc": null,
+      "c_number": "8834",
+      "c_selected": "919344025402,9514687174,9514687174",
+      "active_status": "true",
+      "selectedOptions": [
+        "4dd3",
+        "576e",
+        "8834"
+      ]
+    },
+    {
+      "id": "6edb",
+      "c_name": "freezing",
+      "c_desc": null,
+      "c_number": "576e",
+      "c_selected": "918056221146,9514687174",
+      "active_status": "true",
+      "selectedOptions": [
+        "f329",
+        "576e"
+      ]
     }
   ],
   "variants": [
     {
-      "id": "5093",
-      "Body_Text": "ASDFG DFG",
-      "g_name": "Batch one",
+      "id": "59b1",
+      "Body_Text": "fitness buddies",
+      "group_id": "b120",
+      "group_name": "Batch one",
       "active_status": "true",
-      "selectedDate": "2024-03-21",
-      "selectedTime": "16:30"
+      "selectedDate": "2024-03-22"
     }
   ],
-  "Templates":[
+  "templates": [
     {
-      "Temp_name":"Alpha"
+      "id": "6192",
+      "Temp_name": "alpha",
+      "Temp_img": "asdfghjk",
+      "Temp_alt_img": "svnmasdvnm,",
+      "Temp_headers": "sdfghj",
+      "active_status": "true"
     }
   ]
 }

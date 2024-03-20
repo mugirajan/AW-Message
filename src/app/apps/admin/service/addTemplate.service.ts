@@ -10,17 +10,17 @@ import { Template } from '@angular/compiler/src/render3/r3_ast';
   providedIn: 'root'
 })
 export class AddTemplateService {
-  private apiUrl = 'http://localhost:3000/Templates'; 
+  private apiUrl = 'http://localhost:3000/templates/'; 
 
   constructor(private http: HttpClient) { }
  
   createTemplate(data: any) {
-    
+    console.log("called createtmplateL: ", data)
     return this.http.post(this.apiUrl, data);
   }
 
-  getTemplate(): Observable<AddTemplate[]> {
-    return this.http.get<AddTemplate[]>(this.apiUrl);
+  getTemplate() {
+    return this.http.get(this.apiUrl);
     
   }
 

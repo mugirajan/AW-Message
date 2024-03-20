@@ -65,15 +65,13 @@ export class AddTemplateComponent implements OnInit {
     private TempServ: AddTemplateService,
     private notifyServ: NotificationService,
     private conserv: ContactService,
-    private http: HttpClient
     ) { }
 
    
 
   ngOnInit(): void {
-    this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Add Template', path: '/', active: true }];
 
-   
+    this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Add Template', path: '/', active: true }];
 
     
     // get Categories
@@ -84,29 +82,15 @@ export class AddTemplateComponent implements OnInit {
 
     // product form
     this.Template_List = this.fb.group({ 
-      // id:[''],
-      Temp_name: ['', Validators.required],
-      Temp_img: ['',Validators.required],
+      id:[''],
+      temp_name: ['', Validators.required],
+      temp_img: ['',Validators.required],
       // Temp_number: ['', Validators.required],
-      Temp_alt_img:['', Validators.required],
-      Temp_headers:['', Validators.required],
+      temp_alt_img:['', Validators.required],
+      temp_headers:['', Validators.required],
 
       active_status: [false, Validators.required],
-    });
-   
-    this.TempServ.getTemplate().subscribe(
-      (data: AddTemplate[]) => {
-        this.addtemplates = data;
-        this.loading = false;
-      },
-      (error) => {
-        console.error('Error fetching contacts:', error);
-        this.loading = false;
-      }
-    );
-
-    
-    
+    })    
    
   };
 
@@ -125,11 +109,10 @@ export class AddTemplateComponent implements OnInit {
 
 
   TemplateForm() {
-    this.TempServ.createTemplate(this.Template_List.value)
+    let d = this.Template_List.value
+    this.TempServ.createTemplate(d)
     .subscribe(response => {
       console.log('Contact added successfully:', response);
-    }, error => {
-      console.error('contact adding testimonial:', error);
     });
     this.closeTemplateModal();
     this._fetchData();
@@ -138,13 +121,13 @@ export class AddTemplateComponent implements OnInit {
   
   
   _fetchData(): void {
+    console.log("called fetch data")
     this.TempServ.getTemplate().subscribe((data: any) =>{
       if(data.length > 0) {
         this.records =  data;
       }
+      console.log("Upon fetch: ", data)
     });
-
-   
   }
 
   initTableCofig(): void {

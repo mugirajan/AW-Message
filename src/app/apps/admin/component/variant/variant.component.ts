@@ -51,7 +51,11 @@ export class VariantComponent implements OnInit {
   selectedCategory: Select2Option[] = [];
   selectProduct: any;
   selectedProduct: Select2Option[] = [];
-  list:any[]=[];
+  list: any[] = [];
+
+  selectedGroupName: string = ''; 
+  
+  
 
   @ViewChild('sizeableModal')
   sizeableModal!: TemplateRef<NgbModal>;
@@ -92,7 +96,8 @@ export class VariantComponent implements OnInit {
     this.ScheduleList = this.fb.group({
       id: [''],
       Body_Text: ['', Validators.required],
-      g_name: ['', Validators.required],
+      group_id: ['', Validators.required],
+      group_name:['', Validators.required],
       active_status: ['', Validators.required],
       selectedDate: ['', Validators.required],
       selectedTime: ['', Validators.required],
@@ -105,10 +110,22 @@ export class VariantComponent implements OnInit {
   }
 
 
+
+  onGroupNameSelect(event: any): void {
+    const selectedId = event.target.value;
+    const selectedGroup = this.list.find(group => group.id === selectedId);
+    if (selectedGroup) {
+      this.selectedGroupName = selectedGroup.c_name;
+      this.ScheduleList.patchValue({
+        group_name: this.selectedGroupName
+      });
+    }
+  }
   ScheduleForm() {
     const formData = this.ScheduleList.value;
     this.varServ.createSchedule(formData).subscribe(response => {
       this.ScheduleList.reset();
+      this.selectedGroupName = '';
      
     }, error => {
       console.error('Error adding List:', error);
@@ -117,6 +134,8 @@ export class VariantComponent implements OnInit {
     this.closeVariantModal();
     this._fetchData();
   }
+
+  
   
   _fetchData(): void {
     this.varServ.getSchedule().subscribe((data: any) =>{
@@ -124,15 +143,6 @@ export class VariantComponent implements OnInit {
         this.records =  data;
       }
     });
-    
-    // this.varServ.getSchedule().subscribe((data: any) =>{
-    //   if(data.length > 0) {
-    //     data.forEach((e : any)=>{
-    //     e.active_status = e.active_status == true ? 'active':'inactive'
-    //     })
-    //     this.records =  data;
-    //   }
-    // });
   }
  
   
@@ -146,9 +156,9 @@ export class VariantComponent implements OnInit {
         formatter: (a: Variant) => a.id
       },
       {
-        name: 'g_name',
-        label: 'Variant Name',
-        formatter: (a: Variant) => a.g_name
+        name: 'group_name',
+        label: 'Group Name',
+        formatter: (a: Variant) => a.group_name
       },
       {
         name: 'Body_Text',
@@ -172,7 +182,8 @@ export class VariantComponent implements OnInit {
         formatter: this.variantActiveStatusFormatter.bind(this)
       },
     ];
-  }
+  }  
+  
 
   
   variantActiveStatusFormatter(data: Variant): any {
@@ -300,7 +311,7 @@ actionTriggerd(event: actionEvent) {
   
     this.ScheduleList.patchValue({
       id: data.id,
-      g_name: data.g_name,
+      group_id: data.group_id,
       Body_Text: data.Body_Text,
       selectedDate: data.selectedDate,
       SelectedTime: data.SelectedTime,
