@@ -58,6 +58,13 @@ const MENU_ITEMS: MenuItem[] = [
                
             },
             {
+                key: 'Add-Template',
+                label: 'Add Template',
+                link: '/apps/admin/Add-Template',
+                icon: 'message-square'
+                // parentKey: 'manage-items'
+            },
+            {
                 key: 'app-manage-custom',
                 label: 'Default Message',
                 link: '/apps/admin/custom',

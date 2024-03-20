@@ -97,7 +97,7 @@ export class ProductComponent implements OnInit {
     private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Custom Template', path: '/', active: true }];
+    this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Default Message', path: '/', active: true }];
     
 
     this.http.get<any>('http://localhost:3000/contacts').subscribe(data => {

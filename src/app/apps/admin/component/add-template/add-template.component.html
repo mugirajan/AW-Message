@@ -1,5 +1,5 @@
 <!-- page title -->
-<app-page-title [breadcrumbItems]="pageTitle" title="Manage List"></app-page-title>
+<app-page-title [breadcrumbItems]="pageTitle" title="Add Template"></app-page-title>
 
 <div class="row">
     <div class="col-12">
@@ -32,7 +32,7 @@
                     [isSortable]="false" 
                     [hasActionColumn]="true"
                     (actionTrigger)="actionTriggerd($event)"
-                    (search)="searchData($event)"
+                    
                     tableClasses="table-centered"
                     theadClasses="table-light">
                 </app-advanced-table>
@@ -48,14 +48,14 @@
 <!--  -->
 <ng-template #sizeableModal let-modal>
     <div class="modal-header">
-        <h4 class="modal-title" id="modalLabel"> {{ actionType }} Category </h4>
+        <h4 class="modal-title" id="modalLabel"> {{ actionType }} Template </h4>
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
 
         </button>
     </div>
     <div class="modal-body">
 
-        <form   [formGroup]="categoryList" #addProduct="ngForm">
+        <form   [formGroup]="Template_List" #addProduct="ngForm">
 
             <div class="row">
                 <div class="col">
@@ -64,32 +64,52 @@
                             <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">General</h5>
         
                             <div class="mb-3">
-                                <label for="category-name" class="form-label"> Name <span
+                                <label for="Template-name" class="form-label"> Name <span
                                         class="text-danger">*</span></label>
-                                <input type="text"  id="category-name" class="form-control" placeholder="Mugilavathi"
-                                    required formControlName="c_name"
-                                    [ngClass]="{ 'is-invalid': addProduct.submitted && form1.c_name.invalid }">
+                                <input type="text"  id="Template-name" class="form-control" placeholder="Mugilavathi"
+                                    required formControlName="Temp_name"
+                                    [ngClass]="{ 'is-invalid': addProduct.submitted && form1.Temp_name.invalid }">
                             </div>
-                           
-                                
+                            <div class = "row">
+                            <div class = "col-6">
                             <div class="mb-3">
-                                <label for="List-number" class="form-label">Contact<span class="text-danger">*</span></label>
-                                <select class="form-select" id="List-number" (change)="onSelectionChange($event)" formControlName="c_number">
-                                  <option *ngFor="let contact of contacts" [value]="contact.id">{{ contact.t_name }} - {{ contact.t_role }}</option>
-                                </select>
-                              </div>
-                              
-                              <div class="mb-3">
-                                <label for="List-option" class="form-label">Selected Contacts<span class="text-danger">*</span></label>
-                                <ul>
-                                  <li *ngFor="let option of selectedOptions">
-                                    {{ getNumberFromId(option) }}
-                                    <button class="can-button" (click)="cancelSelection(option)">X</button>
-                                  </li>
-                                </ul>
-                              </div>
-                              
-                              
+                                <label for="Template-name" class="form-label"> Image Url <span
+                                        class="text-danger">*</span></label>
+                                <input type="text"  id="Template-name" class="form-control" placeholder="Mugilavathi"
+                                    required formControlName="Temp_img"
+                                    [ngClass]="{ 'is-invalid': addProduct.submitted && form1.Temp_img.invalid }">
+                            </div>
+                           </div>
+                            <div class = "col-6">
+                            <div class="mb-3">
+                                <label for="Template-name" class="form-label"> Image Alt Text <span
+                                        class="text-danger">*</span></label>
+                                <input type="text"  id="Template-name" class="form-control" placeholder="Mugilavathi"
+                                    required formControlName="Temp_alt_img"
+                                    [ngClass]="{ 'is-invalid': addProduct.submitted && form1.Temp_alt_img.invalid }">
+                            </div>
+                        
+                        </div>
+                             </div>
+
+
+                             <!--3rd Row-->
+                             <div class = "row">
+                                <div class = "col-6">
+                                <div class="mb-3">
+                                    <label for="Template-name" class="form-label"> Body Text <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text"  id="Template-name" class="form-control" placeholder="Mugilavathi"
+                                        required formControlName="Temp_headers"
+                                        [ngClass]="{ 'is-invalid': addProduct.submitted && form1.Temp_headers.invalid }">
+                                </div>
+                               </div>
+                                
+                                 </div>
+
+                             <!--End of 3rd Row-->                     
+                            
+                                        
                               
                             
 
@@ -123,7 +143,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="text-center mb-3">
-                        <button type="submit" class="btn w-sm btn-success waves-effect waves-light me-1" (click)="ListForm()">Save</button>
+                        <button type="submit" class="btn w-sm btn-success waves-effect waves-light me-1" (click)="TemplateForm()">Save</button>
                         <button type="button" class="btn w-sm btn-danger waves-effect" aria-label="Close" (click)="modal.dismiss('Cross click')">Cancel</button>
                     </div>
                 </div> <!-- end col -->

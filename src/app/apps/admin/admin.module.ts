@@ -29,6 +29,7 @@ import { DynaFormService } from './service/form.service';
 import { SheduleComponent } from './component/shedule/shedule.component';
 import { MessageComponent } from './component/message/message.component';
 import { WAMesssagingService } from './service/wa.message.service';
+import { AddTemplateComponent } from './component/add-template/add-template.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { WAMesssagingService } from './service/wa.message.service';
         CategoryComponent,
         VariantComponent,
         SheduleComponent,
-        MessageComponent
+        MessageComponent,
+        AddTemplateComponent
     ],
     imports: [
         CommonModule,

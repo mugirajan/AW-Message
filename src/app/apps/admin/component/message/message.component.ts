@@ -63,7 +63,7 @@ export class MessageComponent implements OnInit {
 
   ngOnInit(): void {
     
-    this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Manage variant', path: '/', active: true }];
+    this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Custom Message', path: '/', active: true }];
 
 
     this.http.get<any>('http://localhost:3000/contacts').subscribe(data => {

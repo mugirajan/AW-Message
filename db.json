@@ -69,6 +69,20 @@
       "t_dob": "21-3-2000",
       "t_term": "One Year",
       "active_status": "true"
+    },
+    {
+      "id": "867d",
+      "t_name": "alpha",
+      "t_role": "91 9840892730",
+      "t_date": "21-09-2003",
+      "t_msg": null,
+      "t_address": "No 8a/30 nermai nagar 1st street kolathur",
+      "t_city": "Chennai",
+      "t_gender": null,
+      "t_mail": "azemaltha@gmail.com",
+      "t_dob": "21-09-2023",
+      "t_term": "Six Month",
+      "active_status": "true"
     }
   ],
   "list": [
@@ -100,25 +114,17 @@
   ],
   "variants": [
     {
-      "id": "8407",
-      "Body_Text": "kokka makka",
-      "g_name": "mugi",
-      "active_status": "true",
-      "selectedDate": "2222-02-22"
-    },
-    {
-      "id": "4868",
-      "Body_Text": "follow  panriya da body soda",
-      "g_name": "mrng5batch",
-      "active_status": "true",
-      "selectedDate": "1998-04-02"
-    },
-    {
-      "id": "78aa",
-      "Body_Text": "enada pani vachirukeeka",
+      "id": "5093",
+      "Body_Text": "ASDFG DFG",
       "g_name": "Batch one",
       "active_status": "true",
-      "selectedDate": "2024-02-07"
+      "selectedDate": "2024-03-21",
+      "selectedTime": "16:30"
+    }
+  ],
+  "Templates":[
+    {
+      "Temp_name":"Alpha"
     }
   ]
 }

@@ -1,40 +1,44 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Column } from 'src/app/shared/advanced-table/advanced-table.component';
-import { Category, CategoryMOdel2 } from '../../models/category.model';
+// import { Category, CategoryMOdel2 } from '../../models/category.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { BreadcrumbItem } from 'src/app/shared/page-title/page-title.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CategoryService } from '../../service/category.service';
+// import { CategoryService } from '../../service/category.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
 import { actionEvent } from '../../models';
 import { NotificationService } from 'src/app/layout/shared/service/notification.service';
-import { Variant } from '../../models/variant.model';
+// import { Variant } from '../../models/variant.model';
 import { ContactService } from '../../service/testimonial.service';
 import { HttpClient } from '@angular/common/http';
+import { AddTemplate, AddTemplateMOdel2 } from '../../models/addTemplate.model';
+import { AddTemplateService } from '../../service/addTemplate.service';
+import { Template } from '@angular/compiler/src/render3/r3_ast';
 
 @Component({
-  selector: 'app-category',
-  templateUrl: './category.component.html',
-  styleUrls: ['./category.component.scss']
+  selector: 'app-add-template',
+  templateUrl: './add-template.component.html',
+  styleUrls: ['./add-template.component.scss']
 })
-export class CategoryComponent implements OnInit {
+export class AddTemplateComponent implements OnInit {
 
   pageTitle: BreadcrumbItem[] = [];
-  records: CategoryMOdel2[] = [];
+  records: AddTemplateMOdel2[] = [];
   columns: Column[] = [];
   loading: boolean = false;
   statusGroup: string = "All";
   pageSizeOptions: number[] = [10, 25, 50, 100];
-  categoryList!: FormGroup;
+  Template_List!: FormGroup;
   files: File[] = [];
   actionType: string = "Add New";
-  val2!: Category;
+  val2!: AddTemplate;
   categorySubscription!: Subscription;
   categoryDeleteID:any;
   roles: any[] = [];
   selectedNumber: string = '';
+  addtemplates:AddTemplate[]=[];
  
 
 
@@ -46,8 +50,8 @@ export class CategoryComponent implements OnInit {
   requestData: any[]=[];
   @ViewChild('positionModal')
   positionModal!: TemplateRef<NgbModal>;
-  ListData: any = {};
-  contacts: any[] =[];
+  // TempData: any = {};
+  Templates: any[] =[];
 
 
   selectedOptions: string[] = [];
@@ -58,7 +62,7 @@ export class CategoryComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private modalService: NgbModal,
     private fb: FormBuilder,
-    private catServ: CategoryService,
+    private TempServ: AddTemplateService,
     private notifyServ: NotificationService,
     private conserv: ContactService,
     private http: HttpClient
@@ -67,17 +71,10 @@ export class CategoryComponent implements OnInit {
    
 
   ngOnInit(): void {
-    this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Manage List', path: '/', active: true }];
+    this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Add Template', path: '/', active: true }];
 
    
 
-    this.http.get<any>('http://localhost:3000/contacts').subscribe(data => {
-      this.contacts = data.contacts;
-    });
-  
-    this.catServ.getContacts().subscribe(contacts => {
-      this.contacts = contacts;
-    });
     
     // get Categories
     this._fetchData();
@@ -86,15 +83,27 @@ export class CategoryComponent implements OnInit {
     this.initTableCofig();
 
     // product form
-    this.categoryList = this.fb.group({ 
-      id:[''],
-      c_name: ['', Validators.required],
-      c_desc: ['',Validators.required],
-      c_number: ['', Validators.required],
-      c_selected:['', Validators.required],
+    this.Template_List = this.fb.group({ 
+      // id:[''],
+      Temp_name: ['', Validators.required],
+      Temp_img: ['',Validators.required],
+      // Temp_number: ['', Validators.required],
+      Temp_alt_img:['', Validators.required],
+      Temp_headers:['', Validators.required],
+
       active_status: [false, Validators.required],
     });
-
+   
+    this.TempServ.getTemplate().subscribe(
+      (data: AddTemplate[]) => {
+        this.addtemplates = data;
+        this.loading = false;
+      },
+      (error) => {
+        console.error('Error fetching contacts:', error);
+        this.loading = false;
+      }
+    );
 
     
     
@@ -110,86 +119,60 @@ export class CategoryComponent implements OnInit {
   // cancelSelection(option: string): void {
   //   this.selectedOptions = this.selectedOptions.filter(item => item !== option);
   // }
-  onSelectionChange(event: any): void {
-    const selectedValue = event.target.value;
-    const selectedContact = this.contacts.find(contact => contact.id === selectedValue);
-    if (selectedContact && !this.selectedOptions.includes(selectedValue)) {
-      this.selectedOptions.push(selectedValue);
-    }
-    this.updateSelectedOptions();
-  }
-
-  cancelSelection(option: string): void {
-    this.selectedOptions = this.selectedOptions.filter(item => item !== option);
-    this.updateSelectedOptions();
-  }
-
-  updateSelectedOptions(): void {
-    const selectedRoles = this.selectedOptions.map(option =>
-      this.contacts.find(contact => contact.id === option)?.t_role
-    );
-    this.categoryList.get('c_selected')?.setValue(selectedRoles.join(','));
-  }
   
-  getNumberFromId(id: string): string {
-    const contact = this.contacts.find(contact => contact.id === id);
-    return contact ? contact.t_role : '';
-  }
+  
+ 
 
 
-  ListForm() {
-    const formData = this.categoryList.value;
-    formData.selectedOptions = this.selectedOptions; 
-    this.catServ.createCatergory(formData).subscribe(response => {
-      console.log('List added successfully:', response);
-      this.categoryList.reset();
-      this.selectedOptions = [];
+  TemplateForm() {
+    this.TempServ.createTemplate(this.Template_List.value)
+    .subscribe(response => {
+      console.log('Contact added successfully:', response);
     }, error => {
-      console.error('Error adding List:', error);
+      console.error('contact adding testimonial:', error);
     });
-  
-    this.closeListModal();
+    this.closeTemplateModal();
     this._fetchData();
   }
   
   
   
   _fetchData(): void {
-    this.catServ.getCategory().subscribe((data: any) =>{
+    this.TempServ.getTemplate().subscribe((data: any) =>{
       if(data.length > 0) {
         this.records =  data;
       }
     });
 
-    // this.catServ.getContacts().subscribe((data: any) =>{
-    //   console.log("asdfghj")
-    //   if(data.length > 0) {
-    //     this.records =  data;
-    //   }
-    // });
+   
   }
 
   initTableCofig(): void {
     this.columns = [
       {
-        name: 'c_id',
-        label: 'Category ID',
-        formatter: this.categoryIDFormatter.bind(this)
+        name: 'Temp_id',
+        label: 'AddTemplate ID',
+        formatter: this.AddTemplateIDFormatter.bind(this)
       },
       {
-        name: 'c_name',
+        name: 'Temp_name',
         label: 'Name',
-        formatter: (order: Category) => order.c_name
+        formatter: (order: AddTemplate) => order.Temp_name
       }, 
       {
-        name: 'c_number',
-        label: 'Total contacts',
-        formatter: (order: Category) => `${order.c_selected.split(',').length}`,
+        name: 'Temp_img',
+        label: 'Img Url',
+        formatter: (order: AddTemplate) => order.Temp_img
+      },
+      {
+        name: 'Temp_Temp_headers',
+        label: 'Context',
+        formatter: (order: AddTemplate) => order.Temp_headers
       },
       {
         name: 'active_status',
         label: 'Active Status',
-        formatter: this.categoryActiveStatusFormatter.bind(this)
+        formatter: this.AddTemplateActiveStatusFormatter.bind(this)
       },
     ];
   }
@@ -199,14 +182,14 @@ export class CategoryComponent implements OnInit {
   }
 
   
-  categoryIDFormatter(data: Category): any {
+  AddTemplateIDFormatter(data: AddTemplate): any {
     return this.sanitizer.bypassSecurityTrustHtml(
       `<a href="javascript:void(0)" class="order text-body fw-bold" id="${data.id}">#${data.id}</a> `
     );
   }
 
     
-  categoryActiveStatusFormatter(data: Category): any {
+  AddTemplateActiveStatusFormatter(data: AddTemplate): any {
     if (data.active_status == "true") {
       return this.sanitizer.bypassSecurityTrustHtml(
         `<h5><span class="badge bg-soft-success text-success"><i class="mdi mdi-check"></i> Active </span></h5>`
@@ -227,52 +210,54 @@ export class CategoryComponent implements OnInit {
  * @param term Search the value
  */
   
-  matches(row: Category, term: string) {
+  matches(row: AddTemplate, term: string) {
     return (
       row.id?.toString().includes(term) ||
-      row.c_name.toLowerCase().includes(term) ||
-      row.c_desc.toLowerCase().includes(term) ||
-      // row.c_number.toLowerCase().includes(term) ||
-      row.c_number.toLowerCase().includes(term) ||
+      row.Temp_name.toLowerCase().includes(term) ||
+      row.Temp_img.toLowerCase().includes(term) ||
+      row.Temp_alt_img.toLowerCase().includes(term) ||
+      row.Temp_headers.toLowerCase().includes(term) ||
       
       this._matchesActiveStatus(row, term)
     );
   }
   
-  searchData(searchTerm: string): void {
-    console.log('Search Term:', searchTerm);
-    if (searchTerm === '') {
-      this._fetchData();
-    } else {
-      searchTerm = searchTerm.toLowerCase();
-      this.records = this._filterData(this.records, searchTerm);
-    }
-  }
+  // searchData(searchTerm: string): void {
+  //   console.log('Search Term:', searchTerm);
+  //   if (searchTerm === '') {
+  //     this._fetchData();
+  //   } else {
+  //     searchTerm = searchTerm.toLowerCase();
+  //     this.records = this._filterData(this.records, searchTerm);
+  //   }
+  // }
 
   
-  private _filterData(data: Category[], term: string): Category[] {
-    return data.filter((item: Category) => this._itemMatches(item, term));
+  private _filterData(data: AddTemplate[], term: string): AddTemplate[] {
+    return data.filter((item: AddTemplate) => this._itemMatches(item, term));
   }
   
-  private _itemMatches(item: Category, term: string): boolean {
+  private _itemMatches(item: AddTemplate, term: string): boolean {
     const matchesId = item.id?.toString().includes(term);
-    const matchesCName = item.c_name.toLowerCase().includes(term);
-    const matchesCDesc = item.c_desc.toLowerCase().includes(term);
-    // const matchesUnqCatName = item.c_number.toLowerCase().includes(term);
-    const matchesSuprCat = item.c_number.toLowerCase().includes(term);
+    const matchesTempName = item.Temp_name.toLowerCase().includes(term);
+    const matchesTempImg = item.Temp_img.toLowerCase().includes(term);
+    const matchesTempAltImg = item.Temp_alt_img.toLowerCase().includes(term);
+
+    // const matchesUnqCatName = item.Temp_number.toLowerCase().includes(term);
+    const matchesTempBodyText = item.Temp_headers.toLowerCase().includes(term);
     const matchesActiveStatus = this._matchesActiveStatus(item, term);
   
     return (
       matchesId ||
-      matchesCName ||
-      matchesCDesc ||
-      // matchesUnqCatName ||
-      matchesSuprCat ||
+      matchesTempName ||
+      matchesTempImg ||
+      matchesTempBodyText ||
+      matchesTempAltImg ||
       matchesActiveStatus
     );
   }
   
-  private _matchesActiveStatus(item: Category, term: string): boolean {
+  private _matchesActiveStatus(item: AddTemplate, term: string): boolean {
     if ('inactive'.includes(term) && item.active_status.toLowerCase() === 'false') {
       return true;
     } else if ('active'.includes(term) && item.active_status.toLowerCase() === 'true') {
@@ -317,7 +302,7 @@ export class CategoryComponent implements OnInit {
 
   deleteList() {
     if (this.categoryDeleteID) {
-     this.catServ.deleteList(this.categoryDeleteID).subscribe(
+     this.TempServ.deleteTemplate(this.categoryDeleteID).subscribe(
        (response) => {
          console.log('Delete successful', response);
        },
@@ -335,7 +320,7 @@ export class CategoryComponent implements OnInit {
   }
 
   deletedSeletedContact(){
-    this.catServ.deleteList(this.categoryDeleteID).subscribe( (val) => {
+    this.TempServ.deleteTemplate(this.categoryDeleteID).subscribe( (val) => {
       if(val['isSuccess'] == true) {
         this.notifyServ.addNotification(
           {
@@ -357,7 +342,7 @@ export class CategoryComponent implements OnInit {
       this._fetchData();
     });
     this.categoryDeleteID = -1;
-    this.closeListModal();
+    this.closeTemplateModal();
     
   }
 
@@ -372,19 +357,19 @@ export class CategoryComponent implements OnInit {
     this.modalService.open(content, { size: "xl" });
   }
 
-  closeListModal(): void {
+  closeTemplateModal(): void {
     this.modalService.dismissAll();
     this.resetCategoryForm();
   }
 
   
-  editCategoryName(data: Category) {
+  editCategoryName(data:AddTemplate ) {
     this.modalService.open(this.sizeableModal, { size: 'xl' });
-    this.categoryList.patchValue({ ...data });
+    this.Template_List.patchValue({ ...data });
   }
 
   UpdateCategory() {
-    this.catServ.UpdateCategory(this.categoryList.value).subscribe(
+    this.TempServ.UpdateTemplate(this.Template_List.value).subscribe(
       (response) => {
         console.log('Update response:', response);
         this.modalService.dismissAll();
@@ -395,7 +380,7 @@ export class CategoryComponent implements OnInit {
     );
   }
   
-  get form1() { return this.categoryList.controls; }
+  get form1() { return this.Template_List.controls; }
 
  
 
@@ -404,7 +389,7 @@ export class CategoryComponent implements OnInit {
     // files reset
     this.files = []
     // form reset
-    this.categoryList.reset()
+    this.Template_List.reset()
   }
 
 
