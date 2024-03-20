@@ -85,7 +85,7 @@ export class WAMesssagingService {
                         {
                             "type": "image",
                             "image": {
-                                "link": "https://i.imgur.com/UlFinxp.jpeg"
+                                "link": "https://img.freepik.com/free-photo/bodybuilder-training-arm-with-resistance-band_7502-4758.jpg?t=st=1710920484~exp=1710924084~hmac=84b412344cc9f4f61e704c3490da6eb257f5698076fe221670b44e7d2875fc4b&w=826"
                             },
                             "text": ""
                         }

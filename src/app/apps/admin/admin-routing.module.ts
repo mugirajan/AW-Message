@@ -6,6 +6,7 @@ import { ProductComponent } from './component/product/product.component';
 import { VariantComponent } from './component/variant/variant.component';
 import { SheduleComponent } from './component/shedule/shedule.component';
 import { MessageComponent } from './component/message/message.component';
+import { AddTemplateComponent } from './component/add-template/add-template.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,10 @@ const routes: Routes = [
   {
     path: "list",
     component: CategoryComponent
+  },
+  {
+    path: "Add-Template",
+    component: AddTemplateComponent
   },
   {
     path: "custom",

@@ -69,6 +69,34 @@
       "t_dob": "25-11-1999",
       "t_term": "One Year",
       "active_status": "true"
+    },
+    {
+      "id": "0c35",
+      "t_name": "manda",
+      "t_role": "32456789",
+      "t_date": "2024-03-03",
+      "t_msg": null,
+      "t_address": "NO 8A/30 NERMAI NAGAR 1ST STREET",
+      "t_city": "jh",
+      "t_gender": "male",
+      "t_mail": "sdfghjk@njh",
+      "t_dob": "2024-03-17",
+      "t_term": "Three Month",
+      "active_status": "true"
+    },
+    {
+      "id": "675f",
+      "t_name": "k",
+      "t_role": "k",
+      "t_date": "2024-01-01",
+      "t_msg": null,
+      "t_address": "No 8a/30 nermai nagar 1st street kolathur",
+      "t_city": "Chennai",
+      "t_gender": "male",
+      "t_mail": "k",
+      "t_dob": "2024-01-01",
+      "t_term": "Six Month",
+      "active_status": "true"
     }
   ],
   "list": [
@@ -139,6 +167,16 @@
       "group_name": "Special batch",
       "active_status": "true",
       "selectedDate": "2024-03-22"
+    }
+  ],
+  "templates": [
+    {
+      "id": "6192",
+      "Temp_name": "alpha",
+      "Temp_img": "asdfghjk",
+      "Temp_alt_img": "svnmasdvnm,",
+      "Temp_headers": "sdfghj",
+      "active_status": "true"
     }
   ]
 }

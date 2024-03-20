@@ -77,7 +77,7 @@ export class VariantComponent implements OnInit {
 
   // OnInit 
   ngOnInit(): void {
-    this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Manage variant', path: '/', active: true }];
+    this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Manage Schedule', path: '/', active: true }];
     
     this.http.get<any>('http://localhost:3000/list').subscribe(data => {
       this.list = data.list;
@@ -99,7 +99,9 @@ export class VariantComponent implements OnInit {
       group_id: ['', Validators.required],
       group_name:['', Validators.required],
       active_status: ['', Validators.required],
-      selectedDate: ['', Validators.required]
+      selectedDate: ['', Validators.required],
+      selectedTime: ['', Validators.required],
+
     });
 
     this.resetScheduleList();
@@ -168,6 +170,11 @@ export class VariantComponent implements OnInit {
         name: 'Selected_Date',
         label: 'Selected Date',
         formatter: (a: Variant) => a.selectedDate
+      },
+      {
+        name: 'Selected_Time',
+        label: 'Selected Time',
+        formatter: (a: Variant) => a.selectedTime
       },
       {
         name: 'active_status',
@@ -307,6 +314,7 @@ actionTriggerd(event: actionEvent) {
       group_id: data.group_id,
       Body_Text: data.Body_Text,
       selectedDate: data.selectedDate,
+      SelectedTime: data.SelectedTime,
       active_status: data.active_status ? 'true' : 'false', 
     });
     this.varServ.UpdateSchedule(this.ScheduleList.value).subscribe(

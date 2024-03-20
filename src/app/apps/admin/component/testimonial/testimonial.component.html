@@ -101,7 +101,7 @@
                             <div class="mb-3">
                                 <label for="contact-dob" class="form-label">DOB<span
                                         class="text-danger">*</span></label>
-                                <input type="text" id="contact-dob"  class="form-control" placeholder="e.g : 21-09-2023"
+                                <input type="date" id="contact-dob"  class="form-control" placeholder="e.g : 21-09-2023"
                                     required formControlName="t_dob"
                                     [ngClass]="{  'is-invalid': addProduct.submitted && form1.t_dob.invalid }">
                             </div>
@@ -134,7 +134,7 @@
                             <div class="mb-3">
                                 <label for="contact-date" class="form-label">Date <span
                                         class="text-danger">*</span></label>
-                                <input type="text" id="contact-date" class="form-control" placeholder="e.g : 21-09-2023"
+                                <input type="date" id="contact-date" class="form-control" placeholder="e.g : 21-09-2023"
                                     required formControlName="t_date"
                                     [ngClass]="{  'is-invalid': addProduct.submitted && form1.t_date.invalid }">
                             </div>
