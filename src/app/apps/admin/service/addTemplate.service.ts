@@ -1,46 +1,45 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { AddTemplate } from '../models/addTemplate.model';
-import { Template } from '@angular/compiler/src/render3/r3_ast';
-// import{}
-// import { Template } from './template.model'; // Assuming you have a Template model
-
 @Injectable({
   providedIn: 'root'
 })
 export class AddTemplateService {
-  private apiUrl = 'http://localhost:3000/templates/'; 
+  private apiUrl = 'http://localhost:3000/template'; 
 
   constructor(private http: HttpClient) { }
- 
-  createTemplate(data: any) {
-    console.log("called createtmplateL: ", data)
-    return this.http.post(this.apiUrl, data);
+
+  
+  createTemp(data: any) {
+    if(data.id != undefined){ 
+      return this.UpdateTemp(data)
+    } else {
+      delete data.id; 
+      return this.http.post(this.apiUrl, data);
+    }
   }
 
-  getTemplate() {
-    return this.http.get(this.apiUrl);
+  deleteAddTemplate(AddTemplateId: any): Observable<any> {
+    const deleteUrl = `${this.apiUrl}/${AddTemplateId}`;
+    return this.http.delete(deleteUrl);
+  }
+
+  getTemp(): Observable<AddTemplate[]> {
+    return this.http.get<AddTemplate[]>(this.apiUrl);  
+  }
+
+  getAddTemplate(): Observable<AddTemplate[]> {
+    return this.http.get<AddTemplate[]>(this.apiUrl);
     
   }
-
-  editTemplateName(categoryId: number, newName: string): Observable<any> {
-    const url = `${this.apiUrl}/${categoryId}`;
-    return this.http.patch(url, { name: newName });
+  
+  
+   UpdateTemp(data: any): Observable<any> {
+    const updateUrl = `${this.apiUrl}/${data.id}`;
+    return this.http.put(updateUrl, data);
   }
+  
 
- 
-  deleteTemplate(id: string): Observable<any> {
-    const url = `${this.apiUrl}${id}`;
-    return this.http.delete(url);
-  }
+}
 
-  // Define a method to add a template
-  // addTemplate(template: Template): Observable<any> {
-  //   // Assuming your API endpoint for adding templates is '/api/addTemplate'
-  // }
-UpdateTemplate(data: any) {
-  let updateUrl = this.apiUrl  + data.id;
-  return this.http.put(updateUrl, data);
-}
-}

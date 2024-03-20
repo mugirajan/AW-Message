@@ -1,156 +1,125 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import { Column } from 'src/app/shared/advanced-table/advanced-table.component';
-// import { Category, CategoryMOdel2 } from '../../models/category.model';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
 import { BreadcrumbItem } from 'src/app/shared/page-title/page-title.model';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-// import { CategoryService } from '../../service/category.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Router, ActivatedRoute } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { actionEvent } from '../../models';
 import { NotificationService } from 'src/app/layout/shared/service/notification.service';
-// import { Variant } from '../../models/variant.model';
-import { ContactService } from '../../service/testimonial.service';
+import {  Select2Option } from 'ng-select2-component';
 import { HttpClient } from '@angular/common/http';
-import { AddTemplate, AddTemplateMOdel2 } from '../../models/addTemplate.model';
 import { AddTemplateService } from '../../service/addTemplate.service';
-import { Template } from '@angular/compiler/src/render3/r3_ast';
+import { AddTemplate } from '../../models/addTemplate.model';
 
 @Component({
   selector: 'app-add-template',
   templateUrl: './add-template.component.html',
   styleUrls: ['./add-template.component.scss']
 })
-export class AddTemplateComponent implements OnInit {
+export class AddTemplateComponent  implements OnInit {
 
   pageTitle: BreadcrumbItem[] = [];
-  records: AddTemplateMOdel2[] = [];
+  records: any = [];
   columns: Column[] = [];
   loading: boolean = false;
-  statusGroup: string = "All";
   pageSizeOptions: number[] = [10, 25, 50, 100];
-  Template_List!: FormGroup;
-  files: File[] = [];
+  templateform!: FormGroup;
   actionType: string = "Add New";
-  val2!: AddTemplate;
-  categorySubscription!: Subscription;
-  categoryDeleteID:any;
-  roles: any[] = [];
-  selectedNumber: string = '';
-  addtemplates:AddTemplate[]=[];
- 
-
+  AddTemplateDeleteID: any;
+  categoryResource: any = [];
+  specLabels: any = [];
+  idFormBasedOnCategory!: boolean;
+  selectProduct: any;
+  AddTemplate : AddTemplate[] = [];
 
   
+  
 
-  @ViewChild('advancedTable') advancedTable: any;
   @ViewChild('sizeableModal')
   sizeableModal!: TemplateRef<NgbModal>;
-  requestData: any[]=[];
   @ViewChild('positionModal')
   positionModal!: TemplateRef<NgbModal>;
-  // TempData: any = {};
-  Templates: any[] =[];
-
+  @ViewChild('positionModal2')
+  positionModal2!: TemplateRef<NgbModal>;
 
   selectedOptions: string[] = [];
-
   constructor(
-    private router: Router, 
-    private route: ActivatedRoute, 
     private sanitizer: DomSanitizer,
     private modalService: NgbModal,
     private fb: FormBuilder,
-    private TempServ: AddTemplateService,
     private notifyServ: NotificationService,
-    private conserv: ContactService,
-    ) { }
+    private http: HttpClient,
+    private tempServ: AddTemplateService
+  ) { }
 
-   
-
+  // OnInit 
   ngOnInit(): void {
-
-    this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Add Template', path: '/', active: true }];
+    this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Manage Schedule', path: '/', active: true }];
+   
+    this._fetchData();
 
     
-    // get Categories
-    this._fetchData();
-
-    // initialize table configurations
     this.initTableCofig();
 
-    // product form
-    this.Template_List = this.fb.group({ 
-      id:[''],
+    
+    this.templateform = this.fb.group({
+      id: [''],
+      temp_head: ['', Validators.required],
       temp_name: ['', Validators.required],
-      temp_img: ['',Validators.required],
-      // Temp_number: ['', Validators.required],
-      temp_alt_img:['', Validators.required],
-      temp_headers:['', Validators.required],
-
-      active_status: [false, Validators.required],
-    })    
-   
-  };
-
-  // onSelectionChange(event: any): void {
-  //   const selectedValue = event.target.value; 
-  //   this.selectedOptions.push(selectedValue);
-  //   this.contacts = this.contacts.filter(contact => contact.t_role !== selectedValue);
-  // }
-
-  // cancelSelection(option: string): void {
-  //   this.selectedOptions = this.selectedOptions.filter(item => item !== option);
-  // }
-  
-  
- 
-
-
-  TemplateForm() {
-    let d = this.Template_List.value
-    this.TempServ.createTemplate(d)
-    .subscribe(response => {
-      console.log('Contact added successfully:', response);
+      active_status: ['', Validators.required],
+      temp_img:['', Validators.required],
+      temp_body:['', Validators.required]
     });
-    this.closeTemplateModal();
+
+    this.resettemplateform();
+
+  }
+
+
+
+  ScheduleForm() {
+    const formData = this.templateform.value;
+    this.tempServ.createTemp(formData).subscribe(response => {
+      this.templateform.reset();
+     
+    }, error => {
+      console.error('Error adding List:', error);
+    });
+  
+    this.closeAddTemplateModal();
     this._fetchData();
   }
-  
-  
-  
+
   _fetchData(): void {
-    console.log("called fetch data")
-    this.TempServ.getTemplate().subscribe((data: any) =>{
+    this.tempServ.getTemp().subscribe((data: any) =>{
       if(data.length > 0) {
         this.records =  data;
       }
-      console.log("Upon fetch: ", data)
     });
   }
 
   initTableCofig(): void {
     this.columns = [
       {
-        name: 'Temp_id',
-        label: 'AddTemplate ID',
-        formatter: this.AddTemplateIDFormatter.bind(this)
+        name: 'id',
+        label: 'Id',
+        formatter: (a: AddTemplate) => a.id
       },
       {
-        name: 'Temp_name',
-        label: 'Name',
-        formatter: (order: AddTemplate) => order.Temp_name
-      }, 
-      {
-        name: 'Temp_img',
-        label: 'Img Url',
-        formatter: (order: AddTemplate) => order.Temp_img
+        name: 'temp_name',
+        label: 'Template Name',
+        formatter: (a: AddTemplate) => a.temp_name
       },
       {
-        name: 'Temp_Temp_headers',
-        label: 'Context',
-        formatter: (order: AddTemplate) => order.Temp_headers
+        name: 'temp_head',
+        label: 'Header',
+        formatter: (a: AddTemplate) => a.temp_head
+      },
+  
+      {
+        name: 'temp_body',
+        label: 'Body',
+        formatter: (a: AddTemplate) => a.temp_body
       },
       {
         name: 'active_status',
@@ -158,22 +127,10 @@ export class AddTemplateComponent implements OnInit {
         formatter: this.AddTemplateActiveStatusFormatter.bind(this)
       },
     ];
-  }
-
-  getTotalSelected(selectedOptions: any[]): string {
-    return selectedOptions ? selectedOptions.length.toString() : '0';
-  }
-
+  }  
   
-  AddTemplateIDFormatter(data: AddTemplate): any {
-    return this.sanitizer.bypassSecurityTrustHtml(
-      `<a href="javascript:void(0)" class="order text-body fw-bold" id="${data.id}">#${data.id}</a> `
-    );
-  }
-
-    
-  AddTemplateActiveStatusFormatter(data: AddTemplate): any {
-    if (data.active_status == "true") {
+  AddTemplateActiveStatusFormatter(data:AddTemplate): any {
+    if (data.active_status) {
       return this.sanitizer.bypassSecurityTrustHtml(
         `<h5><span class="badge bg-soft-success text-success"><i class="mdi mdi-check"></i> Active </span></h5>`
       );
@@ -185,194 +142,142 @@ export class AddTemplateComponent implements OnInit {
     }
 
   }
-
   
+
   /**
  * Match table data with search input
  * @param row Table row
  * @param term Search the value
  */
-  
-  matches(row: AddTemplate, term: string) {
-    return (
-      row.id?.toString().includes(term) ||
-      row.Temp_name.toLowerCase().includes(term) ||
-      row.Temp_img.toLowerCase().includes(term) ||
-      row.Temp_alt_img.toLowerCase().includes(term) ||
-      row.Temp_headers.toLowerCase().includes(term) ||
-      
-      this._matchesActiveStatus(row, term)
-    );
+  matches(row: any, term: string) {
+      return row.id?.toString().includes(term) || 
+      row.Body_Text?.toString().toLowerCase().includes(term) || 
+      row.category?.toLowerCase().toString().includes(term) || 
+      row.cate_id?.toString().toLowerCase().includes(term)       
   }
-  
-  // searchData(searchTerm: string): void {
-  //   console.log('Search Term:', searchTerm);
-  //   if (searchTerm === '') {
-  //     this._fetchData();
-  //   } else {
-  //     searchTerm = searchTerm.toLowerCase();
-  //     this.records = this._filterData(this.records, searchTerm);
-  //   }
-  // }
 
-  
-  private _filterData(data: AddTemplate[], term: string): AddTemplate[] {
-    return data.filter((item: AddTemplate) => this._itemMatches(item, term));
-  }
-  
-  private _itemMatches(item: AddTemplate, term: string): boolean {
-    const matchesId = item.id?.toString().includes(term);
-    const matchesTempName = item.Temp_name.toLowerCase().includes(term);
-    const matchesTempImg = item.Temp_img.toLowerCase().includes(term);
-    const matchesTempAltImg = item.Temp_alt_img.toLowerCase().includes(term);
-
-    // const matchesUnqCatName = item.Temp_number.toLowerCase().includes(term);
-    const matchesTempBodyText = item.Temp_headers.toLowerCase().includes(term);
-    const matchesActiveStatus = this._matchesActiveStatus(item, term);
-  
-    return (
-      matchesId ||
-      matchesTempName ||
-      matchesTempImg ||
-      matchesTempBodyText ||
-      matchesTempAltImg ||
-      matchesActiveStatus
-    );
-  }
-  
-  private _matchesActiveStatus(item: AddTemplate, term: string): boolean {
-    if ('inactive'.includes(term) && item.active_status.toLowerCase() === 'false') {
-      return true;
-    } else if ('active'.includes(term) && item.active_status.toLowerCase() === 'true') {
-      return true;
+  searchData(searchTerm: string): void {
+    console.log('Search Term:', searchTerm);
+    if (searchTerm === '') {
+      this._fetchData();
     } else {
-      return false;
+      searchTerm = searchTerm.toLowerCase();
+      this.records = this._filterData(this.records, searchTerm);
     }
   }
   
+  private _filterData(data: any[], term: string): any[] {
+    return data.filter((item: any) => this.matches(item, term));
+  }
 
-
-  
   /**
    * Receives the emitted data from tablee
    * @param action action type
    * @param data record info
    */
-
-
-  actionTriggerd(event: actionEvent) {
+actionTriggerd(event: actionEvent) {
     switch (event.action) {
       case "edit":
         this.actionType = "Edit";
-        this.editCategoryName(event.record);
+        this.edittemplateform(event.record);
         break;
       case "delete":
         this.actionType = "Delete";
-        this.deleteCategoryForm(event.record);
+        this. deleteAddTemplate(event.record);
         break;
       default:
         this.actionType = "Add New";
         break;
     }
-  }
-  
-  
-  //To Confirm delete action
-  deleteCategoryForm(record: any) {
-    this.categoryDeleteID = record.id;
-    this.openVerticallyCentered(this.positionModal);
-  }
+}
 
-  deleteList() {
-    if (this.categoryDeleteID) {
-     this.TempServ.deleteTemplate(this.categoryDeleteID).subscribe(
-       (response) => {
-         console.log('Delete successful', response);
-       },
-       (error) => {
-         console.error('Error deleting testimonial', error);
-       }
-     );
-   } else {
-     console.error('Testimonial ID is missing.');
-   }
-   }
+  showEditDisabledDialogue() {
+    this.openVerticallyCentered(this.positionModal2);
+  }
 
   openVerticallyCentered(content: TemplateRef<NgbModal>): void {
     this.modalService.open(content, { centered: true });
   }
 
-  deletedSeletedContact(){
-    this.TempServ.deleteTemplate(this.categoryDeleteID).subscribe( (val) => {
-      if(val['isSuccess'] == true) {
-        this.notifyServ.addNotification(
-          {
-            text: "Category deleted Successfully",
+  deleteAddTemplate(AddTemplate: any) {
+    this.AddTemplateDeleteID = AddTemplate.id;
+    this.openVerticallyCentered(this.positionModal);
+  }
+
+  deletedSeletedAddTemplate() {
+    this.tempServ.deleteAddTemplate(this.AddTemplateDeleteID).subscribe(
+      (response) => {
+        if (response['isSuccess'] == true) {
+          this.notifyServ.addNotification({
+            text: "AddTemplate Deleted Successfully",
             level: "success",
             autohide: true,
-          }
-        );
+          });
+        } else {
+          // this.notifyServ.addNotification({
+          //   text: "Error while deleting AddTemplate",
+          //   level: "error",
+          //   autohide: true,
+          // });
+        }
+        this._fetchData(); 
+      },
+      (error) => {
+        console.error('Error deleting AddTemplate:', error);
       }
-      else{
-        // this.notifyServ.addNotification(
-        //   {
-        //     text: "",
-        //     level: "error",
-        //     autohide: true,
-        //   }
-        // );
-      }
-      this._fetchData();
-    });
-    this.categoryDeleteID = -1;
-    this.closeTemplateModal();
-    
+    );
+    this.AddTemplateDeleteID = -1; 
+    this.closeAddTemplateModal(); 
   }
-
- 
-  openAddCategoryModal(content: TemplateRef<NgbModal>): void {
+  
+  openAddAddTemplateModal(content: TemplateRef<NgbModal>): void {
     this.actionType = "Add New";
-    this.resetCategoryForm();
-    this.openCategoryModal(content);
+    this.resettemplateform();
+    this.openAddTemplateModal(content);
   }
 
-  openCategoryModal(content: TemplateRef<NgbModal>): void {
+  
+  openAddTemplateModal(content: TemplateRef<NgbModal>): void {
     this.modalService.open(content, { size: "xl" });
   }
 
-  closeTemplateModal(): void {
-    this.modalService.dismissAll();
-    this.resetCategoryForm();
-  }
-
   
-  editCategoryName(data:AddTemplate ) {
-    this.modalService.open(this.sizeableModal, { size: 'xl' });
-    this.Template_List.patchValue({ ...data });
+  closeAddTemplateModal(): void {
+    this.modalService.dismissAll();
+    this.resettemplateform();
   }
 
-  UpdateCategory() {
-    this.TempServ.UpdateTemplate(this.Template_List.value).subscribe(
-      (response) => {
-        console.log('Update response:', response);
-        this.modalService.dismissAll();
+  edittemplateform(data: any) {
+    this.resettemplateform();
+    this.modalService.open(this.sizeableModal, { size: 'xl' });
+  
+    this.templateform.patchValue({
+      id: data.id,
+      temp_name: data.temp_name,
+      Body_Text: data.Body_Text,
+      selectedDate: data.selectedDate,
+      SelectedTime: data.SelectedTime,
+      active_status: data.active_status ? 'true' : 'false', 
+    });
+    this.tempServ.UpdateTemp(this.templateform.value).subscribe(
+      response => {
+        console.log('updated successfully:', response);
       },
-      (error) => {
-        console.error('Error updating contact:', error);
+      error => {
+        console.error('Error updating AddTemplate:', error);
       }
     );
+    
+    
   }
   
-  get form1() { return this.Template_List.controls; }
+  
+  gettemplateformValue(): any {
+    return this.templateform.value;
+  }
 
- 
-
-  // reset form and file
-  resetCategoryForm() {
-    // files reset
-    this.files = []
-    // form reset
-    this.Template_List.reset()
+  resettemplateform() {
+    this.templateform.reset()
   }
 
 
