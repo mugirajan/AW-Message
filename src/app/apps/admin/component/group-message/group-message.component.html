@@ -1,0 +1,100 @@
+<!-- page title -->
+<app-page-title [breadcrumbItems]="pageTitle" title="Send Single Custom WA Message"></app-page-title>
+
+<div class="row">
+    <div class="col-12">
+        
+        <div class="card">
+            <div class="card-body">
+                
+                <app-ui-preloader [display]="loading"></app-ui-preloader>
+
+                <form [formGroup]="groupmessageForm">
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">Send a Prepared Custom Message </h5>
+                                    
+                                    <div class="row">
+                                        <div class="col-6"> 
+                                            <div class="mb-3">
+        
+                                                <label for="category" class="form-label">
+                                                    Choose the receiver:
+                                                </label>
+        
+                                                <select2 
+                                                    [data]="senderResource" 
+                                                    placeholder="select sender contact" 
+                                                    id="sender" 
+                                                    #mySelect
+                                                    class="form-control"
+                                                    (update)='onSenderSelected($event)'
+                                                    formControlName="sender"
+                                                >
+                                                </select2>
+        
+                                                <!-- <ng-template #categoryElseBlock>
+                                                    <h4> {{ senderResource[0].t_role }} </h4>
+                                                </ng-template> -->
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="col-6"> 
+                                            <div class="mb-3">
+                                                
+                                            </div>
+                                        </div>
+
+                                        <div class="col-6"> 
+                                            <div class="mb-3">
+        
+                                                <label for="header_text" class="form-label">
+                                                    Header text:
+                                                </label>
+                                                <input type="text" id="header_text" class="form-control" placeholder="the person name, e.g. Brock Lesner"
+                                                    required formControlName="headerTxt" />
+        
+                                            </div>
+                                        </div>
+
+                                        <div class="col-6"> 
+                                            <div class="mb-3">
+        
+                                                <label for="message" class="form-label">
+                                                    Message body:
+                                                </label>
+                                                <input type="textarea" id="message" class="form-control" placeholder="eg: sample message bodu has to be here..."
+                                                    required formControlName="message" />
+        
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12"> 
+                                            <div class="mb-3">
+        
+                                                <button class="btn btn-primary" (click)="sendGroupMessage()">
+                                                    send message
+                                                </button>
+        
+                                            </div>
+                                        </div>
+
+                                    </div>
+                
+                                </div>
+                            </div> <!-- end card -->
+                        </div> <!-- end col -->
+
+                    </div>
+                    <!-- end row -->
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
