@@ -23,7 +23,7 @@ export class MessageComponent implements OnInit {
 
   // senders
 
-  senderResource: Select2Group[] = [
+  senderResource: any[] = [
     {
         label: 'Select receivers...',
         options: [
@@ -42,6 +42,8 @@ export class MessageComponent implements OnInit {
   // ];
   selectedSender: Select2Option[] = [];
   selectedMessage: Select2Option[] = [];
+
+  
 
 
   @ViewChild('sizeableModal')
@@ -65,18 +67,14 @@ export class MessageComponent implements OnInit {
     
     this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Custom Message', path: '/', active: true }];
 
-
-    this.http.get<any>('http://localhost:3000/contacts').subscribe(data => {
-      data.forEach( (con: any, ind: number) => {
-        this.senderResource[0].options.push( 
-          { label: con.t_name, value: con.t_role } 
-        )
-      });;
+    this.http.get<any[]>('http://localhost:3000/list').subscribe(data => {
+      this.senderResource[0].options = [];
+    
+      data.forEach((con: any) => {
+        this.senderResource[0].options.push({ label: con.c_name, value: con.c_selected });
+      });
     });
-
-    this.msgServ.getContacts().subscribe(contacts => {
-      this.contacts = contacts;
-    });
+    
 
     // get Variants
     this._fetchData();
@@ -111,12 +109,32 @@ export class MessageComponent implements OnInit {
 	onMessageTemplateSelected(da: Select2UpdateEvent) {}
 
   // 
-  sendMessage() {
+  sendMessage(): void {
+    const headerTxt = this.messageForm.value.headerTxt;
+    const msg = this.messageForm.value.message;
+    const selectedSenderValue = this.messageForm.value.sender;
 
-    this.msgServ.sendWACustomTemplateMessage(this.messageForm.value['sender'], this.messageForm.value['headerTxt'], this.messageForm.value['message']).subscribe( (resp: any) => {
-      console.log("Return output: ", resp)
-    })
+    const phoneNumbers = selectedSenderValue.split(',');
+
+    phoneNumbers.forEach((phoneNumber:any) => {
+      const trimmedPhoneNumber = phoneNumber.trim(); 
+
+      this.msgServ.sendWACustomTemplateMessage(trimmedPhoneNumber, headerTxt, msg).subscribe(
+        (resp: any) => {
+          console.log(`Message sent successfully to ${trimmedPhoneNumber}`);
+        },
+        (error: any) => {
+          console.error(`Error sending message to ${trimmedPhoneNumber}:`, error);
+        }
+      );
+    });
   }
 
-
 }
+ 
+
+
+  
+
+
+

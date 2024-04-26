@@ -121,17 +121,33 @@
         "f329",
         "576e"
       ]
+    },
+    {
+      "id": "eb8b",
+      "c_name": "mugi",
+      "c_desc": null,
+      "c_number": "f329",
+      "c_selected": "919344025402,918056221146",
+      "active_status": "true",
+      "selectedOptions": [
+        "4dd3",
+        "f329"
+      ]
+    },
+    {
+      "id": "2d5c",
+      "c_name": "deepak gang",
+      "c_desc": null,
+      "c_number": "f329",
+      "c_selected": "919344025402,918056221146",
+      "active_status": "true",
+      "selectedOptions": [
+        "4dd3",
+        "f329"
+      ]
     }
   ],
   "variants": [
-    {
-      "id": "59b1",
-      "Body_Text": "fitness buddies",
-      "group_id": "b120",
-      "group_name": "Batch one",
-      "active_status": "true",
-      "selectedDate": "2024-03-22"
-    },
     {
       "id": "2e19",
       "Body_Text": "so sad",
@@ -148,9 +164,16 @@
       "active_status": "true",
       "selectedDate": "2024-03-22",
       "selectedTime": null
+    },
+    {
+      "id": "aae0",
+      "Body_Text": "wertfyg",
+      "group_id": "2ccf",
+      "group_name": "Special batch",
+      "active_status": "true",
+      "selectedDate": "2024-04-23",
+      "selectedTime": "11:49"
     }
   ],
-  "template": [
-    
-  ]
+  "template": []
 }
