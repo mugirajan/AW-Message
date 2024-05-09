@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild,ElementRef } from '@angular/core';
 import { Category } from '../../models/category.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Column } from 'src/app/shared/advanced-table/advanced-table.component';
@@ -17,6 +17,10 @@ import { Select2Group, Select2Option, Select2UpdateEvent } from 'ng-select2-comp
 
 import { ContactService } from '../../service/testimonial.service';
 import { HttpClient } from '@angular/common/http';
+
+
+// import * as toastr from 'ngx-toastr';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -87,6 +91,7 @@ export class ProductComponent implements OnInit {
 
 
   constructor(
+    private toastr: ToastrService,
     private sanitizer: DomSanitizer,
     private modalService: NgbModal,
     private fb: FormBuilder,
@@ -97,6 +102,8 @@ export class ProductComponent implements OnInit {
     private http: HttpClient) { }
 
   ngOnInit(): void {
+    this.toastr.success('This is a success message!', 'Success');
+
     this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Default Message', path: '/', active: true }];
     
 
@@ -119,6 +126,8 @@ export class ProductComponent implements OnInit {
 			sender: ['', Validators.required],
       headerTxt: ['', Validators.required],
 		});
+
+    
 
     // initialize table configurations
     // this.initTableCofig();
@@ -160,12 +169,16 @@ export class ProductComponent implements OnInit {
 
   // 
   sendMessage() {
-
     this.msgServ.customTemplate(this.TemplateForm.value['sender'], this.TemplateForm.value['headerTxt']).subscribe( (resp: any) => {
-      console.log("Return output: ", resp)
+      console.log("Return output: ", resp);
+      this.toastr.error('message not sent');
+      this.toastr.success('message send successfully')
+      
     })
   
   }
+  
+ 
 
   /**
    * fetches table records

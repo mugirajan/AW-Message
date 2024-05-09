@@ -13,6 +13,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 
+
 @NgModule({
   declarations: [
     AppComponent
@@ -26,7 +27,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     BrowserAnimationsModule,
     LayoutModule,
-    ToastrModule.forRoot({positionClass: 'toast-bottom-center'})
+    ToastrModule.forRoot({timeOut: 3000,
+      progressBar: true,
+      progressAnimation: 'increasing',
+      preventDuplicates: true,
+      positionClass: 'toast-bottom-right'})
   ],
   providers: [
     Title,

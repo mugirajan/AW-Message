@@ -74,7 +74,7 @@ export class WAMesssagingService {
       "to": to,
       "type": "template",
         "template": {
-            "name": "customized_gym_template",
+            "name": "fusion_template",
             "language": {
                 "code": "en"
             },
