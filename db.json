@@ -152,18 +152,19 @@
       "id": "2e19",
       "Body_Text": "so sad",
       "group_id": "2ccf",
-      "group_name": "Special batch",
+      "group_name": null,
       "active_status": "true",
-      "selectedDate": "2024-03-22"
+      "selectedDate": "2024-03-22",
+      "selectedTime": "01:05"
     },
     {
       "id": "3607",
       "Body_Text": "rdtfygyuhiji",
       "group_id": "2ccf",
-      "group_name": "Special batch",
+      "group_name": null,
       "active_status": "true",
       "selectedDate": "2024-03-22",
-      "selectedTime": null
+      "selectedTime": "13:06"
     },
     {
       "id": "aae0",
