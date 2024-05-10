@@ -127,6 +127,14 @@
                             </div>
 
                             <div class="mb-3">
+                                <label for="marriage_date" class="form-label">Date Of Marriage<span
+                                        class="text-danger">*</span></label>
+                                <input type="date" id="marriage_date" class="form-control" placeholder="e.g : 3-05-2019"
+                                    required formControlName="t_marriage"
+                                    [ngClass]="{  'is-invalid': addProduct.submitted && form1.t_marriage.invalid }">
+                            </div>
+
+                            <div class="mb-3">
                                 <label for="contact-role" class="form-label"> Address <span
                                         class="text-danger">*</span></label>
                                 <input type="text" id="contact-role"  class="form-control" placeholder="e.g : a/21,.."

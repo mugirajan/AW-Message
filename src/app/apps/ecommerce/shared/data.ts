@@ -2852,34 +2852,7 @@ const SELLERSLIST: Seller[] = [
 
 // Testimonials
 const TESTIMONAILLIST: Testimonial[] = [
-    {
-        id: 1,
-        t_name: "Ganesh",
-        t_role: "EPC Contractor, Pondy", 
-        t_msg: "The solar modules were delivered promptly and in a timely manner.", 
-        t_img: 'https://robohash.org/explicaborecusandaeet.png?size=100x100&set=set1',
-        t_date: '21/09/2023',
-        active_status: "true"
-    },
-    { 
-        id: 2, 
-        t_name: "Krishna", 
-        t_role: "System Integrator, Chennai", 
-        t_msg: "I saved a lot of time and money as all the components required are available under the same roof.", 
-        t_img: 'https://robohash.org/iustoetut.png?size=100x100&set=set1',
-        t_date: '21/09/2023',
-        active_status: "false"
-        
-    },
-    { 
-        id: 3, 
-        t_name: "Vinayak", 
-        t_role: "Project Owner, Sriperumbudur", 
-        t_msg: "Fitness did an exceptional job in completing our Solar power plant. Right from site visit to Installation, commissioning and testing was done in a professional and flawless manner", 
-        t_img: 'https://robohash.org/evenietquaeconsequuntur.png?size=100x100&set=set1',
-        t_date: '21/09/2023',
-        active_status: "true"
-    }
+   
 ]
 
 export { 

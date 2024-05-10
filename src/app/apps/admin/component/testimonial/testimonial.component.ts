@@ -80,6 +80,7 @@ export class ContactComponent implements OnInit {
       t_name: ['', Validators.required],
       t_role: ['', Validators.required],
       t_date: ['',Validators.required],
+      t_marriage:['',Validators.required],
       t_msg: ['', Validators.required],
       t_address:['', Validators.required],
       t_city:['', Validators.required],
