@@ -1,7 +1,6 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule, Title } from '@angular/platform-browser';
-import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { JoyrideModule } from 'ngx-joyride';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,15 +22,14 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     HttpClientModule,
     JoyrideModule.forRoot(),
-    SweetAlert2Module.forRoot(),
     AppRoutingModule,
     BrowserAnimationsModule,
     LayoutModule,
-    ToastrModule.forRoot({timeOut: 3000,
-      progressBar: true,
+    ToastrModule.forRoot({ timeOut: 2000,
+      progressBar: false,
       progressAnimation: 'increasing',
       preventDuplicates: true,
-      positionClass: 'toast-bottom-right'})
+      positionClass: 'toast-bottom-center'})
   ],
   providers: [
     Title,

@@ -13,6 +13,8 @@ import { NotificationService } from 'src/app/layout/shared/service/notification.
 import { Variant } from '../../models/variant.model';
 import { ContactService } from '../../service/testimonial.service';
 import { HttpClient } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-category',
@@ -53,6 +55,7 @@ export class CategoryComponent implements OnInit {
   selectedOptions: string[] = [];
 
   constructor(
+    private toastr: ToastrService,
     private router: Router, 
     private route: ActivatedRoute, 
     private sanitizer: DomSanitizer,
@@ -132,10 +135,12 @@ export class CategoryComponent implements OnInit {
     const formData = this.categoryList.value;
     formData.selectedOptions = this.selectedOptions; 
     this.catServ.createCatergory(formData).subscribe(response => {
+      this.toastr.success('List added successfully!');
       console.log('List added successfully:', response);
       this.categoryList.reset();
       this.selectedOptions = [];
     }, error => {
+      this.toastr.success('Error adding List!');
       console.error('Error adding List:', error);
     });
   
@@ -310,14 +315,16 @@ export class CategoryComponent implements OnInit {
     if (this.categoryDeleteID) {
      this.catServ.deleteList(this.categoryDeleteID).subscribe(
        (response) => {
+        this.toastr.success('Delete successful!');
          console.log('Delete successful', response);
        },
        (error) => {
-         console.error('Error deleting testimonial', error);
+        this.toastr.error('Error deleting List');
+         console.error('Error deleting list', error);
        }
      );
    } else {
-     console.error('Testimonial ID is missing.');
+     console.error('list missing.');
    }
    }
 
@@ -327,6 +334,8 @@ export class CategoryComponent implements OnInit {
 
   deletedSeletedContact(){
     this.catServ.deleteList(this.categoryDeleteID).subscribe( (val) => {
+      this.toastr.success('Delete successful!');
+
       if(val['isSuccess'] == true) {
         this.notifyServ.addNotification(
           {

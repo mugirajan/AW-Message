@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SweetAlertComponent } from './sweet-alert.component';
+import { StatsComponent } from './stats-component';
 
-describe('SweetAlertComponent', () => {
-  let component: SweetAlertComponent;
-  let fixture: ComponentFixture<SweetAlertComponent>;
+describe('StatsComponent', () => {
+  let component: StatsComponent;
+  let fixture: ComponentFixture<StatsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SweetAlertComponent ]
+      declarations: [ StatsComponent]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SweetAlertComponent);
+    fixture = TestBed.createComponent(StatsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -14,6 +14,8 @@ import { Select2UpdateEvent } from 'ng-select2-component'
 import { Category } from '../../models/category.model';
 import { DynaFormService } from '../../service/form.service';
 import { HttpClient } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
+
 
 
 @Component({
@@ -66,6 +68,7 @@ export class VariantComponent implements OnInit {
 
   selectedOptions: string[] = [];
   constructor(
+    private toastr: ToastrService,
     private sanitizer: DomSanitizer,
     private modalService: NgbModal,
     private fb: FormBuilder,
@@ -124,11 +127,13 @@ export class VariantComponent implements OnInit {
   ScheduleForm() {
     const formData = this.ScheduleList.value;
     this.varServ.createSchedule(formData).subscribe(response => {
+      this.toastr.success('schedule added successfully!');
       this.ScheduleList.reset();
       this.selectedGroupName = '';
      
     }, error => {
-      console.error('Error adding List:', error);
+      this.toastr.error('error adding schedule!');
+      console.error('error adding schedule:', error);
     });
   
     this.closeVariantModal();
@@ -264,7 +269,10 @@ actionTriggerd(event: actionEvent) {
 
   deletedSeletedVariant() {
     this.varServ.deleteVariant(this.variantDeleteID).subscribe(
+      
       (response) => {
+        this.toastr.success('schedule deleted successfully!');
+
         if (response['isSuccess'] == true) {
           this.notifyServ.addNotification({
             text: "Variant Deleted Successfully",
@@ -281,7 +289,9 @@ actionTriggerd(event: actionEvent) {
         this._fetchData(); 
       },
       (error) => {
-        console.error('Error deleting variant:', error);
+        this.toastr.error('error deleting schedule!');
+
+        console.error('Error deleting schedule:', error);
       }
     );
     this.variantDeleteID = -1; 

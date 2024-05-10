@@ -20,6 +20,7 @@ export class WAMesssagingService {
     
   }
 
+  /* Birthday wishes */
   sendWACustomTemplateMessage(to: string, headerTxt: string, msg: string) {
 
     console.log("Parameter got:", to, headerTxt, msg)
@@ -32,7 +33,7 @@ export class WAMesssagingService {
       "to": to,
       "type": "template",
       "template": {
-        "name": "custom_msg",
+        "name": "birthday_fusion_original",
         "language": {
           "code": "en"
         },
@@ -60,6 +61,92 @@ export class WAMesssagingService {
     }
 
     return this.http.post(this.url, data, { headers });
+  }
+
+  /* Anniversary */
+  sendWAanniversaryTemplate(to: string, headerTxt: string, msg: string) {
+
+    console.log("Parameter got:", to, headerTxt, msg)
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `${env.WAEnds.token}`
+    }
+    let data = {
+      "messaging_product": "whatsapp",
+      "to": to,
+      "type": "template",
+      "template": {
+        "name": "anniversary_fusion",
+        "language": {
+          "code": "en"
+        },
+        "components": [
+          {
+            "type": "header",
+            "parameters": [
+              {
+                "type": "text",
+                "text": headerTxt
+              }
+            ]
+          },
+          {
+            "type": "body",
+            "parameters": [
+              {
+                "type": "text",
+                "text": msg
+              }
+            ]
+          }
+        ]
+      }
+    }
+
+    return this.http.post(this.url, data, { headers });
+  }
+
+  /* subscription_fusion*/
+  subscriptionFusionTemplate(to: string, headerTxt: string, msg: string) {
+
+      console.log("Parameter got:", to, headerTxt, msg)
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `${env.WAEnds.token}`
+      }
+      let data = {
+        "messaging_product": "whatsapp",
+        "to": to,
+        "type": "template",
+        "template": {
+          "name": "subscription_fusion",
+          "language": {
+            "code": "en"
+          },
+          "components": [
+            {
+              "type": "header",
+              "parameters": [
+                {
+                  "type": "text",
+                  "text": headerTxt
+                }
+              ]
+            },
+            {
+              "type": "body",
+              "parameters": [
+                {
+                  "type": "text",
+                  "text": msg
+                }
+              ]
+            }
+          ]
+        }
+      }
+  
+      return this.http.post(this.url, data, { headers });
   }
 
   customTemplate(to: string, headerTxt: string, ){
@@ -105,6 +192,6 @@ export class WAMesssagingService {
     }
     return this.http.post(this.url, custom_Temp,{headers});
 
-    }
+  }
     
   }

@@ -53,7 +53,7 @@ export class ContactComponent implements OnInit {
   
   // Constructor
   constructor(
-    private toastServ: ToastrService,
+    private toastr: ToastrService,
     private sanitizer: DomSanitizer,
     private modalService: NgbModal,
     private fb: FormBuilder,
@@ -102,51 +102,31 @@ export class ContactComponent implements OnInit {
       }
     );
 
-  
-
     this.resetcontactForm();
-
-    
 
   }
   submitForm() {
 
     this.testServ.createContacts(this.contactForm.value)
       .subscribe(response => {
-        console.log('Contact added successfully:', response);
+        this.pushtoaster()
       }, error => {
-        console.error('contact adding testimonial:', error);
+        this.pushtoaster()
       });
       this.closeContactModal();
       this._fetchData();
   }
-  
 
-
-  /**
-   * fetches table records
-   */
+ 
   _fetchData(): void {
-
-    // this.records$ = this.testServ._getAllListOfTestimonial();
-    // this.testimonialSubscription = this.records$.subscribe( () => {
-    // });
     this.testServ.getContacts().subscribe((data: any) =>{
       if(data.length > 0) {
         this.records =  data;
       }
     });
 
-    // this.records = TESTIMONAILLIST;
   }
   
- 
-
-  
-  /**
-   * initialize advanced table columns
-   * 
-   */
  
   initTableCofig(): void {
     this.columns = [
@@ -180,35 +160,25 @@ export class ContactComponent implements OnInit {
     ];
   }
 
-  // activeStatusFormatter(tableData: Testimonial): string {
-  //   return tableData.active_status ? 'Active' : 'Inactive';
-  // }
-
-
-
-  // formats testimonial ID cell
   contactsIDFormatter(data: Testimonial): any {
     return this.sanitizer.bypassSecurityTrustHtml(
       `<a href="javascript:void(0)" class="order text-body fw-bold" id="${data.id}">#${data.id}</a> `
     );
   }
 
-  //formats testimonial image cell
   contactsImageFormatter(data: Testimonial): any {
     let image: string = ``;
     // image = `<a href="javascript:void(0)"><img src="${data.t_img}" alt="attestant-img" height="32" /></a>`
-    image = `<a href="javascript:void(0)"><img src="${"http://festasolar.com/"+data.t_img.replace("img/stock/", "")}" alt="attestant-img" height="32" /></a>`
+    image = `<a href="javascript:void(0)"><img src="${"http://fusion.com/"+data.t_img.replace("img/stock/", "")}" alt="attestant-img" height="32" /></a>`
     return this.sanitizer.bypassSecurityTrustHtml(image);
   }
 
-  // formats order date cell
   contactsDateFormatter(data: Testimonial): any {
     return this.sanitizer.bypassSecurityTrustHtml(
       `${data.t_date}`
     );
   }
 
-  // formats payment status cell
   contactsActiveStatusFormatter(data: Testimonial): any {
     if (data.active_status) {
       return this.sanitizer.bypassSecurityTrustHtml(
@@ -220,8 +190,6 @@ export class ContactComponent implements OnInit {
       );
     }
   }
-  
-  
 
   /**
  * Match table data with search input
@@ -273,8 +241,6 @@ export class ContactComponent implements OnInit {
     }
   }
 
-
-  //To Confirm delete action
   deleteContactForm(record: any) {
     this.testimoialDeleteID = record.id;
     this.openVerticallyCentered(this.positionModal);
@@ -284,14 +250,16 @@ export class ContactComponent implements OnInit {
    if (this.testimonialId) {
     this.testServ.deleteCon(this.testimonialId).subscribe(
       (response) => {
+        this.toastr.success('Delete successful!');
         console.log('Delete successful', response);
       },
       (error) => {
-        console.error('Error deleting testimonial', error);
+        this.toastr.success('Error deleting contact!');
+        console.error('Error deleting contact', error);
       }
     );
   } else {
-    console.error('Testimonial ID is missing.');
+    console.error('contact missing.');
   }
   }
 
@@ -300,28 +268,21 @@ export class ContactComponent implements OnInit {
     this.modalService.open(content, { centered: true });
   }
 
- 
-  
-
   deletedSeletedContact(){
     this.testServ.deleteCon(this.testimoialDeleteID).subscribe( (val) => {
+      this.toastr.success('Delete successful!');
+
       if(val['isSuccess'] == true) {
         this.notifyServ.addNotification(
           {
-            text: "Testimonial Deleted Successfully",
+            text: "contact Deleted Successfully",
             level: "success",
             autohide: true,
           }
         );
       }
       else{
-        // this.notifyServ.addNotification(
-        //   {
-        //     text: "",
-        //     level: "error",
-        //     autohide: true,
-        //   }
-        // );
+       
       }
       this._fetchData();
     });
@@ -336,13 +297,12 @@ export class ContactComponent implements OnInit {
         text: "Hello",
         level: "success",
         autohide: true,
-        title: "Festa solar 2"
+        title: "Fusion Fitness"
       }
     );
   }
-  
 
-  /**
+/**
    * change order status group
    * @param OrderStatusGroup order status
    */
@@ -357,13 +317,10 @@ export class ContactComponent implements OnInit {
     }, 400);
   }
 
-
-
   /**
    * Modal methods
    */
 
- 
   openAddContactModal(content: TemplateRef<NgbModal>): void {
     this.actionType = "Add New";
     this.resetcontactForm();
@@ -386,24 +343,18 @@ export class ContactComponent implements OnInit {
    */
   editcontactForm(data: Testimonial) {
     this.modalService.open(this.sizeableModal, { size: 'xl' });
-    this.contactForm.patchValue({ ...data }); 
+    this.contactForm.patchValue({ ...data });  
   }
   
   updateContact() {
-    this.testServ.updateContact(this.contactForm.value).subscribe(
-      (response) => {
-        console.log('Update response:', response);
-        this.modalService.dismissAll();
-      },
-      (error) => {
-        console.error('Error updating contact:', error);
-      }
-    );
+    this.testServ.updateContact(this.contactForm.value).subscribe(response => {
+      this.toastr.success('update successfully!');
+    }, error => {
+      this.toastr.error('error');
+    });
+    
   }
-  
-  
 
-  
   //  convenience getter for easy access to form fields
   get form1() { return this.contactForm.controls; }
 
@@ -454,7 +405,7 @@ export class ContactComponent implements OnInit {
         if(val['isSuccess'] == true) {
           this.notifyServ.addNotification(
             {
-              text: "Testimonial Created Successfully",
+              text: "Contact Created Successfully",
               level: "success",
               autohide: true,
             }
@@ -463,7 +414,7 @@ export class ContactComponent implements OnInit {
         else{
           this.notifyServ.addNotification(
             {
-              text: "Error while creating testimonial",
+              text: "Error while creating Contact",
               level: "error",
               autohide: true,
             }
@@ -475,11 +426,15 @@ export class ContactComponent implements OnInit {
       this.closeContactModal();
     }
     else if(this.actionType == "Edit"){
+      this.toastr.success('edited sucessful!');
+
       this.testServ.updateATestimonial(data).subscribe( (val) => {
+        this.toastr.success('Contact added successfully!');
+
         if(val['isSuccess'] == true) {
           this.notifyServ.addNotification(
             {
-              text: "Testimonial Update Successfully",
+              text: "Contact Update Successfully",
               level: "success",
               autohide: true,
             }
@@ -488,7 +443,7 @@ export class ContactComponent implements OnInit {
         else{
           this.notifyServ.addNotification(
             {
-              text: "Error while Updating testimonial",
+              text: "Error while Updating Contact",
               level: "error",
               autohide: true,
             }
@@ -518,5 +473,15 @@ export class ContactComponent implements OnInit {
         .then(function(buf){return new File([buf], fileName, {type:mimeType});})
     );
   }
+  
+  pushtoaster(){
+    if(this.testServ.createContacts(this.contactForm.value)){
+      this.toastr.success('Contact added successfully!');
+    }
+    else{
+      this.toastr.error('error adding contact.');
+    }
+  }
+  
 
 }

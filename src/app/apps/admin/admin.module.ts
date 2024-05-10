@@ -30,6 +30,9 @@ import { SheduleComponent } from './component/shedule/shedule.component';
 import { MessageComponent } from './component/message/message.component';
 import { WAMesssagingService } from './service/wa.message.service';
 import { AddTemplateComponent } from './component/add-template/add-template.component';
+import { PunchComponent } from './component/punch/punch-component';
+import { StatsComponent } from './component/logstats/stats-component';
+
 
 
 @NgModule({
@@ -40,7 +43,9 @@ import { AddTemplateComponent } from './component/add-template/add-template.comp
         VariantComponent,
         SheduleComponent,
         MessageComponent,
-        AddTemplateComponent
+        AddTemplateComponent,
+        PunchComponent,
+        StatsComponent
     ],
     imports: [
         CommonModule,

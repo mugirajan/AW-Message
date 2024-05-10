@@ -7,7 +7,7 @@ import { Notification } from '../models/notification.model';
 })
 export class NotificationService {
 
-  private notifications$ = new BehaviorSubject<Notification>({ text: "Welcome back", title: "Festa Solar", autohide: true });
+  private notifications$ = new BehaviorSubject<Notification>({ text: "Welcome back", title: "Fusion", autohide: true });
 
   public getNotifications(): Observable<Notification> {
     return this.notifications$;

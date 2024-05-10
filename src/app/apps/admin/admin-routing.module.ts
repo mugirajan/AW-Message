@@ -7,6 +7,8 @@ import { VariantComponent } from './component/variant/variant.component';
 import { SheduleComponent } from './component/shedule/shedule.component';
 import { MessageComponent } from './component/message/message.component';
 import { AddTemplateComponent } from './component/add-template/add-template.component';
+import { PunchComponent } from './component/punch/punch-component';
+import { StatsComponent } from './component/logstats/stats-component';
 
 const routes: Routes = [
   {
@@ -41,6 +43,14 @@ const routes: Routes = [
   {
     path: "custom-single-message-template",
     component: MessageComponent
+  },
+  {
+    path: "punch",
+    component:PunchComponent
+  },
+  {
+    path: "logstats",
+    component:StatsComponent
   }
 ];
 

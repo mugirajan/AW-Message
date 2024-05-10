@@ -2875,7 +2875,7 @@ const TESTIMONAILLIST: Testimonial[] = [
         id: 3, 
         t_name: "Vinayak", 
         t_role: "Project Owner, Sriperumbudur", 
-        t_msg: "Festa solar did an exceptional job in completing our Solar power plant. Right from site visit to Installation, commissioning and testing was done in a professional and flawless manner", 
+        t_msg: "Fitness did an exceptional job in completing our Solar power plant. Right from site visit to Installation, commissioning and testing was done in a professional and flawless manner", 
         t_img: 'https://robohash.org/evenietquaeconsequuntur.png?size=100x100&set=set1',
         t_date: '21/09/2023',
         active_status: "true"

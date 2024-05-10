@@ -7,6 +7,9 @@ import { WAMesssagingService } from "../../service/wa.message.service";
 import { ContactService } from '../../service/testimonial.service';
 import { HttpClient } from '@angular/common/http';
 
+import { ToastrService } from 'ngx-toastr';
+
+
 @Component({
   selector: 'app-message',
   templateUrl: './message.component.html',
@@ -55,6 +58,7 @@ export class MessageComponent implements OnInit {
   
 
   constructor(
+    private toastr: ToastrService,
     private fb: FormBuilder,
     private msgServ: WAMesssagingService,
     private conserv: ContactService,
@@ -121,9 +125,13 @@ export class MessageComponent implements OnInit {
 
       this.msgServ.sendWACustomTemplateMessage(trimmedPhoneNumber, headerTxt, msg).subscribe(
         (resp: any) => {
+          this.toastr.success('Message sent successfully!');
+          this.resetMessageForm()
+
           console.log(`Message sent successfully to ${trimmedPhoneNumber}`);
         },
         (error: any) => {
+          this.toastr.error('Failed to send message.');
           console.error(`Error sending message to ${trimmedPhoneNumber}:`, error);
         }
       );
@@ -131,6 +139,7 @@ export class MessageComponent implements OnInit {
   }
 
 }
+
  
 
 

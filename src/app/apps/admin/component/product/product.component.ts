@@ -18,8 +18,6 @@ import { Select2Group, Select2Option, Select2UpdateEvent } from 'ng-select2-comp
 import { ContactService } from '../../service/testimonial.service';
 import { HttpClient } from '@angular/common/http';
 
-
-// import * as toastr from 'ngx-toastr';
 import { ToastrService } from 'ngx-toastr';
 
 
@@ -102,7 +100,6 @@ export class ProductComponent implements OnInit {
     private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.toastr.success('This is a success message!', 'Success');
 
     this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Default Message', path: '/', active: true }];
     
@@ -168,16 +165,18 @@ export class ProductComponent implements OnInit {
 	onMessageTemplateSelected(da: Select2UpdateEvent) {}
 
   // 
+ 
   sendMessage() {
-    this.msgServ.customTemplate(this.TemplateForm.value['sender'], this.TemplateForm.value['headerTxt']).subscribe( (resp: any) => {
-      console.log("Return output: ", resp);
-      this.toastr.error('message not sent');
-      this.toastr.success('message send successfully')
-      
-    })
-  
+    this.msgServ.customTemplate(this.TemplateForm.value['sender'], this.TemplateForm.value['headerTxt']).subscribe(
+      (resp: any) => {
+        this.toastr.success('Message sent successfully!');
+        this.resetMessageForm();
+      },
+      (error) => {
+        this.toastr.error('Failed to send message.');
+      }
+    );
   }
-  
  
 
   /**
