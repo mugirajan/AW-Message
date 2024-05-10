@@ -109,9 +109,10 @@ export class ContactComponent implements OnInit {
 
     this.testServ.createContacts(this.contactForm.value)
       .subscribe(response => {
-        this.pushtoaster()
+        console.log("success");
       }, error => {
-        this.pushtoaster()
+        console.error('Error in Contact:', error);
+        console.log("error");
       });
       this.closeContactModal();
       this._fetchData();
@@ -473,15 +474,8 @@ export class ContactComponent implements OnInit {
         .then(function(buf){return new File([buf], fileName, {type:mimeType});})
     );
   }
-  
-  pushtoaster(){
-    if(this.testServ.createContacts(this.contactForm.value)){
-      this.toastr.success('Contact added successfully!');
-    }
-    else{
-      this.toastr.error('error adding contact.');
-    }
-  }
+
+ 
   
 
 }

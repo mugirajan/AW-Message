@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, map } from 'rxjs';
 import { Testimonial } from '../models/testimonial.model';
 import { Observable,catchError  } from 'rxjs';
-import * as env from 'src/environments/environment'
+import * as env from 'src/environments/environment';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class ContactService {
   private testimonial$ = new BehaviorSubject<Testimonial[]>([]);
   // private url: string = env.environment.apiUrl+ "testimonials/";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private toastr: ToastrService,) { }
 
   createContacts(data: any) {
     
@@ -24,7 +25,10 @@ export class ContactService {
       return this.updateContact(data)
     } else {
       delete data.id; 
+      this.toastr.success('Contact Added Succesfully!');
+
       return this.http.post(this.apiUrl, data);
+
     }
   }
   
@@ -38,6 +42,7 @@ export class ContactService {
   
 
  updateContact(data: any) {
+    this.toastr.success('edit successfully!');
     let updateUrl = this.apiUrl  + data.id;
     console.log("url: ", updateUrl)
     console.log("Data: ", data)

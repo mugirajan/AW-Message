@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import * as env from 'src/environments/environment';
 import { Category } from '../models/category.model';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Injectable({
@@ -14,7 +15,7 @@ export class CategoryService {
 
   // private url: string = env.environment.apiUrl + "category/";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private toastr: ToastrService) { }
   
  
   getRoles(): Observable<any[]> {
@@ -26,6 +27,7 @@ export class CategoryService {
       return this.UpdateCategory(data)
     } else {
       delete data.id; 
+      this.toastr.success('List Added Succesfully!');
       return this.http.post(this.apiUrl, data);
     }
   }
@@ -54,6 +56,7 @@ export class CategoryService {
 
 
   UpdateCategory(data: any) {
+    this.toastr.success('List Edited succesfully!');
     let updateUrl = this.apiUrl  + data.id;
     return this.http.put(updateUrl, data);
   }

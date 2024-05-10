@@ -135,12 +135,11 @@ export class CategoryComponent implements OnInit {
     const formData = this.categoryList.value;
     formData.selectedOptions = this.selectedOptions; 
     this.catServ.createCatergory(formData).subscribe(response => {
-      this.toastr.success('List added successfully!');
       console.log('List added successfully:', response);
       this.categoryList.reset();
       this.selectedOptions = [];
     }, error => {
-      this.toastr.success('Error adding List!');
+      this.toastr.error('Error adding List!');
       console.error('Error adding List:', error);
     });
   
