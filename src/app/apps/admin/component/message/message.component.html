@@ -9,6 +9,10 @@
                 
                 <app-ui-preloader [display]="loading"></app-ui-preloader>
 
+                <button type="button" class="btn btn-primary" (click)="sendHWMessage()">
+                    <i class="mdi mdi-plus me-1"></i> Send test message
+                </button>
+
                 <form [formGroup]="messageForm">
 
                     <div class="row">
