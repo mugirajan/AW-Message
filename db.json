@@ -70,36 +70,6 @@
       "t_dob": "2024-05-09",
       "t_term": "Six Month",
       "active_status": "true"
-    },
-    {
-      "id": "4112",
-      "t_name": "dxrfcgvhbjnkm,",
-      "t_role": null,
-      "t_date": null,
-      "t_marriage": "2024-05-01",
-      "t_msg": null,
-      "t_address": null,
-      "t_city": null,
-      "t_gender": "male",
-      "t_mail": null,
-      "t_dob": null,
-      "t_term": null,
-      "active_status": null
-    },
-    {
-      "id": "9d33",
-      "t_name": "4e5r6t7y8u9iop",
-      "t_role": "cgv hbnmk,.",
-      "t_date": null,
-      "t_marriage": null,
-      "t_msg": null,
-      "t_address": null,
-      "t_city": null,
-      "t_gender": null,
-      "t_mail": null,
-      "t_dob": null,
-      "t_term": null,
-      "active_status": null
     }
   ],
   "list": [

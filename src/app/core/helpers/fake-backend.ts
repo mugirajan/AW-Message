@@ -12,11 +12,11 @@ function getUsers(): User[] {
     // array in session storage for registered users
     let users: User[] = JSON.parse(sessionStorage.getItem('users')!) || [
         {
-            id: 1, username: 'admin', email: 'fusionfitness.com', password: 'fitness', firstName: 'Admin', lastName: 'Fusion',
+            id: 1, username: 'admin', email: 'fusionfitness@gmail.com', password: 'fitness', firstName: 'Admin', lastName: 'Fusion',
             avatar: 'assets/images/users/businessman-avatar.jpg', location: 'Chennai, India', title: 'Admin Head'
         },
         {
-            id: 2, username: 'admin', email: 'admin@fusion.com', password: 'admin', firstName: 'Admin', lastName: 'Fusion',
+            id: 2, username: 'admin', email: 'admin@fusionfitness.com', password: 'admin', firstName: 'Admin', lastName: 'Fusion',
             avatar: 'assets/images/users/businessman-avatar.jpg', location: 'Chennai, India', title: 'Admin Head'
         },
         {

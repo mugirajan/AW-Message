@@ -32,7 +32,7 @@ import { WAMesssagingService } from './service/wa.message.service';
 import { AddTemplateComponent } from './component/add-template/add-template.component';
 import { PunchComponent } from './component/punch/punch-component';
 import { StatsComponent } from './component/logstats/stats-component';
-
+import { automatTempComponent } from './component/automatic-temp/automat-temp';
 
 
 @NgModule({
@@ -45,7 +45,8 @@ import { StatsComponent } from './component/logstats/stats-component';
         MessageComponent,
         AddTemplateComponent,
         PunchComponent,
-        StatsComponent
+        StatsComponent,
+        automatTempComponent 
     ],
     imports: [
         CommonModule,

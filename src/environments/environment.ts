@@ -11,15 +11,14 @@ export const environment = {
 
 export const WAEnds = {
   // WABI: "231667113353605",
-  WABI: "307486835780062",
-  // url: "https://graph.facebook.com /v18.0/214842615044313/messages",
-  url: "https://graph.facebook.com/",
-  // to be added in the post URL
-  token: "Bearer EAAGu1Bwh6aYBO82dVbZCJb1ZBntlFH8aYIzh9AjaWnJbvpYSpqCEE5PtMG8rNeve9mDLuzGZBLvIUDFgqIkqNfQLejFRZAD5wA5gZAq2ZADdZBnROTKFJ0m4UTQN4vv23lZAFdEdUHLqwZBWMj3toN3CZA68l6KbRILWy7iTpqmKaTwkww25lwBq6543h9PPYUmw0CghtK2zZBOtZA5YZC5GZB", 
+  // url: "https://graph.facebook.com/",
   // token: "Bearer EAANBTnz5WGwBOwWYTNnbLxTJNg72Mk3IZCZCMKdE7zwZA9TftRJdSg6Pk1kbY9gwZAbuBsHRMZADiTDBT3zYTAFTZBzyY9R5YK4DMOvTSJjsECULA72ohuunk78uHTAaW7PmKHNn47qZBnt6gZCDCxTeF3YEL6vhbEYcSl5clrPXTWUelHy5L4uaLrlZBOJ7ZA6TtikyhIlQmFoVmMJiEO",
   // PhnID: "214842615044313",
-  PhnID: "275529308985017",
-  version: "v18.0"
+  WABI: "307486835780062",
+  version: "v19.0",
+  url: "https://graph.facebook.com/",  // /v18.0/214842615044313/messages",
+  token: "Bearer EAAGu1Bwh6aYBO82dVbZCJb1ZBntlFH8aYIzh9AjaWnJbvpYSpqCEE5PtMG8rNeve9mDLuzGZBLvIUDFgqIkqNfQLejFRZAD5wA5gZAq2ZADdZBnROTKFJ0m4UTQN4vv23lZAFdEdUHLqwZBWMj3toN3CZA68l6KbRILWy7iTpqmKaTwkww25lwBq6543h9PPYUmw0CghtK2zZBOtZA5YZC5GZB", 
+  PhnID: "275529308985017"
 }
 
 /*

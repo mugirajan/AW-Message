@@ -59,6 +59,12 @@ const MENU_ITEMS: MenuItem[] = [
                 icon: 'percent'
             },
             {
+                key: 'Automatic',
+                label: 'Automatic Template',
+                link: '/apps/admin/automatic',
+                icon: 'check-circle'
+            },
+            {
                 key: 'app-manage-logout',
                 label: 'logout',
                 link: 'auth/logout',
