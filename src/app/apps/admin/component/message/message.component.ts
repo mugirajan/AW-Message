@@ -138,6 +138,13 @@ export class MessageComponent implements OnInit {
     });
   }
 
+  // Send WA Hello World Message
+  sendHWMessage() {
+    this.msgServ.helloworldTemplate("").subscribe( (resp: any) => {
+      console.log("Values received", resp)
+    })
+  }
+
 }
 
  
