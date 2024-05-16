@@ -179,12 +179,13 @@ export class automatTempComponent  implements OnInit {
         this.TemplateForm.value['sender'], this.selectedLabel, this.TemplateForm.value['message']
       ).subscribe(
         (resp: any) => {
-          console.log(resp)
+          if(resp){
           this.toastr.success('Message sent successfully!');
           this.resetMessageForm()
-        },
-        (error: any) => {
-          this.toastr.success('Messag not send!');
+          }
+          else{
+            this.toastr.error('Message not sent!');
+          }
         }
         
       );
