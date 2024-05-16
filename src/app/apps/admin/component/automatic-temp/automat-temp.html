@@ -2,9 +2,9 @@
     <div class="container  p-3" >
         <div class="row">
             <div class="col-lg-7 col-md-6">
-                <div class="row card bg-white rounded-4 p-2 mb-lg-0 mb-3">
-                    <div class="col-lg-12 col-md-12">
-                        <div class="card bg-white rounded-4 mb-lg-0 mb-3" style="padding:1rem;"
+                <div class="row">
+                    <div class="col-lg-12 col-md-12" style="margin-bottom:3rem">
+                        <div class="card bg-white rounded-4 mb-lg-0" style="padding: 1rem 2rem 3rem 2rem;margin-bottom:3rem"
                             data-tor="inview:bg(primary) , hover:bg(danger)">
                             <div style="padding:1rem 0;">
                                 <h3>Send Quick Message:-</h3>
@@ -18,33 +18,55 @@
                                     </select>
                                 </div>
                                 <div style="width:50%">
-                                    <button>Send Message</button>
+                                    <button class="btn btn-primary">Choose Template</button>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12">
+                        <div class="card bg-white rounded-4 mb-lg-0 mb-3" style="padding:1rem;"
+                            data-tor="inview:bg(primary) , hover:bg(danger)">
                             <!--radio button-->
-                            <div style="padding-top:2rem">
-                                <h4>Choose:-</h4>
-                                <input type="radio">Contact
-                                <input type="radio">List
+                            <div class="custom_radio">
+                                <h4>Choose:</h4>
+                                <div class="d-flex">
+                                <input type="radio" id="contactRadio" name="selectType" (change)="toggleDropdown('contact')" ><label for="contactRadio" >Contact</label>
+                                <input type="radio" id="listRadio" name="selectType" (change)="toggleDropdown('list')"><label for="listRadio">List</label>
+                                </div>
+                                
                             </div>
                             <!--contact dropdown-->
-                            <div class="row">
-                                <div class="col-6"> 
+                            <form [formGroup]="TemplateForm">
+                            <div class="row"  *ngIf="showContactDropdown">
+                                <div class="col-12"> 
                                     <div class="mb-3">
                                         <label for="category" class="form-label">
-                                            Choose the receiver:
+                                            Choose Contact:
                                         </label>
                                         <select2 
-                                        
                                             [data]="senderResource" 
-                                            placeholder="select sender contact" 
+                                            placeholder="select sender CONTACT" 
                                             id="sender" 
                                             #mySelect
                                             class="form-control"
-                                            (update)='onSenderSelected($event)'
+                                            (update)='onSenderSelectedcontact($event)'
                                             formControlName="sender"
                                         >
                                         </select2>
+                                    </div>
+                                </div>
+                                 <!--Subscription dropdown-->
+                                <div class="" style="padding:1rem 1.5rem">
+                                    <div class="subscription-select">
+                                        <select 
+                                        formControlName="message" 
+                                        id="message"
+                                        placeholder="Select Day"
+                                        (change)="onMessageChange($event)"
+                                        >
+                                          <option value="7 days">Subscription ends in 7 days</option>
+                                          <option value="3 days">Subscription ends in 3 days</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-12"> 
@@ -55,35 +77,47 @@
                                     </div>
                                 </div>
                             </div>
+                            </form>
                             <!--list dropdown-->
-                            <div class="row">
-                                <div class="col-6"> 
-                                    <div class="mb-3">
+                            <form [formGroup]="messageForm">
+                                <div class="row" *ngIf="showListDropdown">
+                                    <div class="col-12"> 
+                                        <div class="mb-3">
 
-                                        <label for="category" class="form-label">
-                                            Choose the receiver:
-                                        </label>
+                                            <label for="category" class="form-label">
+                                                Choose list:
+                                            </label>
 
-                                        <select2 
-                                            [data]="senderResourcelist" 
-                                            placeholder="select sender contact" 
-                                            id="sender" 
-                                            #mySelect
-                                            class="form-control"
-                                            (update)='onSenderSelected($event)'
-                                            formControlName="sender"
-                                        >
-                                        </select2>
+                                            <select2 
+                                                [data]="senderResourcelist" 
+                                                placeholder="select sender LIST" 
+                                                id="sender" 
+                                                #mySelect
+                                                class="form-control"
+                                                (update)='onSenderSelected($event)'
+                                                formControlName="sender"
+                                            >
+                                            </select2>
+                                        </div>
+                                    </div>
+                                    <!--Subscription dropdown-->
+                                    <div class="" style="padding:1rem 1.5rem">
+                                        <div class="subscription-select">
+                                            <select formControlName="message" placeholder="select Day" >
+                                            <option value="7">Subscription ends in 7 days</option>
+                                            <option value="3">Subscription ends in 3 days</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12"> 
+                                        <div class="mb-3">
+                                            <button class="btn btn-primary" (click)="sendMessagelist()">
+                                                send message
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-12"> 
-                                    <div class="mb-3">
-                                        <button class="btn btn-primary" (click)="sendMessagelist()">
-                                            send message
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -129,17 +163,7 @@
     </div>
 </div>
 <style>
-   .hstack button{
-    background-color: skyblue;
-    border:none;
-    color:white;
-    padding:0.4rem 1.5rem;
-   } 
-   .hstack button:hover{
-    background-color: transparent;
-    border:2px solid skyblue;
-    color:black;
-   }
+  
    select{
     padding:0.5rem;
     font-size: 1rem;
@@ -148,6 +172,58 @@
    option{
     font-size: 1rem;
    }
+   
+ 
+.custom_radio{
+   margin: 20px;
+}
+.custom_radio input[type="radio"]{
+  display: none;
+}
+.custom_radio input[type="radio"] + label{
+  position: relative;
+  display: inline-block;
+  /* padding-left: 1.5em; */
+  margin-right: 2em;
+  cursor: pointer;
+  line-height: 1em;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  background-color:skyblue;
+  padding:1rem 2.5rem;
+  border-radius:1rem;
+}
+.custom_radio input[type="radio"] + label:before,
+.custom_radio input[type="radio"] + label:after{
+  content: '';
+  position: absolute;
+  top: 10;
+  left: 0;
+  width: 1em;
+  height: 1em;
+  text-align: center;
+  font-family: Times;
+  border-radius: 1rem;
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+  margin-left:1rem;
+}
+
+.custom_radio input[type="radio"] + label:before {
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+  box-shadow: inset 0 0 0 0.2em white, inset 0 0 0 1em white;
+}
+.custom_radio input[type="radio"] + label:hover:before {
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+  box-shadow: inset 0 0 0 0.3em white, inset 0 0 0 1em #c6c6c6;
+}
+.custom_radio input[type="radio"]:checked + label:before {
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+  box-shadow: inset 0 0 0 0.2em white, inset 0 0 0 1em blue;
+}
 </style>
 
 <!--table-->

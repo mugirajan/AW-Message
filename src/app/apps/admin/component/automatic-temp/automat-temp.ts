@@ -1,20 +1,14 @@
-import { Component, OnInit, TemplateRef, ViewChild,ElementRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Category } from '../../models/category.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Column } from 'src/app/shared/advanced-table/advanced-table.component';
 import { Subscription } from 'rxjs';
 import { BreadcrumbItem } from 'src/app/shared/page-title/page-title.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ProductService } from '../../service/product.service';
-import { DomSanitizer } from '@angular/platform-browser';
 import { ProductModel2 } from '../../models/product.model';
-import { WAMesssagingService } from "../../service/wa.message.service"
-
-import { NotificationService } from 'src/app/layout/shared/service/notification.service';
-import { Select2Group, Select2Option, Select2UpdateEvent } from 'ng-select2-component';
-
-import { ContactService } from '../../service/testimonial.service';
+import { Select2Group, Select2Option, Select2UpdateEvent} from 'ng-select2-component';
 import { HttpClient } from '@angular/common/http';
+import { WAMesssagingService } from '../../service/wa.message.service';
 
 import { ToastrService } from 'ngx-toastr';
 
@@ -45,14 +39,14 @@ export class automatTempComponent  implements OnInit {
     contacts: any[] =[];
     senderResource: Select2Group[] = [
       {
-          label: 'Kamalraj Ganesan',
+          label: '',
           options: [
           ]
       },
     ];
     senderResourcelist: Select2Group[] = [
       {
-          label: 'Mugilavathi',
+          label: '',
           options: [
           ]
       },
@@ -83,23 +77,20 @@ export class automatTempComponent  implements OnInit {
     @ViewChild('positionModal2')
     positionModal2!: TemplateRef<NgbModal>;
   
-  
+    selectedLabel:any;
+    selectedValue: string | undefined;
+
+    
     constructor(
       private toastr: ToastrService,
-      private sanitizer: DomSanitizer,
-      private modalService: NgbModal,
       private fb: FormBuilder,
-      private conserv: ContactService,
-      private prodServ: ProductService,
       private msgServ: WAMesssagingService,
-      private notifyServ: NotificationService,
       private http: HttpClient) { }
   
     ngOnInit(): void {
   
       this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Default Message', path: '/', active: true }];
-      
-  
+
       this.http.get<any>('http://localhost:3000/contacts').subscribe(data => {
         data.forEach( (con: any, ind: number) => {
           this.senderResource[0].options.push( 
@@ -116,6 +107,7 @@ export class automatTempComponent  implements OnInit {
       this.TemplateForm = this.fb.group({
         sender: ['', Validators.required],
         headerTxt: ['', Validators.required],
+        message: ['', Validators.required],
       });
   
       this.productForm = this.fb.group({
@@ -137,11 +129,10 @@ export class automatTempComponent  implements OnInit {
 
       this.http.get<any[]>('http://localhost:3000/list').subscribe(data => {
       this.senderResourcelist[0].options = [];
-    
-      data.forEach((con: any) => {
-          this.senderResourcelist[0].options.push({ label: con.c_name, value: con.c_selected });
-        });
-      });
+          data.forEach((con: any) => {
+            this.senderResourcelist[0].options.push({ label: con.c_name, value:con.id, id:con.id });
+          });
+    });
     
 
     // get Variants
@@ -164,45 +155,70 @@ export class automatTempComponent  implements OnInit {
     resetMessageForm() {
       this.TemplateForm.reset()
     }
-    onSenderSelected(da: Select2UpdateEvent) {}
+    
+    onSenderSelected(da: Select2UpdateEvent) {
+      this.selectedValue = da.options[0].id;
+    }
+    onSenderSelectedcontact(da:Select2UpdateEvent){
+      this.selectedLabel = da.options[0].label;
+    }
+
   
-    onMessageTemplateSelected(da: Select2UpdateEvent) {}
-  
+    onMessageTemplateSelected(da: Select2UpdateEvent) {
+
+    }
+    onMessageChange(event: Event): void {
+      const selectedcon = (event.target as HTMLSelectElement).value;
+      this.TemplateForm.patchValue({ message: selectedcon });
+    }
+    
     sendMessage() {
-      this.msgServ.customTemplate(this.TemplateForm.value['sender'], this.TemplateForm.value['headerTxt']).subscribe(
+      console.log("sender" , this.TemplateForm.value)
+      const msg = this.TemplateForm.value.message;
+      this.msgServ.sendWACustomTemplateMessage(
+        this.TemplateForm.value['sender'], this.selectedLabel, this.TemplateForm.value['message']
+      ).subscribe(
         (resp: any) => {
+          console.log(resp)
           this.toastr.success('Message sent successfully!');
-          this.resetMessageForm();
+          this.resetMessageForm()
         },
-        (error) => {
-          this.toastr.error('Failed to send message.');
+        (error: any) => {
+          this.toastr.success('Messag not send!');
         }
+        
       );
     }
 
+    
     sendMessagelist(): void {
-      const headerTxt = this.messageForm.value.headerTxt;
       const msg = this.messageForm.value.message;
-      const selectedSenderValue = this.messageForm.value.sender;
+      const selectedSenderValue = this.messageForm.value.sender
   
-      const phoneNumbers = selectedSenderValue.split(',');
-  
-      phoneNumbers.forEach((phoneNumber:any) => {
-        const trimmedPhoneNumber = phoneNumber.trim(); 
-  
-        this.msgServ.sendWACustomTemplateMessage(trimmedPhoneNumber, headerTxt, msg).subscribe(
-          (resp: any) => {
-            this.toastr.success('Message sent successfully!');
-            this.resetMessageForm()
-  
-            console.log(`Message sent successfully to ${trimmedPhoneNumber}`);
-          },
-          (error: any) => {
-            this.toastr.error('Failed to send message.');
-            console.error(`Error sending message to ${trimmedPhoneNumber}:`, error);
-          }
-        );
+      this.http.get<any>(`http://localhost:3000/list/${this.selectedValue}`).subscribe((item) => {
+        const selectedOptions: string[] = item.selectedOptions;
+        selectedOptions.forEach(id => {
+          this.http.get<any>(`http://localhost:3000/contacts/${id}`).subscribe((data) => {
+            this.msgServ.sendWACustomTemplateMessage(data.t_role, data.t_name, msg).subscribe((resp: any) => {
+              this.toastr.success('Message sent successfully!');
+              this.resetMessageForm()
+            });
+          });
+        });
       });
     }
+
+    showContactDropdown: boolean = false;
+    showListDropdown: boolean = false;
+
+    toggleDropdown(selection: string): void {
+      if (selection === 'contact') {
+          this.showContactDropdown = true;
+          this.showListDropdown = false;
+      } else if (selection === 'list') {
+          this.showContactDropdown = false;
+          this.showListDropdown = true;
+      }
+  }
 
   }

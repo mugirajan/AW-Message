@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class WAMesssagingService {
+export class autoMaticTempSerive {
 
   private apicontactUrl ='http://localhost:3000/list'
 
@@ -19,7 +19,6 @@ export class WAMesssagingService {
     return this.http.get<any[]>(this.apicontactUrl);
 
   }
-  
 
   /* Birthday wishes */
   sendWACustomTemplateMessage(to: string, headerTxt: string, msg: string) {
@@ -196,7 +195,7 @@ export class WAMesssagingService {
   }
 
   helloworldTemplate(to: string) {
-    
+
     console.log("Parameter recieved on helloworldTemplate:", to)
     const headers = {
       'Content-Type': 'application/json',

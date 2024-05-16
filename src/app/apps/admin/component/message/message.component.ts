@@ -22,31 +22,23 @@ export class MessageComponent implements OnInit {
   messageForm!: FormGroup;
   actionType: string = "Add New";
 
-  contacts: any[] =[];
+  contacts: any[] = [];
 
   // senders
 
   senderResource: any[] = [
     {
-        label: 'Select receivers...',
-        options: [
-          // { value: "918056221146", label: "Kamalraj Ganesan" }
-        ]
+      label: 'Select receivers...',
+      options: [
+        // { value: "918056221146", label: "Kamalraj Ganesan" }
+      ]
     },
   ];
- 
-  // messageResource: Select2Group[] = [
-  //   {
-  //       label: '',
-  //       options: [
-  //         { value: "custom_msg", label: "Custom Message Template 1" }
-  //       ]
-  //   },
-  // ];
+
   selectedSender: Select2Option[] = [];
   selectedMessage: Select2Option[] = [];
 
-  
+
 
 
   @ViewChild('sizeableModal')
@@ -55,7 +47,9 @@ export class MessageComponent implements OnInit {
   positionModal!: TemplateRef<NgbModal>;
   @ViewChild('positionModal2')
   positionModal2!: TemplateRef<NgbModal>;
-  
+  selectedValue: string | undefined;
+
+
 
   constructor(
     private toastr: ToastrService,
@@ -63,94 +57,78 @@ export class MessageComponent implements OnInit {
     private msgServ: WAMesssagingService,
     private conserv: ContactService,
     private http: HttpClient
-  ) { 
+  ) {
 
   }
 
   ngOnInit(): void {
-    
+
     this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Custom Message', path: '/', active: true }];
 
     this.http.get<any[]>('http://localhost:3000/list').subscribe(data => {
       this.senderResource[0].options = [];
-    
       data.forEach((con: any) => {
-        this.senderResource[0].options.push({ label: con.c_name, value: con.c_selected });
+        this.senderResource[0].options.push({ label: con.c_name, value: con.id, id: con.id });
       });
     });
-    
 
-    // get Variants
     this._fetchData();
 
-		// product form
-		this.messageForm = this.fb.group({
-			sender: ['', Validators.required],
+    this.messageForm = this.fb.group({
+      sender: ['', Validators.required],
       headerTxt: ['', Validators.required],
-			message: ['', Validators.required],
-		});
-		this.resetMessageForm();
+      message: ['', Validators.required],
+    });
+    this.resetMessageForm();
   }
 
 
-	// used to get data from db.json file
-	_fetchData() {
+  _fetchData() {
 
-    // load the senderContact to senderResource variable
-    // this.senderResource = ?
   }
 
-
-	// reset form and file
   resetMessageForm() {
     this.messageForm.reset()
   }
 
-	// set sender details for WA message transfer
-	onSenderSelected(da: Select2UpdateEvent) {}
+  onSenderSelected(da: Select2UpdateEvent): void {
+    this.selectedValue = da.options[0].id;
+  }
 
-	// set message template details for WA message transfer
-	onMessageTemplateSelected(da: Select2UpdateEvent) {}
+
+
+  onMessageTemplateSelected(da: Select2UpdateEvent) {
+    console.log('onMessageTemplateSelected', da)
+  }
 
   // 
   sendMessage(): void {
-    const headerTxt = this.messageForm.value.headerTxt;
     const msg = this.messageForm.value.message;
-    const selectedSenderValue = this.messageForm.value.sender;
+    const selectedSenderValue = this.messageForm.value.sender
 
-    const phoneNumbers = selectedSenderValue.split(',');
-
-    phoneNumbers.forEach((phoneNumber:any) => {
-      const trimmedPhoneNumber = phoneNumber.trim(); 
-
-      this.msgServ.sendWACustomTemplateMessage(trimmedPhoneNumber, headerTxt, msg).subscribe(
-        (resp: any) => {
-          this.toastr.success('Message sent successfully!');
-          this.resetMessageForm()
-
-          console.log(`Message sent successfully to ${trimmedPhoneNumber}`);
-        },
-        (error: any) => {
-          this.toastr.error('Failed to send message.');
-          console.error(`Error sending message to ${trimmedPhoneNumber}:`, error);
-        }
-      );
+    this.http.get<any>(`http://localhost:3000/list/${this.selectedValue}`).subscribe((item) => {
+      const selectedOptions: string[] = item.selectedOptions;
+      selectedOptions.forEach(id => {
+        this.http.get<any>(`http://localhost:3000/contacts/${id}`).subscribe((data) => {
+          this.msgServ.sendWACustomTemplateMessage(data.t_role, data.t_name, msg).subscribe((resp: any) => {
+            this.toastr.success('Message sent successfully!');
+            this.resetMessageForm()
+          });
+        });
+      });
     });
-  }
-
-  // Send WA Hello World Message
-  sendHWMessage() {
-    this.msgServ.helloworldTemplate("").subscribe( (resp: any) => {
-      console.log("Values received", resp)
-    })
   }
 
 }
 
- 
 
 
-  
+
+
+
+
+
+
 
 
 

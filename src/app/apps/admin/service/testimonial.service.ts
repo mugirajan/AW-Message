@@ -38,7 +38,9 @@ export class ContactService {
     return this.http.delete(url);
   }
  
-  
+  fetchDataForId(id: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}${id}`);
+  }
   
 
  updateContact(data: any) {
