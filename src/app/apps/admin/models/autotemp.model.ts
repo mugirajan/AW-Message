@@ -1,7 +1,10 @@
 
 export interface AutoTemp {
     id?: any,
+    sender:string,
     date_picker: string,
     time_picker: string,
-    active_status?: string
+    template_name: string,
+    custom_template: string,
+    temp_isflag: string,
 }

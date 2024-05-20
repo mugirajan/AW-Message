@@ -123,75 +123,98 @@
                     <div class="col-lg-12 col-md-12">
                         <div class="card bg-white rounded-4 mb-lg-0 mb-3" style="padding:1rem;"
                             data-tor="inview:bg(primary) , hover:bg(danger)">
-                            <!--radio button-->
-                            <div class="custom_radio">
-                                <h4>Choose Template:</h4>
-                                <div class="d-flex">
-                                <input type="radio" id="customRadio" name="selectType" (change)="toggledown('custom')" ><label for="customRadio" >Custom</label>
-                                <input type="radio" id="templateRadio" name="selectType" (change)="toggledown('template')"><label for="templateRadio">Template</label>
-                                </div>
-                            </div>
-                            <div class="" *ngIf="showCustomDropdown">
-                                <div style="padding:1rem 0;">
-                                    <h3>Custom Template:-</h3>
-                                        
-                                </div> 
-                            </div>
-                            <div class="" *ngIf="showTemplateDropdown">
-                                <div style="padding:1rem 0;">
-                                    <h3>FB Template:-</h3>
-                                    <select>
-                                        <option>Birthday Template</option>
-                                        <option>Anniversary Template</option>
-                                        <option>Subscription Template</option>
-                                    </select>
-                                </div>                             
-                            </div>
+                           
                             <!--Date and Time Form-->
                             <div>
                                 <div style="padding:1rem 0;">
                                     <h3>Date and Time:-</h3>
                                 </div>                                
                                 <form [formGroup]="datetimeForm" class="row">
-                                <div class="col-lg-6">
-                                  <div>
-                                    <label for="date">Date:</label>
-                                    <input type="date" id="date" formControlName="date" required style="height:5vh;width:100%">
-                                  </div>
-                                </div>
-                                <div class="col-lg-6">
-                                  <div>
-                                    <label for="time">Time:</label>
-                                    <input type="time" id="time" formControlName="time" required style="height:5vh;width:100%">
-                                  </div>
-                                </div>
-                                <div class="col-lg-6 mt-3">
-                                    <button class="btn btn-primary dateform" type="submit" [disabled]="datetimeForm.invalid" (click)="submitdatetimeForm()">Click To Submit</button>
-                                </div>
+                                 <!--radio button-->
+                                    <div class="custom_radio">
+                                        <h4>Choose Template:</h4>
+                                        <div class="d-flex">
+                                            <input type="radio" value="true"  formControlName="temp_isflag" id="customRadio" name="selectType" (change)="toggledown('custom')" ><label for="customRadio" >Custom</label>
+                                            <input type="radio" value="false"  formControlName="temp_isflag" id="templateRadio" name="selectType" (change)="toggledown('template')"><label for="templateRadio">Template</label>
+                                        </div>
+                                    </div>
+                                    <div class="" *ngIf="showCustomDropdown">
+                                        <div style="padding:1rem 0;">
+                                            <h3>Custom Template:-</h3>
+                                            <label for="custom_template">Create your own template:</label>
+                                            <input type="text" id="custom_template" formControlName="custom_template" required style="height:5vh;width:100%">
+                                        </div> 
+                                    </div>
+                                    <div class="" *ngIf="showTemplateDropdown">
+                                        <div style="padding:1rem 0;">
+                                            <h3>FB Template:-</h3>
+                                            <select
+                                                formControlName="template_name" 
+                                                id="message"
+                                                placeholder="Select Day"
+                                                >
+                                                    <option value="birthday_fusion_original">Birthday Template</option>
+                                                    <option value="anniversary_fusion">Anniversary Template</option>
+                                                    <option value="subscription_fusion">Subscription Template</option>
+                                            </select>
+                                        </div>                             
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <label for="category" class="form-label">
+                                            Choose list:
+                                        </label>
+
+                                        <select2 
+                                            [data]="senderResourcelist" 
+                                            placeholder="select sender LIST" 
+                                            id="sender" 
+                                            #mySelect
+                                            class="form-control"
+                                            (update)='onSenderSelected($event)'
+                                            formControlName="sender_list"
+                                        >
+                                        </select2>
+                                    </div>
+                                    <div class="col-lg-6 mt-2">
+                                    <div>
+                                        <label for="date">Date:</label>
+                                        <input type="date" id="date" formControlName="date" required style="height:5vh;width:100%">
+                                    </div>
+                                    </div>
+                                    <div class="col-lg-6 mt-2">
+                                    <div>
+                                        <label for="time">Time:</label>
+                                        <input type="time" id="time" formControlName="time" required style="height:5vh;width:100%">
+                                    </div>
+                                    </div>
+                                    <div class="col-lg-6 mt-3">
+                                        <button class="btn btn-primary dateform" type="submit" (click)="submitdatetimeForm()">Click To Submit</button>
+                                    </div>
                                 </form>
                                 
                                 <div style="padding:1rem 0;">
-                                    <h3>Date and Time:-</h3>
+                                    <h3>Schedule Details:-</h3>
                                 </div>
                                 <table class="table">
                                     <thead class="thead-light">
                                       <tr>
+                                        <th>Template Name</th>
+                                        <th>Custom Template</th>
                                         <th>Date</th>
                                         <th>Time</th>
                                       </tr>
                                     </thead>
                                     <tbody>
                                         <tr *ngFor="let item of storedData">
+                                        <td>{{item.template_name}}</td>
+                                        <td>{{item.custom_template}}</td>
                                         <td>{{item.date_picker}}</td>
                                         <td>{{item.time_picker}}</td>
-                                        <td>
-                                            <button (click)="editAutoTemp(item)">Edit</button>
-                                            <button (click)="deleteAutoTemp(item.id)">Delete</button>
-                                        </td>
+                                        <td><button (click)="deleteAutoTemp(item.id)">Delete</button></td>
                                       </tr>
                                     </tbody>
                                   </table>
-                              </div>
+                            </div>
                               
                               
                         </div>
@@ -253,7 +276,7 @@
    
  
 .custom_radio{
-   margin: 20px;
+   margin: 20px 0px;
 }
 .custom_radio input[type="radio"]{
   display: none;

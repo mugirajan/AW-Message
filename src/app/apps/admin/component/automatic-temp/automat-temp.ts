@@ -134,9 +134,12 @@ export class automatTempComponent  implements OnInit {
 
       //date and time
       this.datetimeForm = this.fb.group({
-        d_id:[''],
-        date: ['', Validators.required],
-        time: ['', Validators.required]
+          temp_isflag: [''],
+          custom_template: [''],
+          sender_list: [''],
+          template_name: [''],
+          date: [''],
+          time: [''],
       });
   
 
@@ -254,41 +257,65 @@ export class automatTempComponent  implements OnInit {
       }
     }
 
-    //schedule form 
+   
+
     submitdatetimeForm() {
       if (this.datetimeForm.valid) {
-        this.autoTempService.createAutoTemp(this.datetimeForm.value).subscribe((data:any) => {
-          this.storedData.push(data)
+        this.http.post<AutoTemp>('http://localhost:3000/datetime/', this.datetimeForm.value).subscribe(data => {
+          this.storedData.push(data);
           this.datetimeForm.reset();
         });
       }
     }
+   
   
     fetchData() {
-      this.autoTempService.getAutoTemps().subscribe(data => {
+      this.http.get<AutoTemp[]>('http://localhost:3000/datetime').subscribe(data => {
         this.storedData = data;
       });
     }
-  
+
     deleteAutoTemp(id: number) {
       this.autoTempService.deleteAutoTemp(id).subscribe(() => {
         this.storedData = this.storedData.filter(item => item.id !== id);
       });
     }
+
+    //schedule form 
+    // submitdatetimeForm() {
+    //   if (this.datetimeForm.valid) {
+    //     this.autoTempService.createAutoTemp(this.datetimeForm.value).subscribe((data:any) => {
+    //       this.storedData.push(data)
+    //       this.datetimeForm.reset();
+    //     });
+    //   }
+    // }
   
-    editAutoTemp(autoTemp: AutoTemp) {
-      this.datetimeForm.patchValue(autoTemp);
-    }
+    // fetchData() {
+    //   this.autoTempService.getAutoTemps().subscribe(data => {
+    //     this.storedData = data;
+    //   });
+    // }
   
-    updateDatetimeForm() {
-      if (this.datetimeForm.valid) {
-        this.autoTempService.updateAutoTemp(this.datetimeForm.value).subscribe(data => {
-          const index = this.storedData.findIndex(item => item.id === data.id);
-          if (index !== -1) {
-            this.storedData[index] = data;
-          }
-          this.datetimeForm.reset();
-        });
-      }
-    }
+    // deleteAutoTemp(id: number) {
+    //   this.autoTempService.deleteAutoTemp(id).subscribe(() => {
+    //     this.storedData = this.storedData.filter(item => item.id !== id);
+    //   });
+    // }
+  
+    // editAutoTemp(autoTemp: AutoTemp) {
+    //   this.datetimeForm.patchValue(autoTemp);
+    // }
+  
+    // updateDatetimeForm() {
+    //   if (this.datetimeForm.valid) {
+    //     this.autoTempService.updateAutoTemp(this.datetimeForm.value).subscribe(data => {
+    //       const index = this.storedData.findIndex(item => item.id === data.id);
+    //       if (index !== -1) {
+    //         this.storedData[index] = data;
+    //       }
+    //       this.datetimeForm.reset();
+    //     });
+    //   }
+    // }
   }
