@@ -395,7 +395,7 @@ export class ContactComponent implements OnInit {
   }
 
   //  gets the form details
-  submitcontactFormForm(modal: TemplateRef<NgbModal>) {
+  submitcontactForm(modal: TemplateRef<NgbModal>) {
     
     // prepping data for service
     let data:Testimonial = this.contactForm.value;
