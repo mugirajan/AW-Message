@@ -1,219 +1,52 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs';
-import * as env from 'src/environments/environment';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { AutoTemp } from '../models/autotemp.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class autoMaticTempSerive {
+export class AutoTempService {
 
-  private apicontactUrl ='http://localhost:3000/list'
+  private apiUrl = 'http://localhost:3000/datetime/'; 
+  
+  private AutoTemp$ = new BehaviorSubject<AutoTemp[]>([]);
 
-  url = env.WAEnds.url + env.WAEnds.version + "/" + env.WAEnds.PhnID + "/messages";
+  constructor(private http: HttpClient, private toastr: ToastrService) { }
 
-  constructor(private http: HttpClient) { }
-
-  getContacts(): Observable<any[]> {
-    return this.http.get<any[]>(this.apicontactUrl);
-
+  // Create
+  createAutoTemp(data: any) { 
+    if(data.id != undefined){ 
+      return this.updateAutoTemp(data)
+    } else {
+      delete data.id; 
+      this.toastr.success('Date and Time Added Succesfully!');
+      return this.http.post(this.apiUrl, data);
+    }
   }
-
-  /* Birthday wishes */
-  sendWACustomTemplateMessage(to: string, headerTxt: string, msg: string) {
-
-    console.log("Parameter got:", to, headerTxt, msg)
-    const headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `${env.WAEnds.token}`
-    }
-    let data = {
-      "messaging_product": "whatsapp",
-      "to": to,
-      "type": "template",
-      "template": {
-        "name": "birthday_fusion_original",
-        "language": {
-          "code": "en"
-        },
-        "components": [
-          {
-            "type": "header",
-            "parameters": [
-              {
-                "type": "text",
-                "text": headerTxt
-              }
-            ]
-          },
-          {
-            "type": "body",
-            "parameters": [
-              {
-                "type": "text",
-                "text": msg
-              }
-            ]
-          }
-        ]
-      }
-    }
-
-    return this.http.post(this.url, data, { headers });
+  
+  
+  // Delete
+  deleteAutoTemp(id: number): Observable<any> {
+    const url = `${this.apiUrl}${id}`;
+    return this.http.delete(url);
   }
-
-  /* Anniversary */
-  sendWAanniversaryTemplate(to: string, headerTxt: string, msg: string) {
-
-    console.log("Parameter got:", to, headerTxt, msg)
-    const headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `${env.WAEnds.token}`
-    }
-    let data = {
-      "messaging_product": "whatsapp",
-      "to": to,
-      "type": "template",
-      "template": {
-        "name": "anniversary_fusion",
-        "language": {
-          "code": "en"
-        },
-        "components": [
-          {
-            "type": "header",
-            "parameters": [
-              {
-                "type": "text",
-                "text": headerTxt
-              }
-            ]
-          },
-          {
-            "type": "body",
-            "parameters": [
-              {
-                "type": "text",
-                "text": msg
-              }
-            ]
-          }
-        ]
-      }
-    }
-
-    return this.http.post(this.url, data, { headers });
+ 
+  // Fetch by ID
+  fetchAutoTempById(id: number): Observable<AutoTemp> {
+    return this.http.get<AutoTemp>(`${this.apiUrl}${id}`);
   }
-
-  /* subscription_fusion*/
-  subscriptionFusionTemplate(to: string, headerTxt: string, msg: string) {
-
-    console.log("Parameter got:", to, headerTxt, msg)
-    const headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `${env.WAEnds.token}`
-    }
-    let data = {
-      "messaging_product": "whatsapp",
-      "to": to,
-      "type": "template",
-      "template": {
-        "name": "subscription_fusion",
-        "language": {
-          "code": "en"
-        },
-        "components": [
-          {
-            "type": "header",
-            "parameters": [
-              {
-                "type": "text",
-                "text": headerTxt
-              }
-            ]
-          },
-          {
-            "type": "body",
-            "parameters": [
-              {
-                "type": "text",
-                "text": msg
-              }
-            ]
-          }
-        ]
-      }
-    }
-
-    return this.http.post(this.url, data, { headers });
+  
+  // Update
+  updateAutoTemp(data: AutoTemp): Observable<AutoTemp> {
+    this.toastr.success('Date and Time Updated Successfully!');
+    const url = `${this.apiUrl}${data.id}`;
+    return this.http.put<AutoTemp>(url, data);
   }
-
-  customTemplate(to: string, headerTxt: string) {
-    console.log("Parameter recieved:", to, headerTxt,)
-    const headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `${env.WAEnds.token}`
-    }
-
-    let custom_Temp = {
-      "messaging_product": "whatsapp",
-      "to": to,
-      "type": "template",
-      "template": {
-        "name": "fusion_template",
-        "language": {
-          "code": "en"
-        },
-        "components": [
-          {
-            "type": "header",
-            "parameters": [
-              {
-                "type": "image",
-                "image": {
-                  "link": "https://img.freepik.com/free-photo/bodybuilder-training-arm-with-resistance-band_7502-4758.jpg?t=st=1710920484~exp=1710924084~hmac=84b412344cc9f4f61e704c3490da6eb257f5698076fe221670b44e7d2875fc4b&w=826"
-                },
-                "text": ""
-              }
-            ]
-          },
-          {
-            "type": "body",
-            "parameters": [
-              {
-                "type": "text",
-                "text": headerTxt
-              }
-            ]
-          }
-        ]
-      }
-    }
-    return this.http.post(this.url, custom_Temp, { headers });
-
+ 
+  // Get all
+  getAutoTemps(): Observable<AutoTemp[]> {
+    return this.http.get<AutoTemp[]>(this.apiUrl);
   }
-
-  helloworldTemplate(to: string) {
-
-    console.log("Parameter recieved on helloworldTemplate:", to)
-    const headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `${env.WAEnds.token}`
-    }
-    let content = { 
-      "messaging_product": "whatsapp", 
-      "to": "918056221146", 
-      "type": "template", 
-      "template": { 
-        "name": "hello_world", 
-        "language": { 
-          "code": "en_US" 
-        } 
-      } 
-    }
-    return this.http.post(this.url, content, { headers });
-
-  }
-
 }

@@ -9,6 +9,8 @@ import { ProductModel2 } from '../../models/product.model';
 import { Select2Group, Select2Option, Select2UpdateEvent} from 'ng-select2-component';
 import { HttpClient } from '@angular/common/http';
 import { WAMesssagingService } from '../../service/wa.message.service';
+import { AutoTempService } from '../../service/automat.service';
+import { AutoTemp } from '../../models/autotemp.model';
 
 import { ToastrService } from 'ngx-toastr';
 
@@ -20,6 +22,8 @@ import { ToastrService } from 'ngx-toastr';
 
 export class automatTempComponent  implements OnInit {
     messageForm!: FormGroup;
+    datetimeForm!: FormGroup;
+    storedData: AutoTemp[] = [];
     pageTitle: BreadcrumbItem[] = [];
     records: ProductModel2[] = [];
     columns: Column[] = [];
@@ -81,7 +85,9 @@ export class automatTempComponent  implements OnInit {
     selectedValue: string | undefined;
 
     
+
     constructor(
+      private autoTempService: AutoTempService,
       private toastr: ToastrService,
       private fb: FormBuilder,
       private msgServ: WAMesssagingService,
@@ -104,6 +110,7 @@ export class automatTempComponent  implements OnInit {
       });
      
       this._fetchData();
+
       this.TemplateForm = this.fb.group({
         sender: ['', Validators.required],
         headerTxt: ['', Validators.required],
@@ -124,6 +131,14 @@ export class automatTempComponent  implements OnInit {
         catlogue_status: [false, Validators.required],
         datasheet_status: [false, Validators.required],
       });
+
+      //date and time
+      this.datetimeForm = this.fb.group({
+        d_id:[''],
+        date: ['', Validators.required],
+        time: ['', Validators.required]
+      });
+  
 
       //list started
 
@@ -209,6 +224,8 @@ export class automatTempComponent  implements OnInit {
       });
     }
 
+    //radio button for contact or list
+
     showContactDropdown: boolean = false;
     showListDropdown: boolean = false;
 
@@ -220,6 +237,58 @@ export class automatTempComponent  implements OnInit {
           this.showContactDropdown = false;
           this.showListDropdown = true;
       }
-  }
+    }
 
+    //radio button for custom or fb template
+
+    showCustomDropdown: boolean = false;
+    showTemplateDropdown: boolean = false;
+
+    toggledown(selection: string): void {
+      if (selection === 'custom') {
+          this.showCustomDropdown = true;
+          this.showTemplateDropdown = false;
+      } else if (selection === 'template') {
+          this.showCustomDropdown = false;
+          this.showTemplateDropdown = true;
+      }
+    }
+
+    //schedule form 
+    submitdatetimeForm() {
+      if (this.datetimeForm.valid) {
+        this.autoTempService.createAutoTemp(this.datetimeForm.value).subscribe((data:any) => {
+          this.storedData.push(data)
+          this.datetimeForm.reset();
+        });
+      }
+    }
+  
+    fetchData() {
+      this.autoTempService.getAutoTemps().subscribe(data => {
+        this.storedData = data;
+      });
+    }
+  
+    deleteAutoTemp(id: number) {
+      this.autoTempService.deleteAutoTemp(id).subscribe(() => {
+        this.storedData = this.storedData.filter(item => item.id !== id);
+      });
+    }
+  
+    editAutoTemp(autoTemp: AutoTemp) {
+      this.datetimeForm.patchValue(autoTemp);
+    }
+  
+    updateDatetimeForm() {
+      if (this.datetimeForm.valid) {
+        this.autoTempService.updateAutoTemp(this.datetimeForm.value).subscribe(data => {
+          const index = this.storedData.findIndex(item => item.id === data.id);
+          if (index !== -1) {
+            this.storedData[index] = data;
+          }
+          this.datetimeForm.reset();
+        });
+      }
+    }
   }

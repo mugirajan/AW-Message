@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-lg-7 col-md-6">
                 <div class="row">
-                    <div class="col-lg-12 col-md-12" style="margin-bottom:3rem">
+                    <div class="col-lg-12 col-md-12" style="margin-bottom:2rem">
                         <div class="card bg-white rounded-4 mb-lg-0" style="padding: 1rem 2rem 3rem 2rem;margin-bottom:3rem"
                             data-tor="inview:bg(primary) , hover:bg(danger)">
                             <div style="padding:1rem 0;">
@@ -23,12 +23,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-12 col-md-12">
+                    <div class="col-lg-12 col-md-12" style="margin-bottom:2rem">
                         <div class="card bg-white rounded-4 mb-lg-0 mb-3" style="padding:1rem;"
                             data-tor="inview:bg(primary) , hover:bg(danger)">
                             <!--radio button-->
                             <div class="custom_radio">
-                                <h4>Choose:</h4>
+                                <h4>Choose Subscription:</h4>
                                 <div class="d-flex">
                                 <input type="radio" id="contactRadio" name="selectType" (change)="toggleDropdown('contact')" ><label for="contactRadio" >Contact</label>
                                 <input type="radio" id="listRadio" name="selectType" (change)="toggleDropdown('list')"><label for="listRadio">List</label>
@@ -120,8 +120,86 @@
                             </form>
                         </div>
                     </div>
+                    <div class="col-lg-12 col-md-12">
+                        <div class="card bg-white rounded-4 mb-lg-0 mb-3" style="padding:1rem;"
+                            data-tor="inview:bg(primary) , hover:bg(danger)">
+                            <!--radio button-->
+                            <div class="custom_radio">
+                                <h4>Choose Template:</h4>
+                                <div class="d-flex">
+                                <input type="radio" id="customRadio" name="selectType" (change)="toggledown('custom')" ><label for="customRadio" >Custom</label>
+                                <input type="radio" id="templateRadio" name="selectType" (change)="toggledown('template')"><label for="templateRadio">Template</label>
+                                </div>
+                            </div>
+                            <div class="" *ngIf="showCustomDropdown">
+                                <div style="padding:1rem 0;">
+                                    <h3>Custom Template:-</h3>
+                                        
+                                </div> 
+                            </div>
+                            <div class="" *ngIf="showTemplateDropdown">
+                                <div style="padding:1rem 0;">
+                                    <h3>FB Template:-</h3>
+                                    <select>
+                                        <option>Birthday Template</option>
+                                        <option>Anniversary Template</option>
+                                        <option>Subscription Template</option>
+                                    </select>
+                                </div>                             
+                            </div>
+                            <!--Date and Time Form-->
+                            <div>
+                                <div style="padding:1rem 0;">
+                                    <h3>Date and Time:-</h3>
+                                </div>                                
+                                <form [formGroup]="datetimeForm" class="row">
+                                <div class="col-lg-6">
+                                  <div>
+                                    <label for="date">Date:</label>
+                                    <input type="date" id="date" formControlName="date" required style="height:5vh;width:100%">
+                                  </div>
+                                </div>
+                                <div class="col-lg-6">
+                                  <div>
+                                    <label for="time">Time:</label>
+                                    <input type="time" id="time" formControlName="time" required style="height:5vh;width:100%">
+                                  </div>
+                                </div>
+                                <div class="col-lg-6 mt-3">
+                                    <button class="btn btn-primary dateform" type="submit" [disabled]="datetimeForm.invalid" (click)="submitdatetimeForm()">Click To Submit</button>
+                                </div>
+                                </form>
+                                
+                                <div style="padding:1rem 0;">
+                                    <h3>Date and Time:-</h3>
+                                </div>
+                                <table class="table">
+                                    <thead class="thead-light">
+                                      <tr>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of storedData">
+                                        <td>{{item.date_picker}}</td>
+                                        <td>{{item.time_picker}}</td>
+                                        <td>
+                                            <button (click)="editAutoTemp(item)">Edit</button>
+                                            <button (click)="deleteAutoTemp(item.id)">Delete</button>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                              </div>
+                              
+                              
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <!--right side card-->
             <div class="col-lg-5 col-md-6">
                 <div class="row">
                     <div class="col-lg-12 col-md-6">
@@ -223,6 +301,11 @@
   -webkit-transition: all .3s ease;
   transition: all .3s ease;
   box-shadow: inset 0 0 0 0.2em white, inset 0 0 0 1em blue;
+}
+
+/*date and time button*/
+.dateform{
+    border-radius:0.5rem;
 }
 </style>
 
