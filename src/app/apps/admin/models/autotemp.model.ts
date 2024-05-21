@@ -1,7 +1,7 @@
 
 export interface AutoTemp {
     id?: any,
-    sender:string,
+    sender_list:string,
     date_picker: string,
     time_picker: string,
     template_name: string,

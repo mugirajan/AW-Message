@@ -23,7 +23,4 @@ export class AutoTempService {
     return this.http.delete<void>(`${this.apiUrl}${id}`);
   }
 
-  updateAutoTemp(data: AutoTemp): Observable<AutoTemp> {
-    return this.http.put<AutoTemp>(`${this.apiUrl}${data.id}`, data);
-  }
 }

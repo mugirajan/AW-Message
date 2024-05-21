@@ -55,6 +55,13 @@ export class automatTempComponent  implements OnInit {
           ]
       },
     ];
+    senderResourcelistarray: Select2Group[] = [
+      {
+          label: '',
+          options: [
+          ]
+      },
+    ];
     selectedSender: Select2Option[] = [];
     selectedMessage: Select2Option[] = [];
   
@@ -151,6 +158,13 @@ export class automatTempComponent  implements OnInit {
             this.senderResourcelist[0].options.push({ label: con.c_name, value:con.id, id:con.id });
           });
     });
+
+    this.http.get<any[]>('http://localhost:3000/list').subscribe(data => {
+      this.senderResourcelistarray[0].options = [];
+          data.forEach((con: any) => {
+            this.senderResourcelistarray[0].options.push({ label: con.c_name, value:con.selectedOptions });
+          });
+    });
     
 
     // get Variants
@@ -177,6 +191,9 @@ export class automatTempComponent  implements OnInit {
     onSenderSelected(da: Select2UpdateEvent) {
       this.selectedValue = da.options[0].id;
     }
+    onSenderSelectedarray(da: Select2UpdateEvent) {
+      this.selectedValue = da.options[0].id;
+        }
     onSenderSelectedcontact(da:Select2UpdateEvent){
       this.selectedLabel = da.options[0].label;
     }

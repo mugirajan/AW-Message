@@ -161,16 +161,16 @@
                                     </div>
                                     <div class="col-lg-12">
                                         <label for="category" class="form-label">
-                                            Choose list:
+                                            Choose list array:
                                         </label>
 
                                         <select2 
-                                            [data]="senderResourcelist" 
+                                            [data]="senderResourcelistarray" 
                                             placeholder="select sender LIST" 
                                             id="sender" 
                                             #mySelect
                                             class="form-control"
-                                            (update)='onSenderSelected($event)'
+                                            (update)='onSenderSelectedarray($event)'
                                             formControlName="sender_list"
                                         >
                                         </select2>
