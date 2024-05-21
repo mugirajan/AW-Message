@@ -87,7 +87,7 @@ export class ContactComponent implements OnInit {
       t_gender:['', Validators.required],
       t_mail:['', Validators.required],
       t_dob:['', Validators.required],
-      endof_subscription:['', Validators.required],
+      t_endsub:['', Validators.required],
       t_term:['', Validators.required],
       active_status: ['', Validators.required],
     });
