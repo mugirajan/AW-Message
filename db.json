@@ -4,14 +4,14 @@
       "id": "4dd3",
       "t_name": "Ganesh",
       "t_role": "917338908955",
-      "t_date": "28-05-2023",
+      "t_date": "21-05-2023",
       "t_marriage": null,
       "t_msg": null,
       "t_address": "chennai",
       "t_city": "chennai",
       "t_gender": "male",
       "t_mail": "abc@gmail.com",
-      "t_dob": "20-05-2000",
+      "t_dob": "21-05-2000",
       "t_term": "One Year",
       "active_status": "true"
     },
@@ -20,7 +20,7 @@
       "t_name": "Kamal",
       "t_role": "918056221146",
       "t_date": "20-12-2023",
-      "t_marriage": "2020-05-20",
+      "t_marriage": "2020-05-21",
       "t_msg": null,
       "t_address": "chengalpattu",
       "t_city": "chennai",
@@ -215,113 +215,19 @@
     }
   ],
   "template": [],
-  "datetime": [
+  "scheduledmsg": [
     {
-      "id": "4a5e",
-      "d_id": "",
-      "date": "2024-05-15",
-      "time": "21:18"
-    },
-    {
-      "id": "d28b",
-      "custom_template": "",
-      "template_name": "",
-      "date": "2024-05-03",
-      "time": "20:59"
-    },
-    {
-      "id": "5735",
-      "custom_template": null,
-      "template_name": "birthday_fusion_original",
-      "date": "2024-05-23",
-      "time": "21:59"
-    },
-    {
-      "id": "2a3b",
-      "custom_template": "szexdrcftgvyhbj",
-      "template_name": null,
-      "date": "2024-05-23",
-      "time": "20:02"
-    },
-    {
-      "id": "af6d",
-      "custom_template": "xdrcftgvyhbjn",
-      "template_name": "",
-      "date": "2024-05-15",
-      "time": "22:06"
-    },
-    {
-      "id": "f58e",
-      "temp_flag": "false",
-      "custom_template": "",
-      "template_name": "birthday_fusion_original",
-      "date": "2024-05-22",
-      "time": "21:19"
-    },
-    {
-      "id": "2bf2",
-      "temp_flag": "false",
-      "custom_template": "",
-      "template_name": "birthday_fusion_original",
-      "date": "2024-05-10",
-      "time": "22:20"
-    },
-    {
-      "id": "ac9b",
-      "temp_flag": "false",
-      "custom_template": "",
-      "sender": "dd48",
-      "template_name": "birthday_fusion_original",
-      "date": "2024-05-17",
-      "time": "21:31"
-    },
-    {
-      "id": "f37a",
-      "temp_isflag": "false",
-      "custom_template": "custom",
-      "sender_list": "e6fc",
-      "template_name": "anniversary_fusion",
-      "date": "2024-05-17",
-      "time": "22:35"
-    },
-    {
-      "id": "ede8",
-      "temp_isflag": "",
-      "custom_template": "",
-      "sender_list": "e6fc",
-      "template_name": "",
-      "date": "2024-05-02",
-      "time": "11:50"
-    },
-    {
-      "id": "5a3a",
-      "temp_isflag": "",
-      "custom_template": "",
-      "sender_list": "e6fc",
-      "template_name": "",
-      "date": "2024-05-01",
-      "time": "11:53"
-    },
-    {
-      "id": "7951",
-      "temp_isflag": "",
-      "custom_template": "",
-      "sender_list": "2d5c",
-      "template_name": "",
-      "date": "2024-05-02",
-      "time": "00:55"
-    },
-    {
-      "id": "5ad2",
-      "temp_isflag": "",
-      "custom_template": "",
-      "sender_list": [
+      "id": "d9c5",
+      "is_temp": "true",
+      "cust_temp": "xdfgh",
+      "cont_list": [
         "4dd3",
-        "f329"
+        "f329",
+        "11bd"
       ],
-      "template_name": "",
-      "date": "2024-05-03",
-      "time": "11:02"
+      "temp_name": "birthday_fusion_original",
+      "date": "2024-05-21",
+      "time": "15:31"
     }
   ]
 }

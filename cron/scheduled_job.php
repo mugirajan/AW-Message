@@ -1,6 +1,7 @@
 <?php
 
 date_default_timezone_set('Asia/Kolkata');
+
 $WABI = "231667113353605";
 $version = "v19.0";
 $url = "https://graph.facebook.com/";  // /v18.0/214842615044313/messages",
@@ -8,61 +9,59 @@ $token = "EAANBTnz5WGwBOygYs2iMCE8NQolyrqFNR2q1NfTOEpMytfm0tmmmZB0f7p8IZCVx7mZBO
 $PhnID = "214842615044313";
 
 
-$contacts = json_decode(file_get_contents("http://localhost:3000/contacts"), true);
+$jobs = json_decode(file_get_contents("http://localhost:3000/scheduledmsg"), true);
 
 $url = $url . $version . "/" . $PhnID . "/messages";
 
 //To display the list of contacts fetched
-print_r($contacts);
+print_r($jobs);
 echo '<br/>';
 echo '<br/>';
 
+
+
 // To send message to users with birthday as today
-foreach ($contacts as $cont) {
+foreach ($jobs as $job) {
 
   // check number for testing
   // $pno = '917338908955';
   // $pno = '918056221146';
-  $pno = $cont['t_role'];
-  $pname = $cont['t_name'];
-  $pdob = $cont['t_endsub'];
-  $pterm = $cont['t_term'];
-  $dob = new DateTime($pdob);
-  $today   = new DateTime('today');
-  $year = $dob->diff($today)->y;
-
-  $date =  new DateTime($pdob);
-
-  // if ($pterm == 'One Year') {
-  //   $date->modify('+1 Year');
-  // } elseif ($pterm == 'Six Month') {
-  //   $date->modify('+6 months');
-  // }
-  $addate = $date->format('Y-m-d');
+  $cst_msg = $job['cust_temp'];
+  $cst_name = $job['temp_name'];
+  $cst_list = $job['cont_list'];
+  $time = $job['date']." ".$job['time'];
+  print_r($cst_list);
+  $dob = new DateTime($time);
+  $addate = $dob->format('d-m-Y');
+  $currentDate = new DateTime();
+  echo '<br/>';
+  echo '<br/>';
   print_r($addate);
-  $time = strtotime($addate);
+  $timeday = strtotime($addate);
   echo '<br/>';
-  $weektime = strtotime('-7 day', $time);
-  $monthtime = strtotime('-1 month', $time);
-  print_r($time);
 
-  if (date('m-d') == date('m-d', $weektime)) {
-    print_r(sendWACustomTemplateMessage($pno, $pname, $addate, $token, $url));
+  if ($currentDate->format('d-m-Y H:i') == $dob->format('d-m-Y H:i')) {
+    foreach ($cst_list as $cont) {
+      $contact = json_decode(file_get_contents("http://localhost:3000/contacts?id=" . $cont), true);
+      print_r($contact);
+      echo '<br/>';
+      echo '<br/>';
+      if (!(sizeof($contact) == 0)) {
+        $pname = $contact[0]['t_name'];
+        $pcont = $contact[0]['t_role'];
+        print_r(sendWACustomTemplateMessage($pcont, $pname, $cst_msg, $token, $url));
+      }
+      echo '<br/>';
+      echo '<br/>';
+    }
   }
-  if(date('m-d') == date('m-d', $monthtime)){
-    print_r(sendWACustomTemplateMessage($pno, $pname, $addate, $token, $url));
-  }
 
-  // if (date('m-d') == date('m-d', $time)) {
-  //   print_r(sendWACustomTemplateMessage($pno, $pname, $year, $token, $url));
   echo '<br/>';
   echo '<br/>';
-  // }
-
 }
 
 
-/* Birthday wishes */
+/* Custom template */
 function sendWACustomTemplateMessage(string $to, string $headerTxt, string $msg, string $token, string $url)
 {
 
@@ -76,7 +75,7 @@ function sendWACustomTemplateMessage(string $to, string $headerTxt, string $msg,
     "to" => $to,
     "type" => "template",
     "template" => [
-      "name" => "subscription_fusion",
+      "name" => "custom_template",
       "language" => [
         "code" => "en"
       ],
