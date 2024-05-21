@@ -22,7 +22,7 @@ import { ToastrService } from 'ngx-toastr';
 
 export class automatTempComponent  implements OnInit {
     messageForm!: FormGroup;
-    datetimeForm!: FormGroup;
+    scheduledmsg!: FormGroup;
     storedData: AutoTemp[] = [];
     pageTitle: BreadcrumbItem[] = [];
     records: ProductModel2[] = [];
@@ -140,11 +140,11 @@ export class automatTempComponent  implements OnInit {
       });
 
       //date and time
-      this.datetimeForm = this.fb.group({
-          temp_isflag: [''],
-          custom_template: [''],
-          sender_list: [''],
-          template_name: [''],
+      this.scheduledmsg = this.fb.group({
+          is_temp: [''],
+          cust_temp: [''],
+          cont_list: [''],
+          temp_name: [''],
           date: [''],
           time: [''],
       });
@@ -277,10 +277,10 @@ export class automatTempComponent  implements OnInit {
    
 
     submitdatetimeForm() {
-      if (this.datetimeForm.valid) {
-        this.http.post<AutoTemp>('http://localhost:3000/datetime/', this.datetimeForm.value).subscribe(data => {
+      if (this.scheduledmsg.valid) {
+        this.http.post<AutoTemp>('http://localhost:3000/datetime/', this.scheduledmsg.value).subscribe(data => {
           this.storedData.push(data);
-          this.datetimeForm.reset();
+          this.scheduledmsg.reset();
         });
       }
     }

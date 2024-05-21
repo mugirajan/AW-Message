@@ -127,29 +127,29 @@
                             <!--Date and Time Form-->
                             <div>
                                 <div style="padding:1rem 0;">
-                                    <h3>Date and Time:-</h3>
+                                    <h3>Schedule Message:-</h3>
                                 </div>                                
-                                <form [formGroup]="datetimeForm" class="row">
+                                <form [formGroup]="scheduledmsg" class="row">
                                  <!--radio button-->
                                     <div class="custom_radio">
                                         <h4>Choose Template:</h4>
                                         <div class="d-flex">
-                                            <input type="radio" value="true"  formControlName="temp_isflag" id="customRadio" name="selectType" (change)="toggledown('custom')" ><label for="customRadio" >Custom</label>
-                                            <input type="radio" value="false"  formControlName="temp_isflag" id="templateRadio" name="selectType" (change)="toggledown('template')"><label for="templateRadio">Template</label>
+                                            <input type="radio" value="true"  formControlName="is_temp" id="customRadio" name="selectType" (change)="toggledown('custom')" ><label for="customRadio" >Custom</label>
+                                            <input type="radio" value="false"  formControlName="is_temp" id="templateRadio" name="selectType" (change)="toggledown('template')"><label for="templateRadio">Template</label>
                                         </div>
                                     </div>
                                     <div class="" *ngIf="showCustomDropdown">
                                         <div style="padding:1rem 0;">
                                             <h3>Custom Template:-</h3>
-                                            <label for="custom_template">Create your own template:</label>
-                                            <input type="text" id="custom_template" formControlName="custom_template" required style="height:5vh;width:100%">
+                                            <label for="cust_temp">Create your own template:</label>
+                                            <input type="text" id="cust_temp" formControlName="cust_temp" required style="height:5vh;width:100%">
                                         </div> 
                                     </div>
                                     <div class="" *ngIf="showTemplateDropdown">
                                         <div style="padding:1rem 0;">
                                             <h3>FB Template:-</h3>
                                             <select
-                                                formControlName="template_name" 
+                                                formControlName="temp_name" 
                                                 id="message"
                                                 placeholder="Select Day"
                                                 >
@@ -171,7 +171,7 @@
                                             #mySelect
                                             class="form-control"
                                             (update)='onSenderSelectedarray($event)'
-                                            formControlName="sender_list"
+                                            formControlName="cont_list"
                                         >
                                         </select2>
                                     </div>
@@ -206,10 +206,10 @@
                                     </thead>
                                     <tbody>
                                         <tr *ngFor="let item of storedData">
-                                        <td>{{item.template_name}}</td>
-                                        <td>{{item.custom_template}}</td>
-                                        <td>{{item.date_picker}}</td>
-                                        <td>{{item.time_picker}}</td>
+                                        <td>{{item.temp_name}}</td>
+                                        <td>{{item.cust_temp}}</td>
+                                        <td>{{item.date}}</td>
+                                        <td>{{item.time}}</td>
                                         <td><button (click)="deleteAutoTemp(item.id)">Delete</button></td>
                                       </tr>
                                     </tbody>
