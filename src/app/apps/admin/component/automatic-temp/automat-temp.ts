@@ -278,7 +278,7 @@ export class automatTempComponent  implements OnInit {
 
     submitdatetimeForm() {
       if (this.scheduledmsg.valid) {
-        this.http.post<AutoTemp>('http://localhost:3000/datetime/', this.scheduledmsg.value).subscribe(data => {
+        this.http.post<AutoTemp>('http://localhost:3000/scheduledmsg/', this.scheduledmsg.value).subscribe(data => {
           this.storedData.push(data);
           this.scheduledmsg.reset();
         });
@@ -287,7 +287,7 @@ export class automatTempComponent  implements OnInit {
    
   
     fetchData() {
-      this.http.get<AutoTemp[]>('http://localhost:3000/datetime').subscribe(data => {
+      this.http.get<AutoTemp[]>('http://localhost:3000/scheduledmsg').subscribe(data => {
         this.storedData = data;
       });
     }
