@@ -32,11 +32,11 @@ foreach ($contacts as $cont) {
 
   $date =  new DateTime($pdob);
 
-  if ($pterm == 'One Year') {
-    $date->modify('+1 Year');
-  } elseif ($pterm == 'Six Month') {
-    $date->modify('+6 months');
-  }
+  // if ($pterm == 'One Year') {
+  //   $date->modify('+1 Year');
+  // } elseif ($pterm == 'Six Month') {
+  //   $date->modify('+6 months');
+  // }
   $addate = $date->format('Y-m-d');
   print_r($addate);
   $time = strtotime($addate);
