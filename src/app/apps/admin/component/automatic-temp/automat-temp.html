@@ -3,179 +3,49 @@
         <div class="row">
             <div class="col-lg-7 col-md-6">
                 <div class="row">
-                    <div class="col-lg-12 col-md-12" style="margin-bottom:2rem">
-                        <div class="card bg-white rounded-4 mb-lg-0" style="padding: 1rem 2rem 3rem 2rem;margin-bottom:3rem"
-                            data-tor="inview:bg(primary) , hover:bg(danger)">
-                            <div style="padding:1rem 0;">
-                                <h3>Send Quick Message:-</h3>
-                            </div>
-                            <div class="hstack gap-3 d-flex">
-                                <div style="width:50%">
-                                    <select>
-                                        <option>Birthday Template</option>
-                                        <option>Anniversary Template</option>
-                                        <option>Subscription Template</option>
-                                    </select>
-                                </div>
-                                <div style="width:50%">
-                                    <button class="btn btn-primary">Choose Template</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-12 col-md-12" style="margin-bottom:2rem">
-                        <div class="card bg-white rounded-4 mb-lg-0 mb-3" style="padding:1rem;"
-                            data-tor="inview:bg(primary) , hover:bg(danger)">
-                            <!--radio button-->
-                            <div class="custom_radio">
-                                <h4>Choose Subscription:</h4>
-                                <div class="d-flex gap-4">
-                                    <label class="container-radio">Contact
-                                        <input type="radio" id="contactRadio"  checked="checked" name="selectType" (change)="toggleDropdown('contact')">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="container-radio">List
-                                        <input type="radio" id="listRadio"  checked="checked" name="selectType" (change)="toggleDropdown('list')">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                                
-                            </div>
-                            <!--contact dropdown-->
-                            <form [formGroup]="TemplateForm">
-                            <div class="row"  *ngIf="showContactDropdown">
-                                <div class="col-12"> 
-                                    <div class="mb-3">
-                                        <label for="category" class="form-label">
-                                            Choose Contact:
-                                        </label>
-                                        <select2 
-                                            [data]="senderResource" 
-                                            placeholder="select sender CONTACT" 
-                                            id="sender" 
-                                            #mySelect
-                                            class="form-control"
-                                            (update)='onSenderSelectedcontact($event)'
-                                            formControlName="sender"
-                                        >
-                                        </select2>
-                                    </div>
-                                </div>
-                                 <!--Subscription dropdown-->
-                                <div class="" style="padding:1rem 1.5rem">
-                                    <div class="subscription-select">
-                                        <select 
-                                        formControlName="message" 
-                                        id="message"
-                                        placeholder="Select Day"
-                                        (change)="onMessageChange($event)"
-                                        >
-                                          <option value="7 days">Subscription ends in 7 days</option>
-                                          <option value="3 days">Subscription ends in 3 days</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-12"> 
-                                    <div class="mb-3">
-                                        <button class="btn btn-primary" (click)="sendMessage()">
-                                            send message
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            </form>
-                            <!--list dropdown-->
-                            <form [formGroup]="messageForm">
-                                <div class="row" *ngIf="showListDropdown">
-                                    <div class="col-12"> 
-                                        <div class="mb-3">
-
-                                            <label for="category" class="form-label">
-                                                Choose list:
-                                            </label>
-
-                                            <select2 
-                                                [data]="senderResourcelist" 
-                                                placeholder="select sender LIST" 
-                                                id="sender" 
-                                                #mySelect
-                                                class="form-control"
-                                                (update)='onSenderSelected($event)'
-                                                formControlName="sender"
-                                            >
-                                            </select2>
-                                        </div>
-                                    </div>
-                                    <!--Subscription dropdown-->
-                                    <div class="" style="padding:1rem 1.5rem">
-                                        <div class="subscription-select">
-                                            <select formControlName="message" placeholder="select Day" >
-                                            <option value="7">Subscription ends in 7 days</option>
-                                            <option value="3">Subscription ends in 3 days</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-12"> 
-                                        <div class="mb-3">
-                                            <button class="btn btn-primary" (click)="sendMessagelist()">
-                                                send message
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+                   
                     <div class="col-lg-12 col-md-12">
-                        <div class="card bg-white rounded-4 mb-lg-0 mb-3" style="padding:1rem;"
+                        <div class="card bg-white rounded-4 mb-lg-0 mb-3" style="padding:1rem 4rem 2rem 4rem;"
                             data-tor="inview:bg(primary) , hover:bg(danger)">
                            
                             <!--Date and Time Form-->
                             <div>
                                 <div style="padding:1rem 0;">
-                                    <h3>Schedule Message:-</h3>
+                                    <h3>Schedule Message:</h3>
                                 </div>                                
                                 <form [formGroup]="scheduledmsg" class="row">
                                  <!--radio button-->
-                                <div class="mb-3">
-                                    <div class="custom_radio">
+                                    <!-- <div class="custom_radio">
                                         <h4>Choose Template:</h4>
-                                        <div class="d-flex gap-5">
-                                            <label class="container-radio">Custom
-                                                <input type="radio" value="true" checked="checked" name="selectType" formControlName="is_temp" (change)="toggledown('custom')">
-                                                <span class="checkmark"></span>
-                                            </label>
-                                            <label class="container-radio">Template
-                                                <input type="radio"value="false"  checked="checked" name="selectType" formControlName="is_temp" (change)="toggledown('template')">
-                                                <span class="checkmark"></span>
-                                            </label>
+                                        <div class="d-flex">
+                                            <input type="radio" value="true"  formControlName="is_temp" id="customRadio" name="selectType" (change)="toggledown('custom')" ><label for="customRadio" >Custom</label>
                                         </div>
-                                    </div>
-                                    <div class="" *ngIf="showCustomDropdown">
-                                        <div style="padding:1rem 0;">
-                                            <h3>Custom Template:-</h3>
-                                            <label for="cust_temp">Create your own template:</label>
-                                            <input type="text" id="cust_temp" formControlName="cust_temp" style="height:5vh;width:100%">
+                                    </div> -->
+
+                                    <div class="col-lg-12" style="padding:0.5rem 0;">
+                                        <div>
+                                            <label for="temp_name">Enter custom message name:</label>
+                                            <input type="text" id="temp_name" formControlName="temp_name"  style="height:7vh;width:100%;">
                                         </div> 
                                     </div>
-                                    <div class="" *ngIf="showTemplateDropdown">
-                                        <div style="padding:1rem 0;">
-                                            <h3>FB Template:-</h3>
-                                            <label for="message">Choose your template:</label>
-                                            <select
-                                                formControlName="temp_name" 
-                                                id="message"
-                                                placeholder="Select Day"
-                                                style="width:100%"
-                                                >
-                                                    <option value="birthday_fusion_original">Birthday Template</option>
-                                                    <option value="anniversary_fusion">Anniversary Template</option>
-                                                    <option value="subscription_fusion">Subscription Template</option>
-                                            </select>
-                                        </div>                             
+                                    
+                                    <div class="col-lg-12" style="padding:0.5rem 0;">
+                                        <div>
+                                            <label for="cust_temp">Enter your custom message:</label>
+                                            <input type="text" id="cust_temp" formControlName="cust_temp" style="height:7vh;width:100%">
+                                        </div> 
                                     </div>
-                                </div>
-                                    <div class="col-lg-12">
+                                    <div class="d-flex gap-4 mt-3">
+                                        <label class="container-radio">Contact
+                                            <input type="radio" name="radio" (change)="toggleDropdown('contact')">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="container-radio">List
+                                            <input type="radio" name="radio" (change)="toggleDropdown('list')">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div class="col-lg-12" style="padding:0.5rem 0;" *ngIf="showListDropdown">
                                         <label for="category" class="form-label">
                                             Choose list array:
                                         </label>
@@ -191,91 +61,127 @@
                                         >
                                         </select2>
                                     </div>
-                                    <div class="col-lg-12 mt-2">
-                                    <div>
-                                        <label for="date">Date:</label>
-                                        <input type="date" id="date" formControlName="date" required style="height:7vh;width:100%">
+
+                                    <div class="col-lg-12" style="padding:0.5rem 0;" *ngIf="showContactDropdown">
+                                        <label for="category" class="form-label">
+                                            Choose Contact array:
+                                        </label>
+
+                                        <select2 
+                                            [data]="senderResourcecontactarray" 
+                                            placeholder="select sender Contact" 
+                                            id="sender" 
+                                            #mySelect
+                                            class="form-control"
+                                            (update)='onSenderSelectedcontactarray($event)'
+                                            formControlName="cont_list"
+                                        >
+                                        </select2>
                                     </div>
+                                    <div class="col-lg-12 mt-2" style="padding:0.5rem 0;">
+                                        <div>
+                                            <label for="date">Date:</label>
+                                            <input type="date" id="date" formControlName="date"  style="height:7vh;width:100%;padding: 0px 20px">
+                                        </div>
                                     </div>
-                                    <div class="col-lg-12 mt-2">
+                                    <div class="col-lg-12 mt-2" style="padding:0.5rem 0;">
                                     <div>
                                         <label for="time">Time:</label>
-                                        <input type="time" id="time" formControlName="time" required style="height:7vh;width:100%">
+                                        <select name="time" id="time" formControlName="time"   style="height:7vh;width:100%;padding: 0px 20px">
+                                            <option value="00:00">00:00</option>
+                                            <option value="00:30">00:30</option>
+                                            <option value="01:00">01:00</option>
+                                            <option value="01:30">01:30</option>
+                                            <option value="02:00">02:00</option>
+                                            <option value="02:30">02:30</option>
+                                            <option value="03:00">03:00</option>
+                                            <option value="03:30">03:30</option>
+                                            <option value="04:00">04:00</option>
+                                            <option value="04:30">04:30</option>
+                                            <option value="05:00">05:00</option>
+                                            <option value="05:30">05:30</option>
+                                            <option value="06:00">06:00</option>
+                                            <option value="06:30">06:30</option>
+                                            <option value="07:00">07:00</option>
+                                            <option value="07:30">07:30</option>
+                                            <option value="08:00">08:00</option>
+                                            <option value="08:30">08:30</option>
+                                            <option value="09:00">09:00</option>
+                                            <option value="09:30">09:30</option>
+                                            <option value="10:00">10:00</option>
+                                            <option value="10:30">10:30</option>
+                                            <option value="11:00">11:00</option>
+                                            <option value="11:30">11:30</option>
+                                            <option value="12:00">12:00</option>
+                                            <option value="12:30">12:30</option>
+                                            <option value="13:00">13:00</option>
+                                            <option value="13:30">13:30</option>
+                                            <option value="14:00">14:00</option>
+                                            <option value="14:30">14:30</option>
+                                            <option value="15:00">15:00</option>
+                                            <option value="15:30">15:30</option>
+                                            <option value="16:00">16:00</option>
+                                            <option value="16:30">16:30</option>
+                                            <option value="17:00">17:00</option>
+                                            <option value="17:30">17:30</option>
+                                            <option value="18:00">18:00</option>
+                                            <option value="18:30">18:30</option>
+                                            <option value="19:00">19:00</option>
+                                            <option value="19:30">19:30</option>
+                                            <option value="20:00">20:00</option>
+                                            <option value="20:30">20:30</option>
+                                            <option value="21:00">21:00</option>
+                                            <option value="21:30">21:30</option>
+                                            <option value="22:00">22:00</option>
+                                            <option value="22:30">22:30</option>
+                                            <option value="23:00">23:00</option>
+                                            <option value="23:30">23:30</option>
+                                        </select>
                                     </div>
                                     </div>
-                                    <div class="col-lg-6 mt-3">
+                                    <div class="col-lg-12 mt-3 d-flex justify-content-center">
                                         <button class="btn btn-primary dateform" type="submit" (click)="submitdatetimeForm()">Click To Submit</button>
                                     </div>
                                 </form>
                                 
-                                <div style="padding:1rem 0;">
-                                    <h3>Schedule Details:-</h3>
-                                </div>
-                                <table class="table">
-                                    <thead class="thead-light">
-                                      <tr>
-                                        <th>Template Name</th>
-                                        <th>Custom Template</th>
-                                        <th>Date</th>
-                                        <th>Time</th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let item of storedData">
-                                        <td>{{item.temp_name}}</td>
-                                        <td>{{item.cust_temp}}</td>
-                                        <td>{{item.date}}</td>
-                                        <td>{{item.time}}</td>
-                                        <td><button (click)="deleteAutoTemp(item.id)">Delete</button></td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                            </div>
                               
+                            </div>
                               
                         </div>
                     </div>
+                    
                 </div>
             </div>
-
-            <!--right side card-->
-            <div class="col-lg-5 col-md-6">
-                <div class="row">
-                    <div class="col-lg-12 col-md-6">
-                        <div class="card bg-white rounded-4 p-2 mb-lg-0 mb-3">
-                            <div class="hstack gap-3">
-                                <div class="p-2">
-                                    <h3 class="fs-6 text-black-50 lh-1">TODAY'S USERS</h3>
-                                    <strong class="fs-5 lh-1">2,300</strong>
-                                </div>
-                                <div class="p-2 ms-auto rounded-circle bg-danger badge ">
-                                    <i class="fas fa-dove color-white fs-5"></i>
-                                </div>
-                            </div>
-                            <p class="text-black-50 fw-semibold fs-6 ps-2"><a href="#"
-                                    class="link-info text-decoration-none fw-bold">+3%</a>
-                                since week</p>
-                        </div>
+            
+        </div>
+        <div class="row mt-4">
+            <div class="col-lg-12">
+                <div class="card bg-white rounded-4 mb-lg-0 mb-3" style="padding:1rem 4rem;"
+                    data-tor="inview:bg(primary) , hover:bg(danger)">
+                    <div style="padding:1rem 0;">
+                        <h3>Schedule Details:-</h3>
                     </div>
-                    <div class="col-lg-12 col-md-6 mt-6">
-                        <div class="card bg-white rounded-4 p-2 mb-lg-0 mb-3" style="margin-top:1.5rem">
-                            <div class="hstack gap-3">
-                                <div class="p-2">
-                                    <h3 class="fs-6 text-black-50 lh-1">NEW CLIENTS</h3>
-                                    <strong class="fs-5 lh-1">+3,462</strong>
-                                </div>
-                                <div class="p-2 ms-auto rounded-circle bg-info badge ">
-                                    <i class="fas fa-dove color-white fs-5"></i>
-                                </div>
-                            </div>
-                            <p class="text-black-50 fw-semibold fs-6 ps-2"><a href="#"
-                                    class="link-danger text-decoration-none fw-bold">-2%</a>
-                                last quarter</p>
-                        </div>
-                    </div>
+                    <table class="table">
+                        <thead class="thead-light">
+                        <tr>
+                            <th>Template Name</th>
+                            <th>Custom Template</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of storedData">
+                            <td>{{item.temp_name}}</td>
+                            <td>{{item.cust_temp}}</td>
+                            <td>{{item.date}}</td>
+                            <td>{{item.time}}</td>
+                            <td><button class="delete-button" (click)="deleteAutoTemp(item.id)"><i class="fas fa-trash"></i></button></td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-           
         </div>
     </div>
 </div>
@@ -305,7 +211,7 @@ input{
   position: relative;
   padding-left: 35px;
   cursor: pointer;
-  font-size: 22px;
+  font-size: 19px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -324,8 +230,8 @@ input{
   position: absolute;
   top: 4px;
   left: 0;
-  height: 25px;
-  width: 25px;
+  height: 20px;
+  width: 20px;
   background-color: #eee;
   border-radius: 50%;
 }
@@ -354,12 +260,17 @@ input{
 
 /* Style the indicator (dot/circle) */
 .container-radio  .checkmark:after {
- 	top: 9px;
-	left: 9px;
+ 	top: 6px;
+	left:6px;
 	width: 8px;
 	height: 8px;
 	border-radius: 50%;
 	background: white;
+}
+
+.delete-button{
+    border:none;
+    background-color: transparent;
 }
 </style>
 

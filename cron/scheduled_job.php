@@ -27,7 +27,6 @@ foreach ($jobs as $job) {
   // $pno = '917338908955';
   // $pno = '918056221146';
   $cst_msg = $job['cust_temp'];
-  $cst_name = $job['temp_name'];
   $cst_list = $job['cont_list'];
   $time = $job['date']." ".$job['time'];
   print_r($cst_list);

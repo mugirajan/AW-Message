@@ -201,54 +201,38 @@
   "template": [],
   "scheduledmsg": [
     {
-      "id": "d9c5",
-      "is_temp": "true",
-      "cust_temp": "xdfgh",
-      "cont_list": [
-        "4dd3",
-        "f329",
-        "11bd"
-      ],
-      "temp_name": "birthday_fusion_original",
-      "date": "2024-05-21",
-      "time": "15:31"
-    },
-    {
-      "id": "e0ef",
-      "is_temp": "true",
-      "cust_temp": "new",
+      "id": "5df5",
+      "cust_temp": " v bnm",
       "cont_list": [
         "4dd3",
         "576e",
         "8834"
       ],
-      "temp_name": "",
-      "date": "2024-05-20",
-      "time": "16:30"
-    },
-    {
-      "id": "ce38",
-      "is_temp": "true",
-      "cust_temp": "gvhbjn",
-      "cont_list": [
-        "8834",
-        "f329"
-      ],
-      "temp_name": "anniversary_fusion",
-      "date": "2024-05-24",
-      "time": "11:20"
-    },
-    {
-      "id": "843d",
-      "is_temp": "false",
-      "cust_temp": "",
-      "cont_list": [
-        "8834",
-        "f329"
-      ],
-      "temp_name": "anniversary_fusion",
+      "cont_contact": "11bd",
+      "temp_name": "fghvbjn",
       "date": "2024-05-03",
-      "time": "11:18"
+      "time": "08:00"
+    },
+    {
+      "id": "d60d",
+      "cust_temp": "template",
+      "cont_list": [
+        "11bd"
+      ],
+      "temp_name": "birthday",
+      "date": "2024-05-18",
+      "time": "07:30"
+    },
+    {
+      "id": "dad3",
+      "cust_temp": "list ",
+      "cont_list": [
+        "8834",
+        "f329"
+      ],
+      "temp_name": "asubscription",
+      "date": "2024-06-01",
+      "time": "06:00"
     }
   ]
 }

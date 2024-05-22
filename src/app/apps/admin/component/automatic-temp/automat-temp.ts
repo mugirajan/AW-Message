@@ -41,6 +41,8 @@ export class automatTempComponent  implements OnInit {
     productDeleteID:any;
     TemplateForm!: FormGroup;
     contacts: any[] =[];
+    url = "http://localhost:3000/";
+
     senderResource: Select2Group[] = [
       {
           label: '',
@@ -62,6 +64,15 @@ export class automatTempComponent  implements OnInit {
           ]
       },
     ];
+    senderResourcecontactarray: Select2Group[] = [
+      {
+          label: '',
+          options: [
+          ]
+      },
+    ];
+    contactID: any[] =[];
+    listID: string[] = []; 
     selectedSender: Select2Option[] = [];
     selectedMessage: Select2Option[] = [];
   
@@ -89,7 +100,7 @@ export class automatTempComponent  implements OnInit {
     positionModal2!: TemplateRef<NgbModal>;
   
     selectedLabel:any;
-    selectedValue: string | undefined;
+    selectedValue: any | undefined;
 
     
 
@@ -104,13 +115,15 @@ export class automatTempComponent  implements OnInit {
   
       this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Default Message', path: '/', active: true }];
 
-      this.http.get<any>('http://localhost:3000/contacts').subscribe(data => {
+      this.http.get<any>(this.url+'contacts').subscribe(data => {
         data.forEach( (con: any, ind: number) => {
           this.senderResource[0].options.push( 
             { label: con.t_name, value: con.t_role } 
           )
         });;
       });
+
+     
   
       this.msgServ.getContacts().subscribe(contacts => {
         this.contacts = contacts;
@@ -141,9 +154,9 @@ export class automatTempComponent  implements OnInit {
 
       //date and time
       this.scheduledmsg = this.fb.group({
-          is_temp: [''],
           cust_temp: [''],
           cont_list: [''],
+          // cont_contact: [[]],
           temp_name: [''],
           date: [''],
           time: [''],
@@ -152,23 +165,32 @@ export class automatTempComponent  implements OnInit {
 
       //list started
 
-      this.http.get<any[]>('http://localhost:3000/list').subscribe(data => {
+      this.http.get<any[]>('list').subscribe(data => {
       this.senderResourcelist[0].options = [];
           data.forEach((con: any) => {
             this.senderResourcelist[0].options.push({ label: con.c_name, value:con.id, id:con.id });
           });
     });
 
-    this.http.get<any[]>('http://localhost:3000/list').subscribe(data => {
+    //list 
+    this.http.get<any[]>(this.url+'list').subscribe(data => {
       this.senderResourcelistarray[0].options = [];
           data.forEach((con: any) => {
             this.senderResourcelistarray[0].options.push({ label: con.c_name, value:con.selectedOptions });
           });
     });
-    
+
+     //contact id array
+     this.http.get<any>(this.url+'contacts').subscribe(data => {
+      data.forEach((con: any) => {
+        this.senderResourcecontactarray[0].options.push({ label: con.t_name, value: con.id });
+      });
+      this.contactID = this.contactID.concat(data.map((con: any) => [con.id]));
+      console.log('contact id', this.contactID);
+    });
 
     // get Variants
-    this._fetchData();
+    this.fetchData();
 
 		// product form
 		this.messageForm = this.fb.group({
@@ -182,6 +204,7 @@ export class automatTempComponent  implements OnInit {
     _fetchData() {
   
     }
+    
   
   
     resetMessageForm() {
@@ -193,12 +216,17 @@ export class automatTempComponent  implements OnInit {
     }
     onSenderSelectedarray(da: Select2UpdateEvent) {
       this.selectedValue = da.options[0].id;
-        }
+    }
     onSenderSelectedcontact(da:Select2UpdateEvent){
       this.selectedLabel = da.options[0].label;
     }
-
-  
+    onSenderSelectedcontactarray(da: Select2UpdateEvent) {
+      const selectedValue = da.options[0].id; 
+      this.contactID.push(selectedValue); 
+      console.log('Selected values:', this.contactID);
+    }
+    
+ 
     onMessageTemplateSelected(da: Select2UpdateEvent) {
 
     }
@@ -231,10 +259,10 @@ export class automatTempComponent  implements OnInit {
       const msg = this.messageForm.value.message;
       const selectedSenderValue = this.messageForm.value.sender
   
-      this.http.get<any>(`http://localhost:3000/list/${this.selectedValue}`).subscribe((item) => {
+      this.http.get<any>(this.url+`list/${this.selectedValue}`).subscribe((item) => {
         const selectedOptions: string[] = item.selectedOptions;
         selectedOptions.forEach(id => {
-          this.http.get<any>(`http://localhost:3000/contacts/${id}`).subscribe((data) => {
+          this.http.get<any>(this.url+`contacts/${id}`).subscribe((data) => {
             this.msgServ.sendWACustomTemplateMessage(data.t_role, data.t_name, msg).subscribe((resp: any) => {
               this.toastr.success('Message sent successfully!');
               this.resetMessageForm()
@@ -261,78 +289,33 @@ export class automatTempComponent  implements OnInit {
 
     //radio button for custom or fb template
 
-    showCustomDropdown: boolean = false;
-    showTemplateDropdown: boolean = false;
+    
 
-    toggledown(selection: string): void {
-      if (selection === 'custom') {
-          this.showCustomDropdown = true;
-          this.showTemplateDropdown = false;
-      } else if (selection === 'template') {
-          this.showCustomDropdown = false;
-          this.showTemplateDropdown = true;
-      }
-    }
-
-   
 
     submitdatetimeForm() {
       if (this.scheduledmsg.valid) {
-        this.http.post<AutoTemp>('http://localhost:3000/scheduledmsg/', this.scheduledmsg.value).subscribe(data => {
+        const formData = this.scheduledmsg.value;
+        formData.cont_list = Array.isArray(formData.cont_list) ? formData.cont_list : [formData.cont_list];
+        this.http.post<AutoTemp>(this.url + 'scheduledmsg', formData).subscribe(data => {
           this.storedData.push(data);
           this.scheduledmsg.reset();
         });
       }
     }
-   
+    
   
     fetchData() {
-      this.http.get<AutoTemp[]>('http://localhost:3000/scheduledmsg').subscribe(data => {
+      this.http.get<AutoTemp[]>(this.url+'scheduledmsg').subscribe(data => {
         this.storedData = data;
       });
     }
 
     deleteAutoTemp(id: number) {
-      this.autoTempService.deleteAutoTemp(id).subscribe(() => {
+      this.autoTempService.deleteAutoTemp(id).subscribe((val) => {
+        console.log(val);
         this.storedData = this.storedData.filter(item => item.id !== id);
       });
     }
 
-    //schedule form 
-    // submitdatetimeForm() {
-    //   if (this.datetimeForm.valid) {
-    //     this.autoTempService.createAutoTemp(this.datetimeForm.value).subscribe((data:any) => {
-    //       this.storedData.push(data)
-    //       this.datetimeForm.reset();
-    //     });
-    //   }
-    // }
-  
-    // fetchData() {
-    //   this.autoTempService.getAutoTemps().subscribe(data => {
-    //     this.storedData = data;
-    //   });
-    // }
-  
-    // deleteAutoTemp(id: number) {
-    //   this.autoTempService.deleteAutoTemp(id).subscribe(() => {
-    //     this.storedData = this.storedData.filter(item => item.id !== id);
-    //   });
-    // }
-  
-    // editAutoTemp(autoTemp: AutoTemp) {
-    //   this.datetimeForm.patchValue(autoTemp);
-    // }
-  
-    // updateDatetimeForm() {
-    //   if (this.datetimeForm.valid) {
-    //     this.autoTempService.updateAutoTemp(this.datetimeForm.value).subscribe(data => {
-    //       const index = this.storedData.findIndex(item => item.id === data.id);
-    //       if (index !== -1) {
-    //         this.storedData[index] = data;
-    //       }
-    //       this.datetimeForm.reset();
-    //     });
-    //   }
-    // }
+   
   }
