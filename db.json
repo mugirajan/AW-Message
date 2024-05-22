@@ -201,30 +201,40 @@
   "template": [],
   "scheduledmsg": [
     {
-      "id": "d9c5",
-      "is_temp": "true",
-      "cust_temp": "xdfgh",
-      "cont_list": [
-        "4dd3",
-        "f329",
-        "11bd"
-      ],
-      "temp_name": "birthday_fusion_original",
-      "date": "2024-05-21",
-      "time": "15:31"
-    },
-    {
-      "id": "e0ef",
-      "is_temp": "true",
-      "cust_temp": "new",
+      "id": "e053",
+      "cust_temp": "Helooooooo skadlfasklf;sdanf a sf jkdsfjask fsdak adsklf adsjf",
       "cont_list": [
         "4dd3",
         "576e",
         "8834"
       ],
-      "temp_name": "",
-      "date": "2024-05-20",
-      "time": "16:30"
+      "temp_name": "New",
+      "date": "2024-05-21",
+      "time": "19:00"
+    },
+    {
+      "id": "7927",
+      "cust_temp": "Helooooooo skadlfasklf;sdanf a sf jkdsfjask fsdak adsklf adsjf",
+      "cont_list": [
+        "4dd3",
+        "576e",
+        "8834"
+      ],
+      "temp_name": "New",
+      "date": "2024-05-21",
+      "time": "19:00"
+    },
+    {
+      "id": "7f31",
+      "cust_temp": "Helooooooo skadlfasklf;sdanf a sf jkdsfjask fsdak adsklf adsjf",
+      "cont_list": [
+        "4dd3",
+        "576e",
+        "8834"
+      ],
+      "temp_name": "New",
+      "date": "2024-05-21",
+      "time": "19:00"
     }
   ]
 }

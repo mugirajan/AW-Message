@@ -3,123 +3,7 @@
         <div class="row">
             <div class="col-lg-7 col-md-6">
                 <div class="row">
-                    <div class="col-lg-12 col-md-12" style="margin-bottom:2rem">
-                        <div class="card bg-white rounded-4 mb-lg-0" style="padding: 1rem 2rem 3rem 2rem;margin-bottom:3rem"
-                            data-tor="inview:bg(primary) , hover:bg(danger)">
-                            <div style="padding:1rem 0;">
-                                <h3>Send Quick Message:-</h3>
-                            </div>
-                            <div class="hstack gap-3 d-flex">
-                                <div style="width:50%">
-                                    <select>
-                                        <option>Birthday Template</option>
-                                        <option>Anniversary Template</option>
-                                        <option>Subscription Template</option>
-                                    </select>
-                                </div>
-                                <div style="width:50%">
-                                    <button class="btn btn-primary">Choose Template</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-12 col-md-12" style="margin-bottom:2rem">
-                        <div class="card bg-white rounded-4 mb-lg-0 mb-3" style="padding:1rem;"
-                            data-tor="inview:bg(primary) , hover:bg(danger)">
-                            <!--radio button-->
-                            <div class="custom_radio">
-                                <h4>Choose Subscription:</h4>
-                                <div class="d-flex">
-                                <input type="radio" id="contactRadio" name="selectType" (change)="toggleDropdown('contact')" ><label for="contactRadio" >Contact</label>
-                                <input type="radio" id="listRadio" name="selectType" (change)="toggleDropdown('list')"><label for="listRadio">List</label>
-                                </div>
-                                
-                            </div>
-                            <!--contact dropdown-->
-                            <form [formGroup]="TemplateForm">
-                            <div class="row"  *ngIf="showContactDropdown">
-                                <div class="col-12"> 
-                                    <div class="mb-3">
-                                        <label for="category" class="form-label">
-                                            Choose Contact:
-                                        </label>
-                                        <select2 
-                                            [data]="senderResource" 
-                                            placeholder="select sender CONTACT" 
-                                            id="sender" 
-                                            #mySelect
-                                            class="form-control"
-                                            (update)='onSenderSelectedcontact($event)'
-                                            formControlName="sender"
-                                        >
-                                        </select2>
-                                    </div>
-                                </div>
-                                 <!--Subscription dropdown-->
-                                <div class="" style="padding:1rem 1.5rem">
-                                    <div class="subscription-select">
-                                        <select 
-                                        formControlName="message" 
-                                        id="message"
-                                        placeholder="Select Day"
-                                        (change)="onMessageChange($event)"
-                                        >
-                                          <option value="7 days">Subscription ends in 7 days</option>
-                                          <option value="3 days">Subscription ends in 3 days</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-12"> 
-                                    <div class="mb-3">
-                                        <button class="btn btn-primary" (click)="sendMessage()">
-                                            send message
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            </form>
-                            <!--list dropdown-->
-                            <form [formGroup]="messageForm">
-                                <div class="row" *ngIf="showListDropdown">
-                                    <div class="col-12"> 
-                                        <div class="mb-3">
-
-                                            <label for="category" class="form-label">
-                                                Choose list:
-                                            </label>
-
-                                            <select2 
-                                                [data]="senderResourcelist" 
-                                                placeholder="select sender LIST" 
-                                                id="sender" 
-                                                #mySelect
-                                                class="form-control"
-                                                (update)='onSenderSelected($event)'
-                                                formControlName="sender"
-                                            >
-                                            </select2>
-                                        </div>
-                                    </div>
-                                    <!--Subscription dropdown-->
-                                    <div class="" style="padding:1rem 1.5rem">
-                                        <div class="subscription-select">
-                                            <select formControlName="message" placeholder="select Day" >
-                                            <option value="7">Subscription ends in 7 days</option>
-                                            <option value="3">Subscription ends in 3 days</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-12"> 
-                                        <div class="mb-3">
-                                            <button class="btn btn-primary" (click)="sendMessagelist()">
-                                                send message
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+                   
                     <div class="col-lg-12 col-md-12">
                         <div class="card bg-white rounded-4 mb-lg-0 mb-3" style="padding:1rem;"
                             data-tor="inview:bg(primary) , hover:bg(danger)">
@@ -131,34 +15,27 @@
                                 </div>                                
                                 <form [formGroup]="scheduledmsg" class="row">
                                  <!--radio button-->
-                                    <div class="custom_radio">
+                                    <!-- <div class="custom_radio">
                                         <h4>Choose Template:</h4>
                                         <div class="d-flex">
                                             <input type="radio" value="true"  formControlName="is_temp" id="customRadio" name="selectType" (change)="toggledown('custom')" ><label for="customRadio" >Custom</label>
-                                            <input type="radio" value="false"  formControlName="is_temp" id="templateRadio" name="selectType" (change)="toggledown('template')"><label for="templateRadio">Template</label>
                                         </div>
-                                    </div>
-                                    <div class="" *ngIf="showCustomDropdown">
+                                    </div> -->
+
+                                    <div class="">
                                         <div style="padding:1rem 0;">
-                                            <h3>Custom Template:-</h3>
-                                            <label for="cust_temp">Create your own template:</label>
+                                            <label for="temp_name">Enter custom message name:</label>
+                                            <input type="text" id="temp_name" formControlName="temp_name" required style="height:5vh;width:100%">
+                                        </div> 
+                                    </div>
+                                    
+                                    <div class="">
+                                        <div style="padding:1rem 0;">
+                                            <label for="cust_temp">Enter your custom message:</label>
                                             <input type="text" id="cust_temp" formControlName="cust_temp" required style="height:5vh;width:100%">
                                         </div> 
                                     </div>
-                                    <div class="" *ngIf="showTemplateDropdown">
-                                        <div style="padding:1rem 0;">
-                                            <h3>FB Template:-</h3>
-                                            <select
-                                                formControlName="temp_name" 
-                                                id="message"
-                                                placeholder="Select Day"
-                                                >
-                                                    <option value="birthday_fusion_original">Birthday Template</option>
-                                                    <option value="anniversary_fusion">Anniversary Template</option>
-                                                    <option value="subscription_fusion">Subscription Template</option>
-                                            </select>
-                                        </div>                             
-                                    </div>
+                                   
                                     <div class="col-lg-12">
                                         <label for="category" class="form-label">
                                             Choose list array:
@@ -216,50 +93,11 @@
                                   </table>
                             </div>
                               
-                              
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!--right side card-->
-            <div class="col-lg-5 col-md-6">
-                <div class="row">
-                    <div class="col-lg-12 col-md-6">
-                        <div class="card bg-white rounded-4 p-2 mb-lg-0 mb-3">
-                            <div class="hstack gap-3">
-                                <div class="p-2">
-                                    <h3 class="fs-6 text-black-50 lh-1">TODAY'S USERS</h3>
-                                    <strong class="fs-5 lh-1">2,300</strong>
-                                </div>
-                                <div class="p-2 ms-auto rounded-circle bg-danger badge ">
-                                    <i class="fas fa-dove color-white fs-5"></i>
-                                </div>
-                            </div>
-                            <p class="text-black-50 fw-semibold fs-6 ps-2"><a href="#"
-                                    class="link-info text-decoration-none fw-bold">+3%</a>
-                                since week</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-12 col-md-6 mt-6">
-                        <div class="card bg-white rounded-4 p-2 mb-lg-0 mb-3" style="margin-top:1.5rem">
-                            <div class="hstack gap-3">
-                                <div class="p-2">
-                                    <h3 class="fs-6 text-black-50 lh-1">NEW CLIENTS</h3>
-                                    <strong class="fs-5 lh-1">+3,462</strong>
-                                </div>
-                                <div class="p-2 ms-auto rounded-circle bg-info badge ">
-                                    <i class="fas fa-dove color-white fs-5"></i>
-                                </div>
-                            </div>
-                            <p class="text-black-50 fw-semibold fs-6 ps-2"><a href="#"
-                                    class="link-danger text-decoration-none fw-bold">-2%</a>
-                                last quarter</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-           
         </div>
     </div>
 </div>

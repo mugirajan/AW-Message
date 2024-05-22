@@ -19,8 +19,8 @@ export class AutoTempService {
     return this.http.get<AutoTemp[]>(this.apiUrl);
   }
 
-  deleteAutoTemp(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}${id}`);
+  deleteAutoTemp(id: any): Observable<AutoTemp> {
+    return this.http.delete<AutoTemp>(this.apiUrl+id);
   }
 
 }
