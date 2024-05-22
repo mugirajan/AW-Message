@@ -11,6 +11,8 @@ import { HttpClient } from '@angular/common/http';
 import { WAMesssagingService } from '../../service/wa.message.service';
 import { AutoTempService } from '../../service/automat.service';
 import { AutoTemp } from '../../models/autotemp.model';
+import { Observable } from 'rxjs';
+
 
 import { ToastrService } from 'ngx-toastr';
 
@@ -73,6 +75,7 @@ export class automatTempComponent  implements OnInit {
     ];
     contactID: any[] =[];
     listID: string[] = []; 
+    categoryDeleteID:any;
     selectedSender: Select2Option[] = [];
     selectedMessage: Select2Option[] = [];
   
@@ -289,9 +292,6 @@ export class automatTempComponent  implements OnInit {
 
     //radio button for custom or fb template
 
-    
-
-
     submitdatetimeForm() {
       if (this.scheduledmsg.valid) {
         const formData = this.scheduledmsg.value;
@@ -310,12 +310,24 @@ export class automatTempComponent  implements OnInit {
       });
     }
 
-    deleteAutoTemp(id: number) {
-      this.autoTempService.deleteAutoTemp(id).subscribe((val) => {
-        console.log(val);
-        this.storedData = this.storedData.filter(item => item.id !== id);
-      });
+    private apiUrl = 'http://localhost:3000/scheduledmsg/';
+
+    deleteTemp(id: string): Observable<void> {
+      return this.http.delete<void>(`${this.apiUrl}${id}`);
     }
 
+    deleteAutoTemp(id: string): void {
+      this.deleteTemp(id).subscribe(
+        () => {
+          this.storedData = this.storedData.filter(item => item.id !== id);
+          this.toastr.success('Item deleted successfully!');
+        },
+        (error) => {
+          console.error('Error deleting item:', error);
+          this.toastr.error('Failed to delete item. Please try again.');
+        }
+      );
+    }
+  
    
   }

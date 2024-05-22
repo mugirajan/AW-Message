@@ -325,7 +325,7 @@ export class CategoryComponent implements OnInit {
    } else {
      console.error('list missing.');
    }
-   }
+  }
 
   openVerticallyCentered(content: TemplateRef<NgbModal>): void {
     this.modalService.open(content, { centered: true });
@@ -345,13 +345,7 @@ export class CategoryComponent implements OnInit {
         );
       }
       else{
-        // this.notifyServ.addNotification(
-        //   {
-        //     text: "",
-        //     level: "error",
-        //     autohide: true,
-        //   }
-        // );
+       
       }
       this._fetchData();
     });

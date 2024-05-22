@@ -212,27 +212,6 @@
       "temp_name": "fghvbjn",
       "date": "2024-05-03",
       "time": "08:00"
-    },
-    {
-      "id": "d60d",
-      "cust_temp": "template",
-      "cont_list": [
-        "11bd"
-      ],
-      "temp_name": "birthday",
-      "date": "2024-05-18",
-      "time": "07:30"
-    },
-    {
-      "id": "dad3",
-      "cust_temp": "list ",
-      "cont_list": [
-        "8834",
-        "f329"
-      ],
-      "temp_name": "asubscription",
-      "date": "2024-06-01",
-      "time": "06:00"
     }
   ]
 }
