@@ -205,40 +205,17 @@
   "template": [],
   "scheduledmsg": [
     {
-      "id": "e053",
-      "cust_temp": "Helooooooo skadlfasklf;sdanf a sf jkdsfjask fsdak adsklf adsjf",
+      "id": "5df5",
+      "cust_temp": " v bnm",
       "cont_list": [
         "4dd3",
         "576e",
         "8834"
       ],
-      "temp_name": "New",
-      "date": "2024-05-21",
-      "time": "19:00"
-    },
-    {
-      "id": "7927",
-      "cust_temp": "Helooooooo skadlfasklf;sdanf a sf jkdsfjask fsdak adsklf adsjf",
-      "cont_list": [
-        "4dd3",
-        "576e",
-        "8834"
-      ],
-      "temp_name": "New",
-      "date": "2024-05-21",
-      "time": "19:00"
-    },
-    {
-      "id": "7f31",
-      "cust_temp": "Helooooooo skadlfasklf;sdanf a sf jkdsfjask fsdak adsklf adsjf",
-      "cont_list": [
-        "4dd3",
-        "576e",
-        "8834"
-      ],
-      "temp_name": "New",
-      "date": "2024-05-21",
-      "time": "19:00"
+      "cont_contact": "11bd",
+      "temp_name": "fghvbjn",
+      "date": "2024-05-03",
+      "time": "08:00"
     }
   ]
 }

@@ -11,6 +11,8 @@ import { HttpClient } from '@angular/common/http';
 import { WAMesssagingService } from '../../service/wa.message.service';
 import { AutoTempService } from '../../service/automat.service';
 import { AutoTemp } from '../../models/autotemp.model';
+import { Observable } from 'rxjs';
+
 
 import { ToastrService } from 'ngx-toastr';
 
@@ -64,6 +66,16 @@ export class automatTempComponent  implements OnInit {
           ]
       },
     ];
+    senderResourcecontactarray: Select2Group[] = [
+      {
+          label: '',
+          options: [
+          ]
+      },
+    ];
+    contactID: any[] =[];
+    listID: string[] = []; 
+    categoryDeleteID:any;
     selectedSender: Select2Option[] = [];
     selectedMessage: Select2Option[] = [];
   
@@ -91,7 +103,7 @@ export class automatTempComponent  implements OnInit {
     positionModal2!: TemplateRef<NgbModal>;
   
     selectedLabel:any;
-    selectedValue: string | undefined;
+    selectedValue: any | undefined;
 
     
 
@@ -113,6 +125,8 @@ export class automatTempComponent  implements OnInit {
           )
         });;
       });
+
+     
   
       this.msgServ.getContacts().subscribe(contacts => {
         this.contacts = contacts;
@@ -145,6 +159,7 @@ export class automatTempComponent  implements OnInit {
       this.scheduledmsg = this.fb.group({
           cust_temp: [''],
           cont_list: [''],
+          // cont_contact: [[]],
           temp_name: [''],
           date: [''],
           time: [''],
@@ -160,13 +175,22 @@ export class automatTempComponent  implements OnInit {
           });
     });
 
+    //list 
     this.http.get<any[]>(this.url+'list').subscribe(data => {
       this.senderResourcelistarray[0].options = [];
           data.forEach((con: any) => {
             this.senderResourcelistarray[0].options.push({ label: con.c_name, value:con.selectedOptions });
           });
     });
-    
+
+     //contact id array
+     this.http.get<any>(this.url+'contacts').subscribe(data => {
+      data.forEach((con: any) => {
+        this.senderResourcecontactarray[0].options.push({ label: con.t_name, value: con.id });
+      });
+      this.contactID = this.contactID.concat(data.map((con: any) => [con.id]));
+      console.log('contact id', this.contactID);
+    });
 
     // get Variants
     this.fetchData();
@@ -183,6 +207,7 @@ export class automatTempComponent  implements OnInit {
     _fetchData() {
   
     }
+    
   
   
     resetMessageForm() {
@@ -194,12 +219,17 @@ export class automatTempComponent  implements OnInit {
     }
     onSenderSelectedarray(da: Select2UpdateEvent) {
       this.selectedValue = da.options[0].id;
-        }
+    }
     onSenderSelectedcontact(da:Select2UpdateEvent){
       this.selectedLabel = da.options[0].label;
     }
-
-  
+    onSenderSelectedcontactarray(da: Select2UpdateEvent) {
+      const selectedValue = da.options[0].id; 
+      this.contactID.push(selectedValue); 
+      console.log('Selected values:', this.contactID);
+    }
+    
+ 
     onMessageTemplateSelected(da: Select2UpdateEvent) {
 
     }
@@ -262,29 +292,17 @@ export class automatTempComponent  implements OnInit {
 
     //radio button for custom or fb template
 
-    showCustomDropdown: boolean = false;
-    showTemplateDropdown: boolean = false;
-
-    toggledown(selection: string): void {
-      if (selection === 'custom') {
-          this.showCustomDropdown = true;
-          this.showTemplateDropdown = false;
-      } else if (selection === 'template') {
-          this.showCustomDropdown = false;
-          this.showTemplateDropdown = true;
-      }
-    }
-
-
     submitdatetimeForm() {
       if (this.scheduledmsg.valid) {
-        this.http.post<AutoTemp>(this.url+'scheduledmsg/', this.scheduledmsg.value).subscribe(data => {
+        const formData = this.scheduledmsg.value;
+        formData.cont_list = Array.isArray(formData.cont_list) ? formData.cont_list : [formData.cont_list];
+        this.http.post<AutoTemp>(this.url + 'scheduledmsg', formData).subscribe(data => {
           this.storedData.push(data);
           this.scheduledmsg.reset();
         });
       }
     }
-   
+    
   
     fetchData() {
       this.http.get<AutoTemp[]>(this.url+'scheduledmsg').subscribe(data => {
@@ -292,48 +310,24 @@ export class automatTempComponent  implements OnInit {
       });
     }
 
-    deleteAutoTemp(id: number) {
-      this.autoTempService.deleteAutoTemp(id).subscribe((val) => {
-        console.log(val);
-        this.storedData = this.storedData.filter(item => item.id !== id);
-      });
+    private apiUrl = 'http://localhost:3000/scheduledmsg/';
+
+    deleteTemp(id: string): Observable<void> {
+      return this.http.delete<void>(`${this.apiUrl}${id}`);
     }
 
-    //schedule form 
-    // submitdatetimeForm() {
-    //   if (this.datetimeForm.valid) {
-    //     this.autoTempService.createAutoTemp(this.datetimeForm.value).subscribe((data:any) => {
-    //       this.storedData.push(data)
-    //       this.datetimeForm.reset();
-    //     });
-    //   }
-    // }
+    deleteAutoTemp(id: string): void {
+      this.deleteTemp(id).subscribe(
+        () => {
+          this.storedData = this.storedData.filter(item => item.id !== id);
+          this.toastr.success('Item deleted successfully!');
+        },
+        (error) => {
+          console.error('Error deleting item:', error);
+          this.toastr.error('Failed to delete item. Please try again.');
+        }
+      );
+    }
   
-    // fetchData() {
-    //   this.autoTempService.getAutoTemps().subscribe(data => {
-    //     this.storedData = data;
-    //   });
-    // }
-  
-    // deleteAutoTemp(id: number) {
-    //   this.autoTempService.deleteAutoTemp(id).subscribe(() => {
-    //     this.storedData = this.storedData.filter(item => item.id !== id);
-    //   });
-    // }
-  
-    // editAutoTemp(autoTemp: AutoTemp) {
-    //   this.datetimeForm.patchValue(autoTemp);
-    // }
-  
-    // updateDatetimeForm() {
-    //   if (this.datetimeForm.valid) {
-    //     this.autoTempService.updateAutoTemp(this.datetimeForm.value).subscribe(data => {
-    //       const index = this.storedData.findIndex(item => item.id === data.id);
-    //       if (index !== -1) {
-    //         this.storedData[index] = data;
-    //       }
-    //       this.datetimeForm.reset();
-    //     });
-    //   }
-    // }
+   
   }
