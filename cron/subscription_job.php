@@ -4,7 +4,7 @@ date_default_timezone_set('Asia/Kolkata');
 $WABI = "231667113353605";
 $version = "v19.0";
 $url = "https://graph.facebook.com/";  // /v18.0/214842615044313/messages",
-$token = "EAANBTnz5WGwBOygYs2iMCE8NQolyrqFNR2q1NfTOEpMytfm0tmmmZB0f7p8IZCVx7mZBOjnhvWkXcDKpbrBZCmA8kLg8T8gEbQNXnajFHN4pighvbrVfmUqPsiO0ZA73jx13oNcLp9xuPZCI5PAj0buVr2LtiDuAAUpI7CAwO94YlJio6iXXtLnWqYZBC1tNv8ZCjuLsSLkGBuDSZB16jE2GfI1rw6iIZD";
+$token = "EAANBTnz5WGwBO8zDfMVfeisOreLyo7knc33Xj0ozXMXCMnbOURLbZCZAjTHbGoeZAAmiBHpva0tJq4hPXdTsD5RVn239vFMa4ZA2fRUg6ZCtYuh92jipn8O6tCWtZAqsnSRBFQggl1Dc9hAgF6CjSpbDQw6cnn7jEHEhhVurZA5YtwW7vqCdsGiTOmO9nP4WzVyq6e4NK3QHsyUhwycNZCfyjsoituUC";
 $PhnID = "214842615044313";
 
 
@@ -46,10 +46,10 @@ foreach ($contacts as $cont) {
   $monthtime = strtotime('-1 month', $time);
   print_r($time);
 
-  if (date('m-d') == date('m-d', $weektime)) {
+  if (date('m-d-y') == date('m-d-y', $weektime)) {
     print_r(sendWACustomTemplateMessage($pno, $pname, $addate, $token, $url));
   }
-  if(date('m-d') == date('m-d', $monthtime)){
+  if(date('m-d-y') == date('m-d-y', $monthtime)){
     print_r(sendWACustomTemplateMessage($pno, $pname, $addate, $token, $url));
   }
 
