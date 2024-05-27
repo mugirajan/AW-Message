@@ -7,10 +7,11 @@ import { Variant } from '../models/variant.model';
   providedIn: 'root'
 })
 export class VariantService {
-  private apiUrl = 'http://localhost:3000/variants';
-  private apiUrl1 = 'http://localhost:3000/list'; 
+  // private apiUrl = 'http://localhost:3000/variants';
+  // private apiUrl1 = 'http://localhost:3000/list'; 
 
-
+  private apiUrl = 'http://13.127.116.149/variants';
+  private apiUrl1 = 'http://13.127.116.149/list'; 
 
   constructor(private http: HttpClient) { }
 

@@ -6,7 +6,10 @@ import { AddTemplate } from '../models/addTemplate.model';
   providedIn: 'root'
 })
 export class AddTemplateService {
-  private apiUrl = 'http://localhost:3000/template'; 
+  // private apiUrl = 'http://localhost:3000/template'; 
+
+  private apiUrl = 'http://13.127.116.149/template'; 
+
 
   constructor(private http: HttpClient) { }
 

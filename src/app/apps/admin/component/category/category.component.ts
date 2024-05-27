@@ -51,6 +51,11 @@ export class CategoryComponent implements OnInit {
   ListData: any = {};
   contacts: any[] =[];
 
+  // localhost URL
+  // url = "http://localhost:3000/";
+  //Production URL
+  url = "http://13.127.116.149/";
+
 
   selectedOptions: string[] = [];
 
@@ -74,7 +79,7 @@ export class CategoryComponent implements OnInit {
 
    
 
-    this.http.get<any>('http://localhost:3000/contacts').subscribe(data => {
+    this.http.get<any>(this.url+'contacts').subscribe(data => {
       this.contacts = data.contacts;
     });
   

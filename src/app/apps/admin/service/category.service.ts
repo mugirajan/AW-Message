@@ -10,8 +10,11 @@ import { ToastrService } from 'ngx-toastr';
   providedIn: 'root'
 })
 export class CategoryService {
-  private apiUrl = 'http://localhost:3000/list/'; 
-  private apicontactUrl ='http://localhost:3000/contacts'
+  // private apiUrl = 'http://localhost:3000/list/'; 
+  // private apicontactUrl ='http://localhost:3000/contacts'
+
+  private apiUrl = 'http://13.127.116.149/list/'; 
+  private apicontactUrl ='http://13.127.116.149/contacts'
 
   // private url: string = env.environment.apiUrl + "category/";
 

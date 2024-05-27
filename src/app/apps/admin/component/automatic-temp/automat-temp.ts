@@ -43,7 +43,11 @@ export class automatTempComponent  implements OnInit {
     productDeleteID:any;
     TemplateForm!: FormGroup;
     contacts: any[] =[];
-    url = "http://localhost:3000/";
+    // localhost URL
+    // url = "http://localhost:3000/";
+    //Production URL
+    url = "http://13.127.116.149/";
+
 
     senderResource: Select2Group[] = [
       {
@@ -310,10 +314,9 @@ export class automatTempComponent  implements OnInit {
       });
     }
 
-    private apiUrl = 'http://localhost:3000/scheduledmsg/';
 
     deleteTemp(id: string): Observable<void> {
-      return this.http.delete<void>(`${this.apiUrl}${id}`);
+      return this.http.delete<void>(this.url+'scheduledmsg/'+id);
     }
 
     deleteAutoTemp(id: string): void {

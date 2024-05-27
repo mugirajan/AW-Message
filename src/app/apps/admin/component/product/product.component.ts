@@ -75,6 +75,12 @@ export class ProductComponent implements OnInit {
   canSubmit: boolean = true;
   requestData: any[]=[];
 
+  
+  // localhost URL
+  // url = "http://localhost:3000/";
+  //Production URL
+  url = "http://13.127.116.149/";
+
   @ViewChild('advancedTable') 
   advancedTable: any;
   
@@ -104,7 +110,7 @@ export class ProductComponent implements OnInit {
     this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Default Message', path: '/', active: true }];
     
 
-    this.http.get<any>('http://localhost:3000/contacts').subscribe(data => {
+    this.http.get<any>(this.url+'contacts').subscribe(data => {
       data.forEach( (con: any, ind: number) => {
         this.senderResource[0].options.push( 
           { label: con.t_name, value: con.t_role } 

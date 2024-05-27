@@ -11,7 +11,10 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ContactService {
 
-  private apiUrl = 'http://localhost:3000/contacts/'; 
+  // private apiUrl = 'http://localhost:3000/contacts/';
+
+  private apiUrl = 'http://13.127.116.149/contacts/'; 
+
 
   
   private testimonial$ = new BehaviorSubject<Testimonial[]>([]);
