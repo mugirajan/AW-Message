@@ -46,7 +46,7 @@ export class automatTempComponent  implements OnInit {
     // localhost URL
     // url = "http://localhost:3000/";
     //Production URL
-    url = "http://13.127.116.149/";
+    url = "http://13.235.132.13/";
 
 
     senderResource: Select2Group[] = [

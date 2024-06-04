@@ -13,7 +13,7 @@ export class ContactService {
 
   // private apiUrl = 'http://localhost:3000/contacts/';
 
-  private apiUrl = 'http://13.127.116.149/contacts/'; 
+  private apiUrl = 'http://13.235.132.13/contacts/'; 
 
 
   

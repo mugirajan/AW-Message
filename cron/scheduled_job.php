@@ -1,15 +1,15 @@
 <?php
-
+print_r("----------------------------------------------------------------------------------------------------------------------------");
 date_default_timezone_set('Asia/Kolkata');
 
-$WABI = "231667113353605";
+$WABI = "247124335131424";
 $version = "v19.0";
 $url = "https://graph.facebook.com/";  // /v18.0/214842615044313/messages",
-$token = "EAANBTnz5WGwBOygYs2iMCE8NQolyrqFNR2q1NfTOEpMytfm0tmmmZB0f7p8IZCVx7mZBOjnhvWkXcDKpbrBZCmA8kLg8T8gEbQNXnajFHN4pighvbrVfmUqPsiO0ZA73jx13oNcLp9xuPZCI5PAj0buVr2LtiDuAAUpI7CAwO94YlJio6iXXtLnWqYZBC1tNv8ZCjuLsSLkGBuDSZB16jE2GfI1rw6iIZD";
-$PhnID = "214842615044313";
+$token = "EABrZA7KDKk6sBOzurAORQ8ZBfFLmYxVK520Xrxe2AZACdobvqbYQgkvh5lSxd3N3vE26ouxXfO8R5Lvx5dZBXZBZAMSVdYLqblDCPVDbCdenMZAOqvB6IfgcgbFOPsZAJDUTlnMCLgyZCcvNZB4unTcp3ydobZBQ1r97rrjwmRp6PfjMGOQMqCKQcc8JZAMJZCoZCBXStyEACVJojkRs2WBiwE";
+$PhnID = "248510075002931";
 
 
-$jobs = json_decode(file_get_contents("http://localhost:3000/scheduledmsg"), true);
+$jobs = json_decode(file_get_contents("http://13.235.132.13/scheduledmsg"), true);
 
 $url = $url . $version . "/" . $PhnID . "/messages";
 
@@ -33,6 +33,7 @@ foreach ($jobs as $job) {
   $dob = new DateTime($time);
   $addate = $dob->format('d-m-Y');
   $currentDate = new DateTime();
+  echo($dob->format('d-m-Y H:i'));
   echo '<br/>';
   echo '<br/>';
   print_r($addate);
@@ -40,14 +41,16 @@ foreach ($jobs as $job) {
   echo '<br/>';
 
   if ($currentDate->format('d-m-Y H:i') == $dob->format('d-m-Y H:i')) {
-    foreach ($cst_list as $cont) {
-      $contact = json_decode(file_get_contents("http://localhost:3000/contacts?id=" . $cont), true);
+            foreach ($cst_list as $cont) {
+      $contact = json_decode(file_get_contents("http://13.235.132.13/contacts?id=" . $cont), true);
       print_r($contact);
       echo '<br/>';
       echo '<br/>';
       if (!(sizeof($contact) == 0)) {
         $pname = $contact[0]['t_name'];
         $pcont = $contact[0]['t_role'];
+        print_r("---------------------------------Mail Sending-------------------------------------");
+        print_r("Name - ".$pname." ______ Contact".$pcont);
         print_r(sendWACustomTemplateMessage($pcont, $pname, $cst_msg, $token, $url));
       }
       echo '<br/>';
@@ -114,3 +117,4 @@ function sendWACustomTemplateMessage(string $to, string $headerTxt, string $msg,
 
   return json_decode($resp);
 }
+?>

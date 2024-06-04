@@ -8,7 +8,7 @@ import { AddTemplate } from '../models/addTemplate.model';
 export class AddTemplateService {
   // private apiUrl = 'http://localhost:3000/template'; 
 
-  private apiUrl = 'http://13.127.116.149/template'; 
+  private apiUrl = 'http://13.235.132.13/template'; 
 
 
   constructor(private http: HttpClient) { }
