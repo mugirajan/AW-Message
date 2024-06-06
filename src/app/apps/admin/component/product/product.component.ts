@@ -115,7 +115,7 @@ export class ProductComponent implements OnInit {
   ngOnInit(): void {
     this.pageTitle = [
       { label: "Admin", path: "/apps/" },
-      { label: "Default Message", path: "/", active: true },
+      { label: "Contact Message", path: "/", active: true },
     ];
 
     this.http.get<any>(this.url + "contacts").subscribe((data) => {

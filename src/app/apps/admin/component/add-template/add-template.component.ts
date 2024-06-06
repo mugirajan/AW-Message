@@ -6,7 +6,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { actionEvent } from '../../models';
 import { NotificationService } from 'src/app/layout/shared/service/notification.service';
-import {  Select2Option } from 'ng-select2-component';
 import { HttpClient } from '@angular/common/http';
 import { AddTemplateService } from '../../service/addTemplate.service';
 import { AddTemplate } from '../../models/addTemplate.model';
@@ -54,7 +53,7 @@ export class AddTemplateComponent  implements OnInit {
 
   // OnInit 
   ngOnInit(): void {
-    this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Manage Schedule', path: '/', active: true }];
+    this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Add Custom Template', path: '/', active: true }];
    
     this._fetchData();
 
@@ -64,11 +63,9 @@ export class AddTemplateComponent  implements OnInit {
     
     this.templateform = this.fb.group({
       id: [''],
-      temp_head: ['', Validators.required],
       temp_name: ['', Validators.required],
-      active_status: ['', Validators.required],
-      temp_img:['', Validators.required],
-      temp_body:['', Validators.required]
+      temp_body:['', Validators.required],
+      active_status: ['', Validators.required]
     });
 
     this.resettemplateform();
@@ -80,10 +77,8 @@ export class AddTemplateComponent  implements OnInit {
   ScheduleForm() {
     const formData = this.templateform.value;
     this.tempServ.createTemp(formData).subscribe(response => {
+      console.log("Rep:  ", response)
       this.templateform.reset();
-     
-    }, error => {
-      console.error('Error adding List:', error);
     });
   
     this.closeAddTemplateModal();
@@ -110,12 +105,6 @@ export class AddTemplateComponent  implements OnInit {
         label: 'Template Name',
         formatter: (a: AddTemplate) => a.temp_name
       },
-      {
-        name: 'temp_head',
-        label: 'Header',
-        formatter: (a: AddTemplate) => a.temp_head
-      },
-  
       {
         name: 'temp_body',
         label: 'Body',
@@ -254,9 +243,7 @@ actionTriggerd(event: actionEvent) {
     this.templateform.patchValue({
       id: data.id,
       temp_name: data.temp_name,
-      Body_Text: data.Body_Text,
-      selectedDate: data.selectedDate,
-      SelectedTime: data.SelectedTime,
+      temp_body:data.temp_body,
       active_status: data.active_status ? 'true' : 'false', 
     });
     this.tempServ.UpdateTemp(this.templateform.value).subscribe(

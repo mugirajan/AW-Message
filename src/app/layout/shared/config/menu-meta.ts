@@ -27,12 +27,12 @@ const MENU_ITEMS: MenuItem[] = [
                 
                
             },
-            // {
-            //     key: 'Add-Template',
-            //     label: 'Add Template',
-            //     link: '/apps/admin/Add-Template',
-            //     icon: 'message-square'
-            // },
+            {
+                key: 'Add-Template',
+                label: 'Add Custom Template',
+                link: '/apps/admin/Add-Template',
+                icon: 'message-square'
+            },
             {
                 key: 'app-manage-custom',
                 label: 'Instant Contact Message',
