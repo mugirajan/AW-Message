@@ -229,6 +229,7 @@ export class CategoryComponent implements OnInit {
       row.c_desc.toLowerCase().includes(term) ||
       // row.c_number.toLowerCase().includes(term) ||
       row.c_number.toLowerCase().includes(term) ||
+      row.c_selected.toLowerCase().includes(term) ||
       this._matchesActiveStatus(row, term)
     );
   }
@@ -251,7 +252,7 @@ export class CategoryComponent implements OnInit {
     const matchesId = item.id?.toString().includes(term);
     const matchesCName = item.c_name.toLowerCase().includes(term);
     const matchesCDesc = item.c_desc.toLowerCase().includes(term);
-    // const matchesUnqCatName = item.c_number.toLowerCase().includes(term);
+    const matchesUnqCatName = item.c_selected.toLowerCase().includes(term);
     const matchesSuprCat = item.c_number.toLowerCase().includes(term);
     const matchesActiveStatus = this._matchesActiveStatus(item, term);
 
@@ -259,7 +260,7 @@ export class CategoryComponent implements OnInit {
       matchesId ||
       matchesCName ||
       matchesCDesc ||
-      // matchesUnqCatName ||
+      matchesUnqCatName ||
       matchesSuprCat ||
       matchesActiveStatus
     );
@@ -365,8 +366,16 @@ export class CategoryComponent implements OnInit {
 
   editCategoryName(data: Category) {
     this.modalService.open(this.sizeableModal, { size: "xl" });
-    this.categoryList.patchValue({ ...data });
+    // this.categoryList.patchValue({ ...data });
     
+    this.categoryList.patchValue({
+      id: data.id,
+      c_name: data.c_name,
+      c_desc:data.c_desc,
+      c_selected:data.c_selected,
+      c_number:data.c_number,
+      active_status: data.active_status ? 'true' : 'false', 
+    });
   }
 
   UpdateCategory() {
