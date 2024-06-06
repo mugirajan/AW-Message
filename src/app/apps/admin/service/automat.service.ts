@@ -7,7 +7,10 @@ import { AutoTemp } from '../models/autotemp.model';
   providedIn: 'root'
 })
 export class AutoTempService {
-  private apiUrl = 'http://localhost:3000/scheduledmsg/';
+  // private apiUrl = 'http://localhost:3000/scheduledmsg/';
+
+  private apiUrl = 'http://13.235.132.13/scheduledmsg/';
+
 
   constructor(private http: HttpClient) { }
 

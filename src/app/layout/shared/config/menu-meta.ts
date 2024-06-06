@@ -27,37 +27,37 @@ const MENU_ITEMS: MenuItem[] = [
                 
                
             },
-            {
-                key: 'Add-Template',
-                label: 'Add Template',
-                link: '/apps/admin/Add-Template',
-                icon: 'message-square'
-            },
+            // {
+            //     key: 'Add-Template',
+            //     label: 'Add Template',
+            //     link: '/apps/admin/Add-Template',
+            //     icon: 'message-square'
+            // },
             {
                 key: 'app-manage-custom',
-                label: 'Default Message',
+                label: 'Instant Contact Message',
                 link: '/apps/admin/custom',
                 icon: 'package'
 
             },
             {
                 key: 'app-message',
-                label: 'Custom Message',
+                label: 'Instant List Message',
                 link: '/apps/admin/custom-single-message-template',
                 icon: 'message-square'
             },
-            {
-                key: 'Punch-out-in',
-                label: 'Punch In-Punch Out',
-                link: '/apps/admin/punch',
-                icon: 'check-circle'
-            },
-            {
-                key: 'logstats',
-                label: 'Log Stats',
-                link: '/apps/admin/logstats',
-                icon: 'percent'
-            },
+            // {
+            //     key: 'Punch-out-in',
+            //     label: 'Punch In-Punch Out',
+            //     link: '/apps/admin/punch',
+            //     icon: 'check-circle'
+            // },
+            // {
+            //     key: 'logstats',
+            //     label: 'Log Stats',
+            //     link: '/apps/admin/logstats',
+            //     icon: 'percent'
+            // },
             {
                 key: 'Automatic',
                 label: 'Automatic Template',

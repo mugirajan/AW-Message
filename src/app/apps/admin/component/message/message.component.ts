@@ -39,6 +39,10 @@ export class MessageComponent implements OnInit {
   selectedMessage: Select2Option[] = [];
 
 
+  // localhost URL
+  // url = "http://localhost:3000/";
+  //Production URL
+  url = "http://13.235.132.13/";
 
 
   @ViewChild('sizeableModal')
@@ -65,7 +69,7 @@ export class MessageComponent implements OnInit {
 
     this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Custom Message', path: '/', active: true }];
 
-    this.http.get<any[]>('http://localhost:3000/list').subscribe(data => {
+    this.http.get<any[]>(this.url+'list').subscribe(data => {
       this.senderResource[0].options = [];
       data.forEach((con: any) => {
         this.senderResource[0].options.push({ label: con.c_name, value: con.id, id: con.id });
@@ -106,10 +110,10 @@ export class MessageComponent implements OnInit {
     const msg = this.messageForm.value.message;
     const selectedSenderValue = this.messageForm.value.sender
 
-    this.http.get<any>(`http://localhost:3000/list/${this.selectedValue}`).subscribe((item) => {
+    this.http.get<any>(this.url+'list/'+this.selectedValue).subscribe((item) => {
       const selectedOptions: string[] = item.selectedOptions;
       selectedOptions.forEach(id => {
-        this.http.get<any>(`http://localhost:3000/contacts/${id}`).subscribe((data) => {
+        this.http.get<any>(this.url+'contacts/'+id).subscribe((data) => {
           this.msgServ.sendWACustomTemplateMessage(data.t_role, data.t_name, msg).subscribe((resp: any) => {
             this.toastr.success('Message sent successfully!');
             this.resetMessageForm()

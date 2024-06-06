@@ -58,6 +58,10 @@ export class VariantComponent implements OnInit {
   selectedGroupName: string = ''; 
   
   
+  // localhost URL
+  // url = "http://localhost:3000/";
+  //Production URL
+  url = "http://13.235.132.13/";
 
   @ViewChild('sizeableModal')
   sizeableModal!: TemplateRef<NgbModal>;
@@ -82,7 +86,7 @@ export class VariantComponent implements OnInit {
   ngOnInit(): void {
     this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Manage Schedule', path: '/', active: true }];
     
-    this.http.get<any>('http://localhost:3000/list').subscribe(data => {
+    this.http.get<any>(this.url+'list').subscribe(data => {
       this.list = data.list;
     });
   
