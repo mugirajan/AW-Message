@@ -119,11 +119,11 @@ export class ContactComponent implements OnInit {
 
   initTableCofig(): void {
     this.columns = [
-      {
-        name: "t_id",
-        label: "Contact ID",
-        formatter: this.contactsIDFormatter.bind(this),
-      },
+      // {
+      //   name: "t_id",
+      //   label: "Contact ID",
+      //   formatter: this.contactsIDFormatter.bind(this),
+      // },
       {
         name: "t_name",
         label: "Name",

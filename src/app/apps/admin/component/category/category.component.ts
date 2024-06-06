@@ -171,11 +171,11 @@ export class CategoryComponent implements OnInit {
 
   initTableCofig(): void {
     this.columns = [
-      {
-        name: "c_id",
-        label: "Category ID",
-        formatter: this.categoryIDFormatter.bind(this),
-      },
+      // {
+      //   name: "c_id",
+      //   label: "Category ID",
+      //   formatter: this.categoryIDFormatter.bind(this),
+      // },
       {
         name: "c_name",
         label: "Name",
