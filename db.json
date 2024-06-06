@@ -155,6 +155,18 @@
         "119d",
         "4dd3"
       ]
+    },
+    {
+      "id": "b3d4",
+      "c_name": "morning batch",
+      "c_desc": null,
+      "c_number": "119d",
+      "c_selected": "919677220546,918807310429",
+      "active_status": "true",
+      "selectedOptions": [
+        "11bd",
+        "119d"
+      ]
     }
   ],
   "variants": [
@@ -184,18 +196,6 @@
       "active_status": "true",
       "selectedDate": "2024-05-14",
       "selectedTime": "13:27"
-    },
-    {
-      "id": "fb1a",
-      "d_id": "",
-      "date": "2024-05-07",
-      "time": "15:09"
-    },
-    {
-      "id": "e3cb",
-      "d_id": null,
-      "date": "2024-05-07",
-      "time": "15:11"
     }
   ],
   "template": [],
