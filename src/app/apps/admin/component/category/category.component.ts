@@ -143,7 +143,6 @@ export class CategoryComponent implements OnInit {
 
         // get Categories
         this._fetchData();
-
       },
       (error) => {
         this.toastr.error("Error adding List!");
@@ -151,7 +150,6 @@ export class CategoryComponent implements OnInit {
       }
     );
     this.closeListModal();
-
   }
 
   _fetchData(): void {
@@ -234,13 +232,20 @@ export class CategoryComponent implements OnInit {
     );
   }
 
+  /**
+   * Search Method
+   */
   searchData(searchTerm: string): void {
-    console.log("Search Term:", searchTerm);
     if (searchTerm === "") {
       this._fetchData();
     } else {
-      searchTerm = searchTerm.toLowerCase();
-      this.records = this._filterData(this.records, searchTerm);
+      let updatedData = this.records;
+      //  filter
+      updatedData = updatedData.filter((product) =>
+        this.matches(product, searchTerm)
+      );
+      this.records = updatedData;
+      // this.records$ = updatedData;
     }
   }
 
@@ -383,7 +388,7 @@ export class CategoryComponent implements OnInit {
       (response) => {
         console.log("Update response:", response);
         this.modalService.dismissAll();
-        this._fetchData()
+        this._fetchData();
       },
       (error) => {
         console.error("Error updating contact:", error);
