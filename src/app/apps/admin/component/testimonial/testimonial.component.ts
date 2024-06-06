@@ -197,7 +197,7 @@ export class ContactComponent implements OnInit {
 
   /**
    * Search Method
-   */
+   */ 
   searchData(searchTerm: string): void {
     if (searchTerm === "") {
       this._fetchData();

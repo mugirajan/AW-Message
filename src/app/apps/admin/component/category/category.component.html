@@ -22,17 +22,17 @@
                 
                 <!-- order table -->
                 <app-advanced-table 
-                    #advancedTable 
+                    #advancedTable
                     [tableData]="records"
                     [columns]="columns" 
                     [pagination]="true" 
-                    [pageSizeOptions]="pageSizeOptions"
+                    [pageSizeOptions]="pageSizeOptions" 
                     [hasRowSelection]="false" 
                     [isSearchable]="true"
+                    (search)="searchData($event)"
                     [isSortable]="false" 
                     [hasActionColumn]="true"
                     (actionTrigger)="actionTriggerd($event)"
-                    (search)="searchData($event)"
                     tableClasses="table-centered"
                     theadClasses="table-light">
                 </app-advanced-table>
