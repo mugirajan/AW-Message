@@ -34,6 +34,7 @@ import { PunchComponent } from './component/punch/punch-component';
 import { StatsComponent } from './component/logstats/stats-component';
 import { automatTempComponent } from './component/automatic-temp/automat-temp';
 import { AddTemplateService } from './service/addTemplate.service';
+import { AutoTempService } from './service/automat.service';
 
 
 @NgModule({
@@ -71,6 +72,7 @@ import { AddTemplateService } from './service/addTemplate.service';
         DynaFormService,
         WAMesssagingService,
         AddTemplateService,
+        AutoTempService,
     ]
 })
 export class AdminModule { }

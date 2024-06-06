@@ -71,6 +71,7 @@ export class ContactComponent implements OnInit {
       t_role: ["", Validators.required],
       t_date: ["", Validators.required],
       t_marriage: ["", Validators.required],
+      t_membership:["", Validators.required],
       t_msg: ["", Validators.required],
       t_address: ["", Validators.required],
       t_city: ["", Validators.required],
@@ -119,11 +120,11 @@ export class ContactComponent implements OnInit {
 
   initTableCofig(): void {
     this.columns = [
-      // {
-      //   name: "t_id",
-      //   label: "Contact ID",
-      //   formatter: this.contactsIDFormatter.bind(this),
-      // },
+      {
+        name: "t_membership",
+        label: "Membership ID",
+        formatter: (order: Testimonial) => order.t_membership,
+      },
       {
         name: "t_name",
         label: "Name",
@@ -455,5 +456,14 @@ export class ContactComponent implements OnInit {
       .then(function (buf) {
         return new File([buf], fileName, { type: mimeType });
       });
+  };
+
+  showmarritalDropdown: boolean = false;
+  togglemarried(selection: string): void {
+    if (selection === 'married') {
+        this.showmarritalDropdown = true;
+    } else if(selection === 'single'){
+        this.showmarritalDropdown = false;
+    }
   }
 }
