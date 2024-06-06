@@ -53,6 +53,7 @@ export class ProductComponent implements OnInit {
   productDeleteID: any;
   TemplateForm!: FormGroup;
   contacts: any[] = [];
+  valname: string = "";
   senderResource: Select2Group[] = [
     {
       label: "Kamalraj Ganesan",
@@ -121,7 +122,7 @@ export class ProductComponent implements OnInit {
       data.forEach((con: any, ind: number) => {
         this.senderResource[0].options.push({
           label: con.t_name,
-          value: con.t_role,
+          value:  con.t_role + "|" +con.t_name,
         });
       });
     });
@@ -177,15 +178,19 @@ export class ProductComponent implements OnInit {
   //
 
   sendMessage() {
+    var parm = this.TemplateForm.value["sender"].split("|");
+
     console.log(
       this.TemplateForm.value["sender"],
+      parm[0],
+      parm[1],
       this.TemplateForm.value["headerTxt"]
     );
     this.msgServ
       .customTemplate(
-        this.TemplateForm.value["sender"],
-        this.TemplateForm.value["headerTxt"],
-        "Greetings"
+        parm[0],
+        parm[1],
+        this.TemplateForm.value["headerTxt"]
       )
       .subscribe(
         (resp: any) => {
