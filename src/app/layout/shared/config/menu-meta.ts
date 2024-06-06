@@ -18,15 +18,13 @@ const MENU_ITEMS: MenuItem[] = [
                 icon: 'list'
 
             },
-            {
-                key: 'app-manage-shedule',
-                label: 'Schedule',
-                link: '/apps/admin/schedule',
-                icon: 'calendar'
+            // {
+            //     key: 'app-manage-shedule',
+            //     label: 'Schedule',
+            //     link: '/apps/admin/schedule',
+            //     icon: 'calendar'
 
-                
-               
-            },
+            // },
             {
                 key: 'Add-Template',
                 label: 'Add Custom Template',
