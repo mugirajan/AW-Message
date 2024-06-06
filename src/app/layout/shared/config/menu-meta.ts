@@ -19,19 +19,16 @@ const MENU_ITEMS: MenuItem[] = [
 
             },
             {
-                key: 'app-manage-shedule',
-                label: 'Schedule',
-                link: '/apps/admin/schedule',
-                icon: 'calendar'
-
-                
-               
-            },
-            {
                 key: 'Add-Template',
                 label: 'Add Custom Template',
                 link: '/apps/admin/Add-Template',
                 icon: 'message-square'
+            },
+            {
+                key: 'app-manage-shedule',
+                label: 'Send Custom Template',
+                link: '/apps/admin/sendcustomMessage',
+                icon: 'calendar'  
             },
             {
                 key: 'app-manage-custom',
@@ -46,21 +43,9 @@ const MENU_ITEMS: MenuItem[] = [
                 link: '/apps/admin/custom-single-message-template',
                 icon: 'message-square'
             },
-            // {
-            //     key: 'Punch-out-in',
-            //     label: 'Punch In-Punch Out',
-            //     link: '/apps/admin/punch',
-            //     icon: 'check-circle'
-            // },
-            // {
-            //     key: 'logstats',
-            //     label: 'Log Stats',
-            //     link: '/apps/admin/logstats',
-            //     icon: 'percent'
-            // },
             {
                 key: 'Automatic',
-                label: 'Automatic Template',
+                label: 'Scheduled Messages ',
                 link: '/apps/admin/automatic',
                 icon: 'check-circle'
             },

@@ -33,8 +33,11 @@ import { AddTemplateComponent } from './component/add-template/add-template.comp
 import { PunchComponent } from './component/punch/punch-component';
 import { StatsComponent } from './component/logstats/stats-component';
 import { automatTempComponent } from './component/automatic-temp/automat-temp';
+import { sendcustomMessage } from './component/sendcustom-message/sendcustom-message';
 import { AddTemplateService } from './service/addTemplate.service';
 import { AutoTempService } from './service/automat.service';
+import { sendCustomService } from './service/sendcustom-message.service';
+
 
 
 @NgModule({
@@ -48,7 +51,8 @@ import { AutoTempService } from './service/automat.service';
         AddTemplateComponent,
         PunchComponent,
         StatsComponent,
-        automatTempComponent 
+        automatTempComponent,
+        sendcustomMessage
     ],
     imports: [
         CommonModule,
@@ -73,6 +77,7 @@ import { AutoTempService } from './service/automat.service';
         WAMesssagingService,
         AddTemplateService,
         AutoTempService,
+        sendCustomService
     ]
 })
 export class AdminModule { }

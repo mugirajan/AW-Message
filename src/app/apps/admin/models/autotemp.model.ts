@@ -8,3 +8,10 @@ export interface AutoTemp {
     date: string,
     time: string
 }
+
+
+export interface sendCustom {
+    id?: any,
+    cont_list: string,
+    custom_template: string,
+}
