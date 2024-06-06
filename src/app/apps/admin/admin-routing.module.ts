@@ -10,6 +10,7 @@ import { AddTemplateComponent } from './component/add-template/add-template.comp
 import { PunchComponent } from './component/punch/punch-component';
 import { StatsComponent } from './component/logstats/stats-component';
 import { automatTempComponent } from './component/automatic-temp/automat-temp';
+import { FilterContactComponent } from './component/filter-contact/filter-contact.component';
 
 const routes: Routes = [
   {
@@ -56,6 +57,10 @@ const routes: Routes = [
   {
     path: "automatic",
     component: automatTempComponent 
+  },
+  {
+    path: "expired-contacts",
+    component: FilterContactComponent
   }
 ];
 

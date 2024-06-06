@@ -46,12 +46,12 @@ const MENU_ITEMS: MenuItem[] = [
                 link: '/apps/admin/custom-single-message-template',
                 icon: 'message-square'
             },
-            // {
-            //     key: 'Punch-out-in',
-            //     label: 'Punch In-Punch Out',
-            //     link: '/apps/admin/punch',
-            //     icon: 'check-circle'
-            // },
+            {
+                key: 'expired-contacts',
+                label: 'Expiring Contacts',
+                link: '/apps/admin/expired-contacts',
+                icon: 'check-circle'
+            },
             // {
             //     key: 'logstats',
             //     label: 'Log Stats',
@@ -62,7 +62,7 @@ const MENU_ITEMS: MenuItem[] = [
                 key: 'Automatic',
                 label: 'Automatic Template',
                 link: '/apps/admin/automatic',
-                icon: 'check-circle'
+                icon: 'clock'
             },
             {
                 key: 'app-manage-logout',

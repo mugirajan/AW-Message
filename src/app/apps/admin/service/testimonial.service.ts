@@ -59,7 +59,7 @@ export class ContactService {
   //   return this.http.get(this.apiUrl + "getDetails");
   // }
 
-  getContacts(): Observable<Testimonial[]> {
+  getContacts() {
     return this.http.get<Testimonial[]>(this.apiUrl);
   }
 

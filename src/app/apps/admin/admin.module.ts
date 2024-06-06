@@ -11,7 +11,6 @@ import { WidgetModule } from "../../shared/widget/widget.module";
 import { Select2Module } from 'ng-select2-component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { QuillModule } from 'ngx-quill';
-// import { readFile } from 'fs';
 
 import { AdvancedTableModule } from 'src/app/shared/advanced-table/advanced-table.module';
 
@@ -33,6 +32,8 @@ import { AddTemplateComponent } from './component/add-template/add-template.comp
 import { PunchComponent } from './component/punch/punch-component';
 import { StatsComponent } from './component/logstats/stats-component';
 import { automatTempComponent } from './component/automatic-temp/automat-temp';
+import { FilterContactComponent } from './component/filter-contact/filter-contact.component';
+import { FilterContactService } from './service/filter-contact.service';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { automatTempComponent } from './component/automatic-temp/automat-temp';
         AddTemplateComponent,
         PunchComponent,
         StatsComponent,
-        automatTempComponent 
+        automatTempComponent,
+        FilterContactComponent 
     ],
     imports: [
         CommonModule,
@@ -68,7 +70,8 @@ import { automatTempComponent } from './component/automatic-temp/automat-temp';
         CategoryService,
         VariantService,
         DynaFormService,
-        WAMesssagingService
+        WAMesssagingService,
+        FilterContactService
     ]
 })
 export class AdminModule { }

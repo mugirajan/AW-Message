@@ -1,0 +1,208 @@
+<div class="row">
+    <div class="col-12">
+        
+        <div class="card">
+            <div class="card-body">
+                
+                <div class="row mb-2 justify-content-end">
+                    <div class="col-lg-4 col-12">
+                        <div class="text-lg-end">
+                            
+                        </div>
+                    </div><!-- end col-->
+                </div>
+                
+                <app-ui-preloader [display]="loading"></app-ui-preloader>
+                
+                <!-- order table -->
+                <app-advanced-table 
+                    #advancedTable 
+                    [tableData]="records"
+                    [columns]="columns" 
+                    [pagination]="true" 
+                    [pageSizeOptions]="pageSizeOptions"
+                    [hasRowSelection]="false" 
+                    [isSearchable]="true"
+                    [isSortable]="false" 
+                    [hasActionColumn]="true"
+                    (actionTrigger)="actionTriggerd($event)"
+                    tableClasses="table-centered"
+                    theadClasses="table-light">
+                </app-advanced-table>
+                
+            </div> <!-- end card body-->
+        </div> <!-- end card -->
+        
+    </div><!-- end col-->
+</div>
+<!-- end row-->
+
+
+<!--  -->
+<ng-template #sizeableModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modalLabel"> {{ actionType }} Expiring Contacts </h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <form  [formGroup]="contactForm" #addProduct="ngForm">
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="contact-name" class="form-label"> Name <span
+                                        class="text-danger">: </span></label>
+                                <!-- <input type="text"  id="contact-name" class="form-control" placeholder="e.g : Ken Adams"
+                                    required formControlName="t_name" [disabled]="true"
+                                    [ngClass]="{ 'is-invalid': addProduct.submitted && form1.t_name.invalid }"> -->
+                                <span> {{ this.contactForm.get('t_name')?.value }} </span>
+                            </div>
+        
+                            <div class="mb-3">
+                                <label for="contact-role" class="form-label">Phone Number <span
+                                        class="text-danger">: </span></label>
+                                <!-- <input type="text" id="contact-role"  class="form-control" placeholder="e.g : 9567..."
+                                    required formControlName="t_role" [disabled]="true"
+                                    [ngClass]="{  'is-invalid': addProduct.submitted && form1.t_role.invalid }"> -->
+                                <span> {{ this.contactForm.get('t_role')?.value }} </span>
+                            </div>
+                           
+                            <div class="mb-3">
+                                <label for="contact-mail" class="form-label">Mail Id<span
+                                        class="text-danger">: </span></label>
+                                <!-- <input type="text" id="contact-mail"  class="form-control" placeholder="e.g : abc@gmail.com"
+                                    required formControlName="t_mail" [disabled]="true"
+                                    [ngClass]="{  'is-invalid': addProduct.submitted && form1.t_mail.invalid }"> -->
+                                <span> {{ this.contactForm.get('t_mail')?.value }} </span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="contact-dob" class="form-label">DOB<span
+                                        class="text-danger">: </span></label>
+                                <!-- <input type="date" id="contact-dob"  class="form-control" placeholder="e.g : 21-09-2023"
+                                    required formControlName="t_dob" [disabled]="true"
+                                    [ngClass]="{  'is-invalid': addProduct.submitted && form1.t_dob.invalid }"> -->
+                                <span> {{ this.contactForm.get('t_dob')?.value }} </span>
+                            </div>
+                            <!--end of subscription-->
+                            <div class="mb-3">
+                                <label for="contact-subscription" class="form-label">End Of Subscription<span
+                                        class="text-danger">: </span></label>
+                                <!-- <input type="date" id="contact-subscription"  class="form-control" placeholder="e.g : 21-09-2023"
+                                    required formControlName="t_endsub" [disabled]="true"
+                                    [ngClass]="{  'is-invalid': addProduct.submitted && form1.t_endsub.invalid }"> -->
+                                <span> {{ this.contactForm.get('t_endsub')?.value }} </span>
+                            </div>
+        
+                            <div class="mb-3">
+                                <label class="mb-2">Active Status <span class="text-danger">: </span></label>
+                                <!-- <br /> -->
+                                <!-- <div class="d-flex flex-wrap">
+                                  <div class="form-check me-2">
+                                    <input class="form-check-input" type="radio" value="true" formControlName="active_status" id="activeRadio" [disabled]="true">
+                                    <label class="form-check-label" for="activeRadio">Active</label>
+                                  </div>
+                                  <div class="form-check me-2">
+                                    <input class="form-check-input" type="radio" value="false" formControlName="active_status" id="inactiveRadio" [disabled]="true">
+                                    <label class="form-check-label" for="inactiveRadio">Inactive</label>
+                                  </div>
+                                </div> -->
+                                <span> {{ this.contactForm.get('active_status')?.value }} </span>
+                              </div>
+        
+                        </div>
+                    </div> 
+                </div>
+        
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+                            
+                            <div class="mb-3">
+                                <label for="contact-date" class="form-label">Date <span
+                                        class="text-danger">: </span></label>
+                                <!-- <input type="date" id="contact-date" class="form-control" placeholder="e.g : 21-09-2023"
+                                    required formControlName="t_date" [disabled]="true"
+                                    [ngClass]="{  'is-invalid': addProduct.submitted && form1.t_date.invalid }"> -->
+                                <span> {{ this.contactForm.get('t_date')?.value }} </span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="marriage_date" class="form-label">Date Of Marriage<span
+                                        class="text-danger">: </span></label>
+                                <!-- <input type="date" id="marriage_date" class="form-control" placeholder="e.g : 3-05-2019"
+                                    required formControlName="t_marriage" [disabled]="true"
+                                    [ngClass]="{  'is-invalid': addProduct.submitted && form1.t_marriage.invalid }"> -->
+                                <span> {{ this.contactForm.get('t_marriage')?.value }} </span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="contact-role" class="form-label"> Address <span
+                                        class="text-danger">: </span></label>
+                                <!-- <input type="text" id="contact-role"  class="form-control" placeholder="e.g : a/21,.."
+                                    required formControlName="t_address" [disabled]="true"
+                                    [ngClass]="{  'is-invalid': addProduct.submitted && form1.t_address.invalid }"> -->
+                                <span> {{ this.contactForm.get('t_address')?.value }} </span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="contact-mail" class="form-label">city<span
+                                        class="text-danger">: </span></label>
+                                <!-- <input type="text" id="contact-mail"  class="form-control" placeholder="e.g : chennai"
+                                    required formControlName="t_city" [disabled]="true"
+                                    [ngClass]="{  'is-invalid': addProduct.submitted && form1.t_city.invalid }"> -->
+                                <span> {{ this.contactForm.get('t_city')?.value }} </span>
+                            </div>  
+                            
+                            <div class="mb-3">
+                                <label for="contact-term" class="form-label">Term<span
+                                        class="text-danger">: </span></label>
+                                <!-- <select id="contact-term" class="form-select form-select my-1 my-lg-0" id="status-select" name="status"
+                                 [disabled]="true" formControlName="t_term">
+                                    <option value="Three Month">Three Month</option>
+                                    <option value="Six Month">Six Month</option>
+                                    <option value="One Year">One Year</option>
+                                    <option value="Two Year">Two Year</option>
+                                </select> -->
+                                <span> {{ this.contactForm.get('t_term')?.value }} </span>
+                            </div> 
+                                
+                            <div class="mb-3">
+                                <label class="mb-2">Gender <span class="text-danger">: </span></label>
+                                <!-- <br /> -->
+                                <!-- <div class="d-flex flex-wrap">
+                                  <div class="form-check me-2">
+                                    <input class="form-check-input" type="radio" value="male" [disabled]="true" formControlName="t_gender" id="active">
+                                    <label class="form-check-label" for="active">male</label>
+                                  </div>
+                                  <div class="form-check me-2">
+                                    <input class="form-check-input" type="radio" value="female" [disabled]="true" formControlName="t_gender" id="inactive">
+                                    <label class="form-check-label" for="inactive">Female</label>
+                                  </div>
+                                </div> -->
+                                <span> {{ this.contactForm.get('t_gender')?.value }} </span>
+                            </div>
+                        </div>
+                    </div> 
+        
+                </div> 
+            </div>
+        
+            <div class="row">
+                <div class="col-12">
+                    <div class="text-center mb-3">
+                        <button type="button" class="btn w-sm btn-danger waves-effect" aria-label="Close" (click)="closeContactModal()">Cancel</button>
+                    </div>
+                </div> 
+            </div>
+        
+        </form>
+
+    </div>
+</ng-template>
+
+
