@@ -1,5 +1,5 @@
 <!-- page title -->
-<app-page-title [breadcrumbItems]="pageTitle" title="Manage Schedule"></app-page-title>
+<app-page-title [breadcrumbItems]="pageTitle" title="Add Custom Template"></app-page-title>
 <div class="row">
     <div class="col-12"> 
         <div class="card">
@@ -36,7 +36,7 @@
 
 <ng-template #sizeableModal let-modal>
     <div class="modal-header">
-        <h4 class="modal-title" id="modalLabel"> {{ actionType }} Schedule </h4>
+        <h4 class="modal-title" id="modalLabel"> {{ actionType }} Template </h4>
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         </button>
     </div>
@@ -51,29 +51,13 @@
                                 <div class="col-6"> 
                                     <div class="mb-3">
                                         <label for="List-number" class="form-label">Template Name<span class="text-danger">*</span></label>
-                                        <input type="text" id="group_id" formControlName="temp_name" class="form-control" placeholder="eg: custom-template, ..."required  />
-                                    </div>
-                                </div>
-                                <div class="col-6"> 
-                                    <div class="mb-3">
-                                        <label for="AddTemplate" class="form-label">
-                                            Header
-                                        </label>
-                                        <input type="text" id="header" class="form-control" placeholder="hey , ..."
-                                            required formControlName="temp_head" />
-
-                                    </div>
-                                </div> 
-                                <div class="col-6"> 
-                                    <div class="mb-3">
-                                        <label for="temp_img" class="form-label">Image URL</label>
-                                        <input type="text" id="temp_img" class="form-control" required formControlName="temp_img" />
+                                        <input type="text" id="group_id" formControlName="temp_name" class="form-control" placeholder="eg: custom-template, ..." required  />
                                     </div>
                                 </div>
                                 <div class="col-6"> 
                                     <div class="mb-3">
                                         <label for="temp_body" class="form-label">Body</label>
-                                        <input type="text" id="temp_body" class="form-control" required formControlName="temp_body" />
+                                        <input type="text" id="temp_body" class="form-control"  placeholder="eg: hey , ..." required formControlName="temp_body" />
                                     </div>
                                 </div>
                                 <div class="col-6">

@@ -171,11 +171,11 @@ export class CategoryComponent implements OnInit {
 
   initTableCofig(): void {
     this.columns = [
-      {
-        name: "c_id",
-        label: "Category ID",
-        formatter: this.categoryIDFormatter.bind(this),
-      },
+      // {
+      //   name: "c_id",
+      //   label: "Category ID",
+      //   formatter: this.categoryIDFormatter.bind(this),
+      // },
       {
         name: "c_name",
         label: "Name",
@@ -222,24 +222,29 @@ export class CategoryComponent implements OnInit {
    * @param term Search the value
    */
 
-  matches(row: Category, term: string) {
+  matches(row: CategoryMOdel2, term: string) {
+    console.log(row);
     return (
-      row.id?.toString().includes(term) ||
-      row.c_name.toLowerCase().includes(term) ||
-      row.c_desc.toLowerCase().includes(term) ||
-      // row.c_number.toLowerCase().includes(term) ||
-      row.c_number.toLowerCase().includes(term) ||
-      this._matchesActiveStatus(row, term)
+      // row.id?.toString().includes(term) ||
+      row.c_name.toString().toLowerCase().includes(term)||
+      row.c_number.toString().toLowerCase().includes(term)
+      // row.c_number.toString().includes(term)
+      // this._matchesActiveStatus(row, term)
     );
   }
 
   searchData(searchTerm: string): void {
-    console.log("Search Term:", searchTerm);
     if (searchTerm === "") {
       this._fetchData();
     } else {
-      searchTerm = searchTerm.toLowerCase();
-      this.records = this._filterData(this.records, searchTerm);
+      let updatedData = this.records;
+      //  filter
+      searchTerm.toLowerCase();
+      updatedData = updatedData.filter((product) =>
+        this.matches(product, searchTerm)
+      );
+      this.records = updatedData;
+      // this.records$ = updatedData;
     }
   }
 
@@ -248,19 +253,19 @@ export class CategoryComponent implements OnInit {
   }
 
   private _itemMatches(item: Category, term: string): boolean {
-    const matchesId = item.id?.toString().includes(term);
+    // const matchesId = item.id?.toString().includes(term);
     const matchesCName = item.c_name.toLowerCase().includes(term);
     const matchesCDesc = item.c_desc.toLowerCase().includes(term);
     // const matchesUnqCatName = item.c_number.toLowerCase().includes(term);
-    const matchesSuprCat = item.c_number.toLowerCase().includes(term);
+    // const matchesSuprCat = item.c_number.toLowerCase().includes(term);
     const matchesActiveStatus = this._matchesActiveStatus(item, term);
 
     return (
-      matchesId ||
+      // matchesId ||
       matchesCName ||
       matchesCDesc ||
       // matchesUnqCatName ||
-      matchesSuprCat ||
+      // matchesSuprCat ||
       matchesActiveStatus
     );
   }

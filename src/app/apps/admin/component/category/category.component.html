@@ -1,5 +1,5 @@
 <!-- page title -->
-<app-page-title [breadcrumbItems]="pageTitle" title="Manage List"></app-page-title>
+<app-page-title title="Manage List"></app-page-title>
 
 <div class="row">
     <div class="col-12">
@@ -22,17 +22,17 @@
                 
                 <!-- order table -->
                 <app-advanced-table 
-                    #advancedTable 
+                    #advancedTable
                     [tableData]="records"
                     [columns]="columns" 
                     [pagination]="true" 
-                    [pageSizeOptions]="pageSizeOptions"
+                    [pageSizeOptions]="pageSizeOptions" 
                     [hasRowSelection]="false" 
                     [isSearchable]="true"
+                    (search)="searchData($event)"
                     [isSortable]="false" 
                     [hasActionColumn]="true"
                     (actionTrigger)="actionTriggerd($event)"
-                    (search)="searchData($event)"
                     tableClasses="table-centered"
                     theadClasses="table-light">
                 </app-advanced-table>
@@ -88,13 +88,7 @@
                                   </li>
                                 </ul>
                               </div>
-                              
-                              
-                              
                             
-
-                            
-                              
                         
                             <div class="mb-3">
                                 <label class="mb-2">Active Status <span class="text-danger">*</span></label>

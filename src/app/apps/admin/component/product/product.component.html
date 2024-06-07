@@ -1,67 +1,68 @@
 <!-- page title -->
-<app-page-title [breadcrumbItems]="pageTitle" title="Send Single Custom Message"></app-page-title>
+<app-page-title
+  [breadcrumbItems]="pageTitle"
+  title="Send Single Custom Message"
+></app-page-title>
 
 <div class="row">
-    <div class="col-12">
-        
-        <div class="card">
-            <div class="card-body">
-                
-                <app-ui-preloader [display]="loading"></app-ui-preloader>
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <app-ui-preloader [display]="loading"></app-ui-preloader>
 
-                <form [formGroup]="TemplateForm">
+        <form [formGroup]="TemplateForm">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">
+                    Send a Prepared Custom Message
+                  </h5>
 
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">Send a Prepared Custom Message </h5>
-                                    
-                                    <div class="row">
-                                        <div class="col-6"> 
-                                            <div class="mb-3">
-        
-                                                <label for="category" class="form-label">
-                                                    Choose the receiver:
-                                                </label>
-        
-                                                <select2 
-                                                
-                                                    [data]="senderResource" 
-                                                    placeholder="select sender contact" 
-                                                    id="sender" 
-                                                    #mySelect
-                                                    class="form-control"
-                                                    (update)='onSenderSelected($event)'
-                                                    formControlName="sender"
-                                                >
-                                                </select2>
-        
-                                                <!-- <ng-template #categoryElseBlock>
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="mb-3">
+                        <label for="category" class="form-label">
+                          Choose the receiver:
+                        </label>
+
+                        <select2
+                          [data]="senderResource"
+                          placeholder="select sender contact"
+                          id="sender"
+                          #mySelect
+                          class="form-control"
+                          (update)="onSenderSelected($event)"
+                          formControlName="sender"
+                        >
+                        </select2>
+
+                        <!-- <ng-template #categoryElseBlock>
                                                     <h4> {{ selectedSender[0].label }} </h4>
                                                 </ng-template> -->
-                                                
-                                            </div>
-                                        </div>
-                                        <div class="col-6"> 
-                                            <div class="mb-3">
-                                                
-                                            </div>
-                                        </div>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="mb-3"></div>
+                    </div>
 
-                                        <div class="col-6"> 
-                                            <div class="mb-3">
-        
-                                                <label for="header_text" class="form-label">
-                                                    Header text:
-                                                </label>
-                                                <input type="text" id="header_text" class="form-control" placeholder="the person name, e.g. Brock Lesner"
-                                                    required formControlName="headerTxt" />
-        
-                                            </div>
-                                        </div>
+                    <div class="col-6">
+                      <div class="mb-3">
+                        <label for="header_text" class="form-label">
+                          Header text:
+                        </label>
+                        <input
+                          type="text"
+                          id="header_text"
+                          class="form-control"
+                          placeholder="the person name, e.g. Brock Lesner"
+                          required
+                          formControlName="headerTxt"
+                        />
+                      </div>
+                    </div>
 
-                                        <!-- <div class="col-6"> 
+                    <!-- <div class="col-6"> 
                                             <div class="mb-3">
         
                                                 <label for="message" class="form-label">
@@ -73,31 +74,23 @@
                                             </div>
                                         </div> -->
 
-                                        <div class="col-12"> 
-                                            <div class="mb-3">
-        
-                                                <button class="btn btn-primary" (click)="sendMessage()">
-                                                    send message
-                                                </button>
-        
-                                            </div>
-                                        </div>
-
-                                    </div>
-                
-                                </div>
-                            </div> <!-- end card -->
-                        </div> <!-- end col -->
-
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <button class="btn btn-primary" (click)="sendMessage()">
+                          send message
+                        </button>
+                      </div>
                     </div>
-                    <!-- end row -->
-                </form>
-               
-                  
-
+                  </div>
+                </div>
+              </div>
+              <!-- end card -->
             </div>
-        </div>
-
+            <!-- end col -->
+          </div>
+          <!-- end row -->
+        </form>
+      </div>
     </div>
+  </div>
 </div>
-

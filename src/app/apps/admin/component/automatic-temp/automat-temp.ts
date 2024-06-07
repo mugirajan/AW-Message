@@ -270,12 +270,13 @@ export class automatTempComponent  implements OnInit {
         const selectedOptions: string[] = item.selectedOptions;
         selectedOptions.forEach(id => {
           this.http.get<any>(this.url+`contacts/${id}`).subscribe((data) => {
+            console.log("hello");
             this.msgServ.sendWACustomTemplateMessage(data.t_role, data.t_name, msg).subscribe((resp: any) => {
               this.toastr.success('Message sent successfully!');
               this.resetMessageForm()
             });
           });
-        });
+        }); 
       });
     }
 

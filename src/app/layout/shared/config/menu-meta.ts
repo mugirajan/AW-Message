@@ -19,20 +19,17 @@ const MENU_ITEMS: MenuItem[] = [
 
             },
             {
-                key: 'app-manage-shedule',
-                label: 'Schedule',
-                link: '/apps/admin/schedule',
-                icon: 'calendar'
-
-                
-               
+                key: 'Add-Template',
+                label: 'Add Custom Template',
+                link: '/apps/admin/Add-Template',
+                icon: 'message-square'
             },
-            // {
-            //     key: 'Add-Template',
-            //     label: 'Add Template',
-            //     link: '/apps/admin/Add-Template',
-            //     icon: 'message-square'
-            // },
+            {
+                key: 'app-manage-shedule',
+                label: 'Send Custom Template',
+                link: '/apps/admin/sendcustomMessage',
+                icon: 'calendar'  
+            },
             {
                 key: 'app-manage-custom',
                 label: 'Instant Contact Message',
@@ -46,6 +43,7 @@ const MENU_ITEMS: MenuItem[] = [
                 link: '/apps/admin/custom-single-message-template',
                 icon: 'message-square'
             },
+<<<<<<< HEAD
             {
                 key: 'expired-contacts',
                 label: 'Expiring Contacts',
@@ -58,9 +56,11 @@ const MENU_ITEMS: MenuItem[] = [
             //     link: '/apps/admin/logstats',
             //     icon: 'percent'
             // },
+=======
+>>>>>>> 53e92a5f9d366895b6797bd68fe143f0f7284e83
             {
                 key: 'Automatic',
-                label: 'Automatic Template',
+                label: 'Scheduled Messages ',
                 link: '/apps/admin/automatic',
                 icon: 'clock'
             },
