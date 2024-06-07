@@ -159,7 +159,7 @@ export class WAMesssagingService {
       to: to,
       type: "template",
       template: {
-        name: "custom_template",
+        name: "customtemp",
         language: {
           code: "en",
         },
