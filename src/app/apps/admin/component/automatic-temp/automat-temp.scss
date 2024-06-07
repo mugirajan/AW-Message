@@ -1,3 +1,61 @@
 .toast-success {
     background-color: #5cb85c; /* Green */
   }
+    
+    $color-gray-shade-1: #E4E4E4;
+    $color-gray-shade-2: #C4C4C4;
+    $color-theme: #7BC4CA;
+    $radius: 3px;
+    
+    
+    .burmanRadio {
+      margin-bottom: 10px;
+      
+      &__input {
+        display: none;
+        
+        &:checked ~ .burmanRadio__label::after {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      
+      &__label {
+        cursor: pointer;
+        // line-height: 30px;
+        position: relative;
+        margin-left: 35px;
+        
+        &::before, &::after {
+          border-radius: 50%;
+          position: absolute;
+          top: -1.5px; left: -35px;
+          transition: all .3s ease-out;
+          z-index: 2;
+        }
+        
+        &::before {
+          content: "";
+          border: 1.5px solid $color-gray-shade-1;
+          width: 20px; height: 20px;
+        }
+        
+        &::after{
+          content: "✓";
+          background: $color-theme;
+          border: 1.5px solid $color-theme;
+          color: #FFF;
+          font-family: 'Material-Design-Iconic-Font';
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          opacity: 0;
+          width: 20px; height: 20px;
+          transform: scale(0);
+        }
+        
+        &:hover {
+          &::before { border-color: $color-theme; }
+        }
+      }
+    }
