@@ -43,6 +43,7 @@ export class ContactComponent implements OnInit {
   testimonials: Testimonial[] = [];
   testimonialToDelete: any;
   testimonialId: string | null = null;
+  isbool: any;
 
   // Constructor
   constructor(
@@ -70,9 +71,9 @@ export class ContactComponent implements OnInit {
       t_name: ["", Validators.required],
       t_role: ["", Validators.required],
       t_date: ["", Validators.required],
-      t_marriage: ["", Validators.required],
+      t_marriage: [""],
       t_membership:["", Validators.required],
-      t_msg: ["", Validators.required],
+      t_msg: [""],
       t_address: ["", Validators.required],
       t_city: ["", Validators.required],
       t_gender: ["", Validators.required],
@@ -97,18 +98,23 @@ export class ContactComponent implements OnInit {
     this.resetcontactForm();
   }
   submitForm() {
+    console.log("add data ", this.contactForm.value)
+    console.log("add data ", this.contactForm.valid)
+
     if(this.contactForm.valid){
+      this.contactForm.value.t_marriage = this.isbool ? this.contactForm.value.t_marriage : '';
       this.testServ.createContacts(this.contactForm.value).subscribe(
         (response) => {
           console.log("success");
           this._fetchData();
+          this.closeContactModal();
+
         },
         (error) => {
           console.error("Error in Contact:", error);
           console.log("error");
         }
       );
-      this.closeContactModal();
     }
     
   }
@@ -335,6 +341,10 @@ export class ContactComponent implements OnInit {
    */
   editcontactForm(data: Testimonial) {
     this.modalService.open(this.sizeableModal, { size: "xl" });
+    this.isbool = (data.t_marriage != '')? true : false;
+    if(this.isbool){
+      this.togglemarried('married')
+    } 
     this.contactForm.patchValue({ ...data });
   }
 
@@ -399,8 +409,6 @@ export class ContactComponent implements OnInit {
     // prepping data for service
     if(this.contactForm.valid){
       let data: Testimonial = this.contactForm.value;
-      data.t_img_file = this.files[0];
-
       if (this.actionType == "Add New") {
         this.testServ.putATestiomonial(data).subscribe((val) => {
           if (val["isSuccess"] == true) {
@@ -469,8 +477,10 @@ export class ContactComponent implements OnInit {
   showmarritalDropdown: boolean = false;
   togglemarried(selection: string): void {
     if (selection === 'married') {
+        this.isbool = true;
         this.showmarritalDropdown = true;
     } else if(selection === 'single'){
+        this.isbool = false;
         this.showmarritalDropdown = false;
     }
   }
