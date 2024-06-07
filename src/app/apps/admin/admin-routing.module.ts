@@ -10,12 +10,8 @@ import { AddTemplateComponent } from './component/add-template/add-template.comp
 import { PunchComponent } from './component/punch/punch-component';
 import { StatsComponent } from './component/logstats/stats-component';
 import { automatTempComponent } from './component/automatic-temp/automat-temp';
-<<<<<<< HEAD
 import { FilterContactComponent } from './component/filter-contact/filter-contact.component';
-import { sendcustomMessage } from './component/sendcustom-message/sendcustom-Message';
-=======
-import { sendcustomMessage } from './component/sendcustom-message/sendcustom-message';
->>>>>>> 53e92a5f9d366895b6797bd68fe143f0f7284e83
+import { SendCustomMessageComponent } from './component/send-custom-message/send-custom-message.component';
 
 const routes: Routes = [
   {
@@ -69,7 +65,7 @@ const routes: Routes = [
   },
   {
     path: "sendcustomMessage",
-    component: sendcustomMessage 
+    component: SendCustomMessageComponent 
   }
 ];
 

@@ -34,10 +34,10 @@ import { StatsComponent } from './component/logstats/stats-component';
 import { automatTempComponent } from './component/automatic-temp/automat-temp';
 import { FilterContactComponent } from './component/filter-contact/filter-contact.component';
 import { FilterContactService } from './service/filter-contact.service';
-import { sendcustomMessage } from './component/sendcustom-message/sendcustom-message';
 import { AddTemplateService } from './service/addTemplate.service';
 import { AutoTempService } from './service/automat.service';
 import { sendCustomService } from './service/sendcustom-message.service';
+import { SendCustomMessageComponent } from './component/send-custom-message/send-custom-message.component';
 
 
 
@@ -54,7 +54,7 @@ import { sendCustomService } from './service/sendcustom-message.service';
         StatsComponent,
         automatTempComponent,
         FilterContactComponent,
-        sendcustomMessage
+        SendCustomMessageComponent
     ],
     imports: [
         CommonModule,

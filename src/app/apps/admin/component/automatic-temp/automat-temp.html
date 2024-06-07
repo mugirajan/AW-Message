@@ -11,7 +11,7 @@
                             <!--Date and Time Form-->
                             <div>
                                 <div style="padding:1rem 0;">
-                                    <h3>Schedule Message:</h3>
+                                    <h3>Schedule Messages:</h3>
                                 </div>                                
                                 <form [formGroup]="scheduledmsg" class="row">
                                  <!--radio button-->
@@ -24,14 +24,14 @@
 
                                     <div class="col-lg-12" style="padding:0.5rem 0;">
                                         <div>
-                                            <label for="temp_name">Enter custom message name:</label>
+                                            <label for="temp_name">Enter Schedule Message Name:</label>
                                             <input type="text" id="temp_name" formControlName="temp_name"  style="height:7vh;width:100%;">
                                         </div> 
                                     </div>
                                     
                                     <div class="col-lg-12" style="padding:0.5rem 0;">
                                         <div>
-                                            <label for="cust_temp">Enter your custom message:</label>
+                                            <label for="cust_temp">Enter Your Custom Message:</label>
                                             <input type="text" id="cust_temp" formControlName="cust_temp" style="height:7vh;width:100%">
                                         </div> 
                                     </div>
@@ -139,8 +139,10 @@
                                         </select>
                                     </div>
                                     </div>
-                                    <div class="col-lg-12 mt-3 d-flex justify-content-center">
-                                        <button class="btn btn-primary dateform" type="submit" (click)="submitdatetimeForm()">Click To Submit</button>
+                                    <div class="my-3">
+                                        <button class="btn btn-primary" (click)="submitdatetimeForm()">
+                                            Schedule
+                                        </button>
                                     </div>
                                 </form>
                                 

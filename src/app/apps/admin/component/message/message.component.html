@@ -1,5 +1,5 @@
 <!-- page title -->
-<app-page-title [breadcrumbItems]="pageTitle" title="Send Single Custom List Message"></app-page-title>
+<app-page-title [breadcrumbItems]="pageTitle" title="Send A Prepared Custom Message To A List"></app-page-title>
 
 <div class="row">
     <div class="col-12">
@@ -16,19 +16,18 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">Send a Prepared Custom Message </h5>
                                     
                                     <div class="row">
                                         <div class="col-6"> 
                                             <div class="mb-3">
         
                                                 <label for="category" class="form-label">
-                                                    Choose the receiver:
+                                                    Choose the Receiver List:
                                                 </label>
         
                                                 <select2 
                                                     [data]="senderResource" 
-                                                    placeholder="select sender List" 
+                                                    placeholder="Select List" 
                                                     id="sender" 
                                                     #mySelect
                                                     class="form-control"
@@ -36,28 +35,12 @@
                                                     formControlName="sender"
                                                 >
                                                 </select2>
-        
-                                                <!-- <ng-template #categoryElseBlock>
-                                                    <h4> {{ senderResource[0].t_role }} </h4>
-                                                </ng-template> -->
                                                 
                                             </div>
                                         </div>
                                         <div class="col-6"> 
                                             <div class="mb-3">
                                                 
-                                            </div>
-                                        </div>
-
-                                        <div class="col-6" style="display: none;"> 
-                                            <div class="mb-3">
-        
-                                                <label for="header_text" class="form-label">
-                                                    Header text:
-                                                </label>
-                                                <input type="text" id="header_text" class="form-control" placeholder="the person name, e.g. Brock Lesner"
-                                                    required formControlName="headerTxt" />
-        
                                             </div>
                                         </div>
 
@@ -65,9 +48,9 @@
                                             <div class="mb-3">
         
                                                 <label for="message" class="form-label">
-                                                    Message body:
+                                                    Custome Message Body :
                                                 </label>
-                                                <input type="textarea" id="message" class="form-control" placeholder="eg: sample message bodu has to be here..."
+                                                <input type="textarea" id="message" class="form-control" placeholder="Hey there..! how you do'in...?"
                                                     required formControlName="message" />
         
                                             </div>
@@ -75,11 +58,9 @@
 
                                         <div class="col-12"> 
                                             <div class="mb-3">
-        
                                                 <button class="btn btn-primary" (click)="sendMessage()">
-                                                    send message
+                                                    Send Message
                                                 </button>
-        
                                             </div>
                                         </div>
 
