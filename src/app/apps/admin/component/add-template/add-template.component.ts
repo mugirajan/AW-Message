@@ -69,14 +69,16 @@ export class AddTemplateComponent implements OnInit {
   }
 
   ScheduleForm() {
-    const formData = this.templateform.value;
-    this.tempServ.createTemp(formData).subscribe((response) => {
-      console.log("Rep:  ", response);
-      this.templateform.reset();
-      this._fetchData();
-    });
+    if(this.templateform.valid){
+      const formData = this.templateform.value;
+      this.tempServ.createTemp(formData).subscribe((response) => {
+        console.log("Rep:  ", response);
+        this.templateform.reset();
+        this._fetchData();
+      });
 
-    this.closeAddTemplateModal();
+      this.closeAddTemplateModal();
+    }
   }
 
   _fetchData(): void {
@@ -233,23 +235,26 @@ export class AddTemplateComponent implements OnInit {
   }
 
   edittemplateform(data: any) {
-    this.resettemplateform();
-    this.modalService.open(this.sizeableModal, { size: "xl" });
+    // if(this.templateform.valid){
 
-    this.templateform.patchValue({
-      id: data.id,
-      temp_name: data.temp_name,
-      temp_body: data.temp_body,
-      active_status: data.active_status ? "true" : "false",
-    });
-    this.tempServ.UpdateTemp(this.templateform.value).subscribe(
-      (response) => {
-        console.log("updated successfully:", response);
-      },
-      (error) => {
-        console.error("Error updating AddTemplate:", error);
-      }
-    );
+      this.resettemplateform();
+      this.modalService.open(this.sizeableModal, { size: "xl" });
+
+      this.templateform.patchValue({
+        id: data.id,
+        temp_name: data.temp_name,
+        temp_body: data.temp_body,
+        active_status: data.active_status ? "true" : "false",
+      });
+      this.tempServ.UpdateTemp(this.templateform.value).subscribe(
+        (response) => {
+          console.log("updated successfully:", response);
+        },
+        (error) => {
+          console.error("Error updating AddTemplate:", error);
+        }
+      );
+    // }
   }
 
   gettemplateformValue(): any {

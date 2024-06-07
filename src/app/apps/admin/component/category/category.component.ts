@@ -21,6 +21,7 @@ import { ToastrService } from "ngx-toastr";
   styleUrls: ["./category.component.scss"],
 })
 export class CategoryComponent implements OnInit {
+
   pageTitle: BreadcrumbItem[] = [];
   records: CategoryMOdel2[] = [];
   columns: Column[] = [];
@@ -83,7 +84,7 @@ export class CategoryComponent implements OnInit {
     this.categoryList = this.fb.group({
       id: [""],
       c_name: ["", Validators.required],
-      c_desc: ["", Validators.required],
+      c_desc: [""],
       c_number: ["", Validators.required],
       c_selected: ["", Validators.required],
       active_status: [false, Validators.required],
@@ -129,29 +130,37 @@ export class CategoryComponent implements OnInit {
     const contact = this.contacts.find((contact) => contact.id === id);
     return contact ? contact.t_role : "";
   }
+  getNameFromId(id:string):string{
+    const contact = this.contacts.find((contact) => contact.id === id);
+    return contact ? contact.t_name : "";
+  }
 
   ListForm() {
-    const formData = this.categoryList.value;
-    formData.selectedOptions = this.selectedOptions;
-    this.catServ.createCatergory(formData).subscribe(
-      (response) => {
-        console.log("List added successfully:", response);
-        this.categoryList.reset();
-        this.selectedOptions = [];
+    console.log("List added successfully:",this.categoryList.valid );
 
-        this.getcontacts();
+    if(this.categoryList.valid){
 
-        // get Categories
-        this._fetchData();
+      const formData = this.categoryList.value;
+      formData.selectedOptions = this.selectedOptions;
+      this.catServ.createCatergory(formData).subscribe(
+        (response) => {
+          console.log("List added successfully:", response);
+          this.categoryList.reset();
+          this.selectedOptions = [];
 
-      },
-      (error) => {
-        this.toastr.error("Error adding List!");
-        console.error("Error adding List:", error);
-      }
-    );
-    this.closeListModal();
+          this.getcontacts();
 
+          // get Categories
+          this._fetchData();
+          this.closeListModal();
+
+        },
+        (error) => {
+          this.toastr.error("Error adding List!");
+          console.error("Error adding List:", error);
+        }
+      );
+    }
   }
 
   _fetchData(): void {
@@ -368,23 +377,26 @@ export class CategoryComponent implements OnInit {
     this.resetCategoryForm();
   }
 
-  editCategoryName(data: Category) {
+  editCategoryName(data: any) {
+    console.log("edit triggered", data.selectedOptions)
     this.modalService.open(this.sizeableModal, { size: "xl" });
+    this.selectedOptions = data.selectedOptions;
     this.categoryList.patchValue({ ...data });
-    
   }
 
   UpdateCategory() {
-    this.catServ.UpdateCategory(this.categoryList.value).subscribe(
-      (response) => {
-        console.log("Update response:", response);
-        this.modalService.dismissAll();
-        this._fetchData()
-      },
-      (error) => {
-        console.error("Error updating contact:", error);
-      }
-    );
+    if(this.categoryList.valid){
+      this.catServ.UpdateCategory(this.categoryList.value).subscribe(
+        (response) => {
+          console.log("Update response:", response);
+          this.modalService.dismissAll();
+          this._fetchData()
+        },
+        (error) => {
+          console.error("Error updating contact:", error);
+        }
+      );
+    }
   }
 
   get form1() {
@@ -394,8 +406,10 @@ export class CategoryComponent implements OnInit {
   // reset form and file
   resetCategoryForm() {
     // files reset
-    this.files = [];
+    this.selectedOptions = [];
     // form reset
     this.categoryList.reset();
   }
+
+  
 }

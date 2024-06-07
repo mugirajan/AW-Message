@@ -80,12 +80,26 @@
                               
                               <div class="mb-3">
                                 <label for="List-option" class="form-label">Selected Contacts<span class="text-danger">*</span></label>
-                                <ul>
-                                  <li *ngFor="let option of selectedOptions">
-                                    {{ getNumberFromId(option) }}
-                                    <button class="can-button" (click)="cancelSelection(option)">X</button>
-                                  </li>
-                                </ul>
+                                
+                                    <table >
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Contact no</th>
+                                            <th>Remove</th>
+                                        </tr>
+                                        <tr *ngFor="let option of selectedOptions">
+                                            <td>
+                                                {{getNameFromId(option)}}
+                                            </td>
+                                            <td>
+                                                {{ getNumberFromId(option) }}
+                                            </td>
+                                            <td>
+                                                <button class="can-button" (click)="cancelSelection(option)">X</button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                
                               </div>
                             
                         
@@ -117,7 +131,7 @@
                 <div class="col-12">
                     <div class="text-center mb-3">
                         <button type="submit" class="btn w-sm btn-success waves-effect waves-light me-1" (click)="ListForm()">Save</button>
-                        <button type="button" class="btn w-sm btn-danger waves-effect" aria-label="Close" (click)="modal.dismiss('Cross click')">Cancel</button>
+                        <button type="button" class="btn w-sm btn-danger waves-effect" aria-label="Close" (click)="closeListModal()">Cancel</button>
                     </div>
                 </div> <!-- end col -->
             </div>

@@ -97,17 +97,20 @@ export class ContactComponent implements OnInit {
     this.resetcontactForm();
   }
   submitForm() {
-    this.testServ.createContacts(this.contactForm.value).subscribe(
-      (response) => {
-        console.log("success");
-        this._fetchData();
-      },
-      (error) => {
-        console.error("Error in Contact:", error);
-        console.log("error");
-      }
-    );
-    this.closeContactModal();
+    if(this.contactForm.valid){
+      this.testServ.createContacts(this.contactForm.value).subscribe(
+        (response) => {
+          console.log("success");
+          this._fetchData();
+        },
+        (error) => {
+          console.error("Error in Contact:", error);
+          console.log("error");
+        }
+      );
+      this.closeContactModal();
+    }
+    
   }
 
   _fetchData(): void {
@@ -336,15 +339,18 @@ export class ContactComponent implements OnInit {
   }
 
   updateContact() {
-    this.testServ.updateContact(this.contactForm.value).subscribe(
-      (response) => {
-        this.toastr.success("update successfully!");
-        this._fetchData();
-      },
-      (error) => {
-        this.toastr.error("error");
-      }
-    );
+    if(this.contactForm.valid){
+      
+      this.testServ.updateContact(this.contactForm.value).subscribe(
+        (response) => {
+          this.toastr.success("update successfully!");
+          this._fetchData();
+        },
+        (error) => {
+          this.toastr.error("error");
+        }
+      );
+    }
   }
 
   //  convenience getter for easy access to form fields
@@ -389,54 +395,56 @@ export class ContactComponent implements OnInit {
 
   //  gets the form details
   submitcontactForm(modal: TemplateRef<NgbModal>) {
+    console.log("submit form")
     // prepping data for service
-    let data: Testimonial = this.contactForm.value;
-    data.t_img_file = this.files[0];
+    if(this.contactForm.valid){
+      let data: Testimonial = this.contactForm.value;
+      data.t_img_file = this.files[0];
 
-    if (this.actionType == "Add New") {
-      this.testServ.putATestiomonial(data).subscribe((val) => {
-        if (val["isSuccess"] == true) {
-          this.notifyServ.addNotification({
-            text: "Contact Created Successfully",
-            level: "success",
-            autohide: true,
-          });
-        } else {
-          this.notifyServ.addNotification({
-            text: "Error while creating Contact",
-            level: "error",
-            autohide: true,
-          });
-        }
-        this._fetchData();
-      });
-      this.resetcontactForm();
-      this.closeContactModal();
-    } else if (this.actionType == "Edit") {
-      this.toastr.success("edited sucessful!");
+      if (this.actionType == "Add New") {
+        this.testServ.putATestiomonial(data).subscribe((val) => {
+          if (val["isSuccess"] == true) {
+            this.notifyServ.addNotification({
+              text: "Contact Created Successfully",
+              level: "success",
+              autohide: true,
+            });
+          } else {
+            this.notifyServ.addNotification({
+              text: "Error while creating Contact",
+              level: "error",
+              autohide: true,
+            });
+          }
+          this._fetchData();
+        });
+        this.resetcontactForm();
+        this.closeContactModal();
+      } else if (this.actionType == "Edit") {
+        this.toastr.success("edited sucessful!");
 
-      this.testServ.updateATestimonial(data).subscribe((val) => {
-        this.toastr.success("Contact added successfully!");
+        this.testServ.updateATestimonial(data).subscribe((val) => {
+          this.toastr.success("Contact added successfully!");
 
-        if (val["isSuccess"] == true) {
-          this.notifyServ.addNotification({
-            text: "Contact Update Successfully",
-            level: "success",
-            autohide: true,
-          });
-        } else {
-          this.notifyServ.addNotification({
-            text: "Error while Updating Contact",
-            level: "error",
-            autohide: true,
-          });
-        }
-        this._fetchData();
-      });
-      this.resetcontactForm();
-      this.closeContactModal();
+          if (val["isSuccess"] == true) {
+            this.notifyServ.addNotification({
+              text: "Contact Update Successfully",
+              level: "success",
+              autohide: true,
+            });
+          } else {
+            this.notifyServ.addNotification({
+              text: "Error while Updating Contact",
+              level: "error",
+              autohide: true,
+            });
+          }
+          this._fetchData();
+        });
+        this.resetcontactForm();
+        this.closeContactModal();
+      }
     }
-
     // this._fetchData();
   }
 
