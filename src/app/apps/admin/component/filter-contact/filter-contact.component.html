@@ -1,3 +1,6 @@
+
+<app-page-title title="Contacts Exipring Within 2 Months From Today"></app-page-title>
+
 <div class="row">
     <div class="col-12">
         
@@ -24,6 +27,7 @@
                     [hasRowSelection]="false" 
                     [isSearchable]="true"
                     [isSortable]="false" 
+                    (search)="searchData($event)"
                     [hasActionColumn]="true"
                     (actionTrigger)="actionTriggerd($event)"
                     tableClasses="table-centered"

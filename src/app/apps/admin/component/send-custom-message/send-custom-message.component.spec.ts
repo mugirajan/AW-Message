@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { sendcustomMessage } from './sendcustom-Message';
+import { SendCustomMessageComponent } from './send-custom-message.component';
 
-describe('ProductComponent', () => {
-  let component:sendcustomMessage;
-  let fixture: ComponentFixture<sendcustomMessage>;
+describe('SendCustomMessageComponent', () => {
+  let component: SendCustomMessageComponent;
+  let fixture: ComponentFixture<SendCustomMessageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ sendcustomMessage ]
+      declarations: [ SendCustomMessageComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(sendcustomMessage);
+    fixture = TestBed.createComponent(SendCustomMessageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

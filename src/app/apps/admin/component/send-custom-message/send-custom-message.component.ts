@@ -19,12 +19,13 @@ import { Observable } from "rxjs";
 
 import { ToastrService } from "ngx-toastr";
 
+
 @Component({
-  selector: "sendcustom-Message",
-  templateUrl: "./sendcustom-Message.html",
-  styleUrls: ["./sendcustom-Message.scss"],
+  selector: 'app-send-custom-message',
+  templateUrl: './send-custom-message.component.html',
+  styleUrls: ['./send-custom-message.component.scss']
 })
-export class sendcustomMessage implements OnInit {
+export class SendCustomMessageComponent implements OnInit {
   messageForm!: FormGroup;
   sendCustom!: FormGroup;
   storedData: sendCustom[] = [];

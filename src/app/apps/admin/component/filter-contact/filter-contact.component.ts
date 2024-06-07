@@ -1,6 +1,5 @@
 import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
 import { Column } from "src/app/shared/advanced-table/advanced-table.component";
-import { BreadcrumbItem } from "src/app/shared/page-title/page-title.model";
 import { TESTIMONAILLIST } from "../../../ecommerce/shared/data";
 import { DomSanitizer } from "@angular/platform-browser";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
@@ -8,9 +7,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { actionEvent } from "../../models";
 import { Testimonial, TestimonialModel2 } from "../../models/testimonial.model";
 import { ContactService } from "../../service/testimonial.service";
-import { Subscription } from "rxjs";
 import { NotificationService } from "src/app/layout/shared/service/notification.service";
-import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: 'app-filter-contact',
@@ -18,7 +15,7 @@ import { ToastrService } from "ngx-toastr";
   styleUrls: ['./filter-contact.component.scss']
 })
 export class FilterContactComponent implements OnInit {
-  pageTitle: BreadcrumbItem[] = [];
+  
   records: TestimonialModel2[] = [];
   columns: Column[] = [];
   loading: boolean = false;
@@ -27,22 +24,10 @@ export class FilterContactComponent implements OnInit {
   contactForm!: FormGroup;
   files: File[] = [];
   actionType: string = "Add New";
-  val2!: Testimonial;
-  testimonialSubscription!: Subscription;
-  testimoialDeleteID: any;
-  testimonial_img: any;
 
   @ViewChild("advancedTable") advancedTable: any;
   @ViewChild("sizeableModal")
   sizeableModal!: TemplateRef<NgbModal>;
-  requestData: any[] = [];
-  @ViewChild("positionModal")
-  positionModal!: TemplateRef<NgbModal>;
-  contactData: any = {};
-
-  testimonials: Testimonial[] = [];
-  testimonialToDelete: any;
-  testimonialId: string | null = null;
 
   // Constructor
   constructor(
@@ -55,14 +40,8 @@ export class FilterContactComponent implements OnInit {
 
   // OnInit
   ngOnInit(): void {
-    this.pageTitle = [
-      { label: "", path: "/apps/" },
-      { label: "", path: "/", active: true },
-    ];
-
-    this._fetchData();
-
     this.initTableCofig();
+    this._fetchData();
 
     this.contactForm = this.fb.group({
       id: [""],
@@ -82,35 +61,27 @@ export class FilterContactComponent implements OnInit {
     });
 
     {{ this.contactForm.get('t_name.')?.value }}
+  }
 
+  _fetchData() {
     this.testServ.getContacts().subscribe(
       (data: any) => {
         this.loading = false;
-        // data.forEach((contact: any) => {
-        //     this.testimonials = data;
-        // })
         let d = new Date();
         d.setMonth(d.getMonth() - 2);
-        this.testimonials = data.filter((a: any) => { return a.t_endsub > d.toLocaleDateString } )
-        this.testimonials = data
+        this.records = data.filter((a: any) => { 
+          return new Date(a.t_endsub) > new Date(d);
+        })
       }
     );
-  }
-
-  _fetchData(): void {
-    this.testServ.getContacts().subscribe((data: any) => {
-      if (data.length > 0) {
-        this.records = data;
-      }
-    });
   }
 
   initTableCofig(): void {
     this.columns = [
       {
-        name: "t_id",
-        label: "Contact ID",
-        formatter: this.contactsIDFormatter.bind(this),
+        name: "t_membership",
+        label: "Membership ID",
+        formatter: (order: Testimonial) => order.t_membership,
       },
       {
         name: "t_name",
@@ -126,7 +97,7 @@ export class FilterContactComponent implements OnInit {
 
       {
         name: "t_date",
-        label: "Date",
+        label: "Membership Date",
         formatter: (order: Testimonial) => order.t_date,
       },
       {
@@ -135,12 +106,6 @@ export class FilterContactComponent implements OnInit {
         formatter: this.contactsActiveStatusFormatter.bind(this),
       },
     ];
-  }
-
-  contactsIDFormatter(data: Testimonial): any {
-    return this.sanitizer.bypassSecurityTrustHtml(
-      `<a href="javascript:void(0)" class="order text-body fw-bold" id="${data.id}">#${data.id}</a> `
-    );
   }
 
   contactsActiveStatusFormatter(data: Testimonial): any {
