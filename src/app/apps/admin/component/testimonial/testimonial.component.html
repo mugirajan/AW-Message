@@ -150,10 +150,10 @@
                             <div class="mb-3">
                                 <div class="input-type-checkbox">
                                     <label for="marriage_date" class="form-label">Marital Status<span class="text-danger">*</span></label><br>
-                                        <input type="radio" name="radio" (change)="togglemarried('married')">  <label class="container-radio">Married
+                                        <input type="radio" name="radio" (change)="togglemarried('married')" [checked]="isbool == true">  <label class="container-radio">Married
                                         <span class="checkmark"></span>
                                     </label>
-                                        <input type="radio" name="radio" (change)="togglemarried('single')"> <label class="container-radio">Single
+                                        <input type="radio" name="radio" (change)="togglemarried('single')" [checked]="isbool == false"> <label class="container-radio">Single
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
