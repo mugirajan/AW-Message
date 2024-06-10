@@ -1,192 +1,183 @@
-<div class="hero_sec d-flex justify-content-center align-items-center" style="margin:0 0 5rem 0;">
-    <div class="container  p-3" >
-        <div class="row">
-            <div class="col-lg-7 col-md-6">
-                <div class="row">
-                   
-                    <div class="col-lg-12 col-md-12">
-                        <div class="card bg-white rounded-4 mb-lg-0 mb-3" style="padding:1rem 4rem 2rem 4rem;"
-                            data-tor="inview:bg(primary) , hover:bg(danger)">
-                           
-                            <!--Date and Time Form-->
-                            <div>
-                                <div style="padding:1rem 0;">
-                                    <h3>Schedule Messages:</h3>
-                                </div>                                
-                                <form [formGroup]="scheduledmsg" class="row">
-                                 <!--radio button-->
-                                    <!-- <div class="custom_radio">
-                                        <h4>Choose Template:</h4>
-                                        <div class="d-flex">
-                                            <input type="radio" value="true"  formControlName="is_temp" id="customRadio" name="selectType" (change)="toggledown('custom')" ><label for="customRadio" >Custom</label>
-                                        </div>
-                                    </div> -->
+<app-page-title  title="Schedule A New Message"></app-page-title>
 
-                                    <div class="col-lg-12" style="padding:0.5rem 0;">
-                                        <div>
-                                            <label for="temp_name">Enter Schedule Message Name:</label>
-                                            <input type="text" id="temp_name" formControlName="temp_name"  style="height:6vh;width:100%;">
-                                        </div> 
+<div class="row">
+    <div class="col-12">
+        
+        <div class="card">
+            <div class="card-body">
+                <!--Date and Time Form-->
+                <div>                         
+                    <form [formGroup]="scheduledmsg" class="row">
+                        <!--radio button-->
+                        <!-- <div class="custom_radio">
+                            <h4>Choose Template:</h4>
+                            <div class="d-flex">
+                                <input type="radio" value="true"  formControlName="is_temp" id="customRadio" name="selectType" (change)="toggledown('custom')" ><label for="customRadio" >Custom</label>
+                            </div>
+                        </div> -->
+
+                        <div class="col-lg-12" style="padding:0.5rem 0;">
+                            <div>
+                                <label for="temp_name">Enter Schedule Message Name:</label>
+                                <input type="text" id="temp_name" formControlName="temp_name"  style="height:6vh;width:100%;">
+                            </div> 
+                        </div>
+                        
+                        <div class="col-lg-12" style="padding:0.5rem 0;">
+                            <div>
+                                <label for="cust_temp">Enter Your Custom Message:</label>
+                                <input type="text" id="cust_temp" formControlName="cust_temp" style="height:6vh;width:100%">
+                            </div> 
+                        </div>
+                        <div class="col-lg-12" style="padding:0.5rem 0;">
+                            <label for="temp_name">Send Message To:</label>
+                            <div class="d-flex gap-4 mt-2">
+                                <div class="burmanRadio">
+                                    <input type="radio" class="burmanRadio__input" id="radio-1" name="burmanRadio"  (change)="toggleDropdown('contact')">
+                                    <label for="radio-1" class="burmanRadio__label">Contact</label>
                                     </div>
                                     
-                                    <div class="col-lg-12" style="padding:0.5rem 0;">
-                                        <div>
-                                            <label for="cust_temp">Enter Your Custom Message:</label>
-                                            <input type="text" id="cust_temp" formControlName="cust_temp" style="height:6vh;width:100%">
-                                        </div> 
-                                    </div>
-                                    <div class="d-flex gap-4 mt-3">
-                                        <div class="burmanRadio">
-                                            <input type="radio" class="burmanRadio__input" id="radio-1" name="burmanRadio"  (change)="toggleDropdown('contact')">
-                                            <label for="radio-1" class="burmanRadio__label">Contact</label>
-                                          </div>
-                                          
-                                          <div class="burmanRadio">
-                                            <input type="radio" class="burmanRadio__input" id="radio-2" name="burmanRadio" (change)="toggleDropdown('list')">
-                                            <label for="radio-2" class="burmanRadio__label">List</label>
-                                          </div> 
-                                    </div>
-                                    <div class="col-lg-12" style="padding:0.5rem 0;" *ngIf="showListDropdown">
-                                        <label for="category" class="form-label">
-                                            Choose list array:
-                                        </label>
-
-                                        <select2 
-                                            [data]="senderResourcelistarray" 
-                                            placeholder="select sender LIST" 
-                                            id="sender" 
-                                            #mySelect
-                                            class="form-control"
-                                            (update)='onSenderSelectedarray($event)'
-                                            formControlName="cont_list"
-                                        >
-                                        </select2>
-                                    </div>
-
-                                    <div class="col-lg-12" style="padding:0.5rem 0;" *ngIf="showContactDropdown">
-                                        <label for="category" class="form-label">
-                                            Choose Contact array:
-                                        </label>
-
-                                        <select2 
-                                            [data]="senderResourcecontactarray" 
-                                            placeholder="select sender Contact" 
-                                            id="sender" 
-                                            #mySelect
-                                            class="form-control"
-                                            (update)='onSenderSelectedcontactarray($event)'
-                                            formControlName="cont_list"
-                                        >
-                                        </select2>
-                                    </div>
-                                    <div class="col-lg-12 mt-2" style="padding:0.5rem 0;">
-                                        <div>
-                                            <label for="date">Date:</label>
-                                            <input type="date" id="date" formControlName="date"  style="height:6vh;width:100%;padding: 0px 20px">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 mt-2" style="padding:0.5rem 0;">
-                                    <div>
-                                        <label for="time">Time:</label>
-                                        <select name="time" id="time" formControlName="time"  style="height:6vh;width:100%;padding: 0px 20px">
-                                            <option value="00:00">00:00</option>
-                                            <option value="00:30">00:30</option>
-                                            <option value="01:00">01:00</option>
-                                            <option value="01:30">01:30</option>
-                                            <option value="02:00">02:00</option>
-                                            <option value="02:30">02:30</option>
-                                            <option value="03:00">03:00</option>
-                                            <option value="03:30">03:30</option>
-                                            <option value="04:00">04:00</option>
-                                            <option value="04:30">04:30</option>
-                                            <option value="05:00">05:00</option>
-                                            <option value="05:30">05:30</option>
-                                            <option value="06:00">06:00</option>
-                                            <option value="06:30">06:30</option>
-                                            <option value="07:00">07:00</option>
-                                            <option value="07:30">07:30</option>
-                                            <option value="08:00">08:00</option>
-                                            <option value="08:30">08:30</option>
-                                            <option value="09:00">09:00</option>
-                                            <option value="09:30">09:30</option>
-                                            <option value="10:00">10:00</option>
-                                            <option value="10:30">10:30</option>
-                                            <option value="11:00">11:00</option>
-                                            <option value="11:30">11:30</option>
-                                            <option value="12:00">12:00</option>
-                                            <option value="12:30">12:30</option>
-                                            <option value="13:00">13:00</option>
-                                            <option value="13:30">13:30</option>
-                                            <option value="14:00">14:00</option>
-                                            <option value="14:30">14:30</option>
-                                            <option value="15:00">15:00</option>
-                                            <option value="15:30">15:30</option>
-                                            <option value="16:00">16:00</option>
-                                            <option value="16:30">16:30</option>
-                                            <option value="17:00">17:00</option>
-                                            <option value="17:30">17:30</option>
-                                            <option value="18:00">18:00</option>
-                                            <option value="18:30">18:30</option>
-                                            <option value="19:00">19:00</option>
-                                            <option value="19:30">19:30</option>
-                                            <option value="20:00">20:00</option>
-                                            <option value="20:30">20:30</option>
-                                            <option value="21:00">21:00</option>
-                                            <option value="21:30">21:30</option>
-                                            <option value="22:00">22:00</option>
-                                            <option value="22:30">22:30</option>
-                                            <option value="23:00">23:00</option>
-                                            <option value="23:30">23:30</option>
-                                        </select>
-                                    </div>
-                                    </div>
-                                    <div class="my-3">
-                                        <button class="btn btn-primary" (click)="submitdatetimeForm()">
-                                            Schedule
-                                        </button>
-                                    </div>
-                                </form>
-                                
-                              
+                                    <div class="burmanRadio">
+                                    <input type="radio" class="burmanRadio__input" id="radio-2" name="burmanRadio" (change)="toggleDropdown('list')">
+                                    <label for="radio-2" class="burmanRadio__label">List</label>
+                                    </div> 
                             </div>
-                              
                         </div>
-                    </div>
-                    
-                </div>
+                        <div class="col-lg-12" style="padding:0.5rem 0;" *ngIf="showListDropdown">
+                            <label for="category" class="form-label">
+                                Choose list array:
+                            </label>
+
+                            <select2 
+                                [data]="senderResourcelistarray" 
+                                placeholder="select sender LIST" 
+                                id="sender" 
+                                #mySelect
+                                class="form-control"
+                                (update)='onSenderSelectedarray($event)'
+                                formControlName="cont_list"
+                            >
+                            </select2>
+                        </div>
+
+                        <div class="col-lg-12" style="padding:0.5rem 0;" *ngIf="showContactDropdown">
+                            <label for="category" class="form-label">
+                                Choose Contact array:
+                            </label>
+
+                            <select2 
+                                [data]="senderResourcecontactarray" 
+                                placeholder="select sender Contact" 
+                                id="sender" 
+                                #mySelect
+                                class="form-control"
+                                (update)='onSenderSelectedcontactarray($event)'
+                                formControlName="cont_list"
+                            >
+                            </select2>
+                        </div>
+                        <div class="col-lg-12 mt-2" style="padding:0.5rem 0;">
+                            <div>
+                                <label for="date">Date:</label>
+                                <input type="date" id="date" formControlName="date"  style="height:6vh;width:100%;padding: 0px 20px">
+                            </div>
+                        </div>
+                        <div class="col-lg-12 mt-2" style="padding:0.5rem 0;">
+                        <div>
+                            <label for="time">Time:</label>
+                            <select name="time" id="time" formControlName="time"  style="height:6vh;width:100%;padding: 0px 20px">
+                                <option value="" hidden selected> Select The Exact Time To Send Message </option>
+                                <option value="00:00">00:00</option>
+                                <option value="00:30">00:30</option>
+                                <option value="01:00">01:00</option>
+                                <option value="01:30">01:30</option>
+                                <option value="02:00">02:00</option>
+                                <option value="02:30">02:30</option>
+                                <option value="03:00">03:00</option>
+                                <option value="03:30">03:30</option>
+                                <option value="04:00">04:00</option>
+                                <option value="04:30">04:30</option>
+                                <option value="05:00">05:00</option>
+                                <option value="05:30">05:30</option>
+                                <option value="06:00">06:00</option>
+                                <option value="06:30">06:30</option>
+                                <option value="07:00">07:00</option>
+                                <option value="07:30">07:30</option>
+                                <option value="08:00">08:00</option>
+                                <option value="08:30">08:30</option>
+                                <option value="09:00">09:00</option>
+                                <option value="09:30">09:30</option>
+                                <option value="10:00">10:00</option>
+                                <option value="10:30">10:30</option>
+                                <option value="11:00">11:00</option>
+                                <option value="11:30">11:30</option>
+                                <option value="12:00">12:00</option>
+                                <option value="12:30">12:30</option>
+                                <option value="13:00">13:00</option>
+                                <option value="13:30">13:30</option>
+                                <option value="14:00">14:00</option>
+                                <option value="14:30">14:30</option>
+                                <option value="15:00">15:00</option>
+                                <option value="15:30">15:30</option>
+                                <option value="16:00">16:00</option>
+                                <option value="16:30">16:30</option>
+                                <option value="17:00">17:00</option>
+                                <option value="17:30">17:30</option>
+                                <option value="18:00">18:00</option>
+                                <option value="18:30">18:30</option>
+                                <option value="19:00">19:00</option>
+                                <option value="19:30">19:30</option>
+                                <option value="20:00">20:00</option>
+                                <option value="20:30">20:30</option>
+                                <option value="21:00">21:00</option>
+                                <option value="21:30">21:30</option>
+                                <option value="22:00">22:00</option>
+                                <option value="22:30">22:30</option>
+                                <option value="23:00">23:00</option>
+                                <option value="23:30">23:30</option>
+                            </select>
+                        </div>
+                        </div>
+                        <div class="my-3">
+                            <button class="btn btn-primary" (click)="submitdatetimeForm()">
+                                Schedule
+                            </button>
+                        </div>
+                    </form>
+                </div>    
             </div>
-            
         </div>
-        <div class="row mt-4">
-            <div class="col-lg-12">
-                <div class="card bg-white rounded-4 mb-lg-0 mb-3" style="padding:1rem 4rem;"
-                    data-tor="inview:bg(primary) , hover:bg(danger)">
-                    <div style="padding:1rem 0;">
-                        <h3>Schedule Details:-</h3>
-                    </div>
-                    <table class="table">
-                        <thead class="thead-light">
-                        <tr>
-                            <th>Template Name</th>
-                            <th>Custom Template</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let item of storedData">
-                            <td>{{item.temp_name}}</td>
-                            <td>{{item.cust_temp}}</td>
-                            <td>{{item.date}}</td>
-                            <td>{{item.time}}</td>
-                            <td><button class="delete-button" (click)="deleteAutoTemp(item.id)"><i class="fas fa-trash"></i></button></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+                    
+    </div>
+            
+    <div class="mt-2 col-12">
+        <div class="card bg-white rounded-4 mb-lg-0 mb-3" style="padding:1rem 1rem;"
+            data-tor="inview:bg(primary) , hover:bg(danger)">
+            <div style="padding:1rem 0;">
+                <h3> Scheduled Details: </h3>
             </div>
+            <table class="table">
+                <thead class="thead-light">
+                <tr>
+                    <th>Template Name</th>
+                    <th>Custom Template</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of storedData">
+                    <td>{{item.temp_name}}</td>
+                    <td>{{item.cust_temp}}</td>
+                    <td>{{item.date}}</td>
+                    <td>{{item.time}}</td>
+                    <td><button class="delete-button" (click)="deleteAutoTemp(item.id)"><i class="fas fa-trash"></i></button></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
+    
 </div>
 <style>
   

@@ -55,21 +55,9 @@
                         <img [src]="loggedInUser.avatar" alt="user-image" class="rounded-circle">
                     </span>
                     <span class="pro-user-name ms-1">
-                        {{loggedInUser.firstName}} <i class="mdi mdi-chevron-down"></i>
+                        {{loggedInUser.firstName}}
                     </span>
-
                 </a>
-                <div ngbDropdownMenu aria-labelledby="profileMenuDropdown" class="dropdown-menu-end profile-dropdown">
-                    <!-- item -->
-                    <div ngbDropdownItem class="dropdown-header noti-title">
-                        <h6 class="text-overflow m-0">Welcome !</h6>
-                    </div>
-                    <!-- item -->
-                    <a *ngFor="let option of profileOptions;" class="notify-item" ngbDropdownItem>
-                        <i class="{{option.icon}} me-1"></i>
-                        <span style="cursor: pointer;" [routerLink]="option.redirectTo">{{option.label}}</span>
-                    </a>
-                </div>
             </li>
 
         </ul>

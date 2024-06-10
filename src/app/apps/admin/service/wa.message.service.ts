@@ -22,7 +22,7 @@ export class WAMesssagingService {
 
   /* Birthday wishes */
   sendWACustomTemplateMessage(to: string, headerTxt: string, msg: string) {
-    console.log("Parameter got:", to, headerTxt, msg);
+    // console.log("Parameter got:", to, headerTxt, msg);
     const headers = {
       "Content-Type": "application/json",
       Authorization: env.WAEnds.token,
@@ -64,7 +64,7 @@ export class WAMesssagingService {
 
   /* Anniversary */
   sendWAanniversaryTemplate(to: string, headerTxt: string, msg: string) {
-    console.log("Parameter got:", to, headerTxt, msg);
+    // console.log("Parameter got:", to, headerTxt, msg);
     const headers = {
       "Content-Type": "application/json",
       Authorization: `${env.WAEnds.token}`,
@@ -106,7 +106,7 @@ export class WAMesssagingService {
 
   /* subscription_fusion*/
   subscriptionFusionTemplate(to: string, headerTxt: string, msg: string) {
-    console.log("Parameter got:", to, headerTxt, msg);
+    // console.log("Parameter got:", to, headerTxt, msg);
     const headers = {
       "Content-Type": "application/json",
       Authorization: `${env.WAEnds.token}`,
@@ -147,7 +147,7 @@ export class WAMesssagingService {
   }
 
   customTemplate(to: string, headerTxt: string, msg: string) {
-    console.log("Parameter recieved:", to, headerTxt);
+    // console.log("Parameter recieved:", to, headerTxt);
     const headers = {
       "Accept" : "application/json",
       "Content-Type": "application/json",

@@ -1,102 +1,98 @@
+<app-page-title  title="Send Custom Message"></app-page-title>
 
-<div class="hero_sec d-flex justify-content-center align-items-center" style="margin:0 0 5rem 0;">
-    <div class="container  p-3" >
-        <div class="row">
-            <div class="col-lg-7 col-md-6">
-                <div class="row">
-                   
-                    <div class="col-lg-12 col-md-12">
-                        <div class="card bg-white rounded-4 mb-lg-0 mb-3" style="padding:1rem 4rem 2rem 4rem;"
-                            data-tor="inview:bg(primary) , hover:bg(danger)">
+<div class="row">
+    <div class="col-12">
+        
+        <div class="card">
+            <div class="card-body">
                            
-                            <!--Date and Time Form-->
-                            <div>
-                                <div style="padding:1rem 0;">
-                                    <h3>Send Custom Message:</h3>
-                                </div>                                
-                                <form [formGroup]="sendCustom" class="row">
-                                    <!--Radio button start-->
-                                        <div class="d-flex gap-4 mt-3">                                          
-                                          <div class="burmanRadio">
-                                            <input type="radio" class="burmanRadio__input" id="radio-1" name="burmanRadio"  (change)="toggleDropdown('contact')">
-                                            <label for="radio-1" class="burmanRadio__label">Contact</label>
-                                          </div>
-                                          
-                                          <div class="burmanRadio">
-                                            <input type="radio" class="burmanRadio__input" id="radio-2" name="burmanRadio" (change)="toggleDropdown('list')">
-                                            <label for="radio-2" class="burmanRadio__label">List</label>
-                                          </div>                                          
-                                        </div>
-                                        
-                                    <!--Radio button end-->
-
-                                    <div class="col-lg-12" style="padding:0.5rem 0;" *ngIf="showListDropdown">
-                                        <label for="category" class="form-label">
-                                            Choose List:
-                                        </label>
-
-                                        <select2 
-                                            [data]="senderResourcelistarray" 
-                                            placeholder="select sender LIST" 
-                                            id="sender" 
-                                            #mySelect
-                                            class="form-control"
-                                            (update)='onSenderSelectedarray($event)'
-                                            formControlName="cont_list"
-                                        >
-                                        </select2>
-                                    </div>
-
-                                    <div class="col-lg-12" style="padding:0.5rem 0;" *ngIf="showContactDropdown">
-                                        <label for="category" class="form-label">
-                                            Choose Contact:
-                                        </label>
-
-                                        <select2 
-                                            [data]="senderResourcecontactarray" 
-                                            placeholder="select sender Contact" 
-                                            id="sender" 
-                                            #mySelect
-                                            class="form-control"
-                                            (update)='onSenderSelectedcontactarray($event)'
-                                            formControlName="cont_list"
-                                        >
-                                        </select2>
-                                    </div>
-
-                                    <div class="col-lg-12 mt-2" style="padding:0.5rem 0;">
-                                        <label for="category" class="form-label">
-                                            Custom Template Name:
-                                        </label>
-                                        <select2 
-                                            [data]="senderResourceMessage" 
-                                            placeholder="Select Custom Template" 
-                                            id="sender" 
-                                            #mySelect
-                                            class="form-control"
-                                            (update)='onSenderCustomMessage($event)'
-                                            formControlName="custom_template"
-                                        >
-                                        </select2>
-                                    </div>
-                                    
-                                    <div class="col-12"> 
-                                        <div class="my-2">
-                                            <button class="btn btn-primary" type="submit" (click)="sendMessagelist()">
-                                                Send Message
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>                                
+                <!--Date and Time Form-->
+                <div>                               
+                    <form [formGroup]="sendCustom" class="row">
+                        
+                        <!--Radio button start -->
+                        <div class="col-lg-12 mt-2" style="padding:0.5rem 0;">
+                            <label for="category" class="form-label">
+                                Send Message To:
+                            </label>
+                            <div class="d-flex gap-4 mt-2">
+                                <div class="burmanRadio">
+                                <input type="radio" class="burmanRadio__input" id="radio-1" name="burmanRadio"  (change)="toggleDropdown('contact')">
+                                <label for="radio-1" class="burmanRadio__label">Contact</label>
+                                </div>
+                                
+                                <div class="burmanRadio">
+                                <input type="radio" class="burmanRadio__input" id="radio-2" name="burmanRadio" (change)="toggleDropdown('list')">
+                                <label for="radio-2" class="burmanRadio__label">List</label>
+                                </div>                                          
                             </div>
                         </div>
-                    </div>
+                        <!--Radio button end-->
+
+                        <div class="col-lg-12" style="padding:0.5rem 0;" *ngIf="showListDropdown">
+                            <label for="category" class="form-label">
+                                Choose List:
+                            </label>
+
+                            <select2 
+                                [data]="senderResourcelistarray" 
+                                placeholder="select sender list" 
+                                id="sender" 
+                                #mySelect
+                                class="form-control"
+                                (update)='onSenderSelectedarray($event)'
+                                formControlName="cont_list"
+                            >
+                            </select2>
+                        </div>
+
+                        <div class="col-lg-12" style="padding:0.5rem 0;" *ngIf="showContactDropdown">
+                            <label for="category" class="form-label">
+                                Choose Contact:
+                            </label>
+
+                            <select2 
+                                [data]="senderResourcecontactarray" 
+                                placeholder="select sender contact" 
+                                id="sender" 
+                                #mySelect
+                                class="form-control"
+                                (update)='onSenderSelectedcontactarray($event)'
+                                formControlName="cont_list"
+                            >
+                            </select2>
+                        </div>
+
+                        <div class="col-lg-12 mt-2" style="padding:0.5rem 0;">
+                            <label for="category" class="form-label">
+                                Custom Template Name:
+                            </label>
+                            <select2 
+                                [data]="senderResourceMessage" 
+                                placeholder="Select Custom Template" 
+                                id="sender" 
+                                #mySelect
+                                class="form-control"
+                                (update)='onSenderCustomMessage($event)'
+                                formControlName="custom_template"
+                            >
+                            </select2>
+                        </div>
+                        
+                        <div class="col-12"> 
+                            <div class="my-2">
+                                <button class="btn btn-primary" type="submit" (click)="sendMessagelist()">
+                                    Send Message
+                                </button>
+                            </div>
+                        </div>
+                    </form>                                
                 </div>
             </div>
-
         </div>
     </div>
 </div>
+
 <style>
   
    select{
