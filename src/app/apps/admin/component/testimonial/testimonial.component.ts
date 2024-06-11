@@ -43,7 +43,7 @@ export class ContactComponent implements OnInit {
   testimonials: Testimonial[] = [];
   testimonialToDelete: any;
   testimonialId: string | null = null;
-  isbool: any;
+  isbool: any ;
 
   // Constructor
   constructor(
@@ -71,7 +71,7 @@ export class ContactComponent implements OnInit {
       t_name: ["", Validators.required],
       t_role: ["", Validators.required],
       t_date: ["", Validators.required],
-      t_marriage: [""],
+      t_marriage: [],
       t_membership:["", Validators.required],
       t_msg: [""],
       t_address: ["", Validators.required],
@@ -100,9 +100,7 @@ export class ContactComponent implements OnInit {
   submitForm() {
     console.log("add data ", this.contactForm.value)
     console.log("add data ", this.contactForm.valid)
-
     if(this.contactForm.valid){
-      this.contactForm.value.t_marriage = this.isbool ? this.contactForm.value.t_marriage : '';
       this.testServ.createContacts(this.contactForm.value).subscribe(
         (response) => {
           console.log("success");
@@ -298,30 +296,11 @@ export class ContactComponent implements OnInit {
   }
 
   /**
-   * change order status group
-   * @param OrderStatusGroup order status
-   */
-  changeStatusGroup(OrderStatusGroup: string): void {
-    this.loading = true;
-    let updatedData = TESTIMONAILLIST;
-    //  filter
-    updatedData =
-      OrderStatusGroup === "All"
-        ? TESTIMONAILLIST
-        : [...TESTIMONAILLIST].filter((o) =>
-            o.active_status?.includes(OrderStatusGroup)
-          );
-    this.records = updatedData;
-    setTimeout(() => {
-      this.loading = false;
-    }, 400);
-  }
-
-  /**
    * Modal methods
    */
 
   openAddContactModal(content: TemplateRef<NgbModal>): void {
+    this.isbool = null;
     this.actionType = "Add New";
     this.resetcontactForm();
     this.openconModal(content);
@@ -340,11 +319,14 @@ export class ContactComponent implements OnInit {
    * Edit form
    */
   editcontactForm(data: Testimonial) {
+    console.log(data);
+    if(data.t_marriage == null){
+      this.togglemarried('single');
+    }
+    else{
+      this.togglemarried('married');
+    }
     this.modalService.open(this.sizeableModal, { size: "xl" });
-    this.isbool = (data.t_marriage != '')? true : false;
-    if(this.isbool){
-      this.togglemarried('married')
-    } 
     this.contactForm.patchValue({ ...data });
   }
 
@@ -378,82 +360,8 @@ export class ContactComponent implements OnInit {
     this.files.splice(this.files.indexOf(event), 1);
   }
 
-  //  formats the size
-  getSize(f: File) {
-    const bytes = f.size;
-    if (bytes === 0) {
-      return "0 Bytes";
-    }
-    const k = 1024;
-    const dm = 2;
-    const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
-
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
-  }
-
-  //  returns the preview url
-  getPreviewUrl(f: File) {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(
-      encodeURI(URL.createObjectURL(f))
-    );
-  }
-
   getcontactFormValue() {
     return this.contactForm.value;
-  }
-
-  //  gets the form details
-  submitcontactForm(modal: TemplateRef<NgbModal>) {
-    console.log("submit form")
-    // prepping data for service
-    if(this.contactForm.valid){
-      let data: Testimonial = this.contactForm.value;
-      if (this.actionType == "Add New") {
-        this.testServ.putATestiomonial(data).subscribe((val) => {
-          if (val["isSuccess"] == true) {
-            this.notifyServ.addNotification({
-              text: "Contact Created Successfully",
-              level: "success",
-              autohide: true,
-            });
-          } else {
-            this.notifyServ.addNotification({
-              text: "Error while creating Contact",
-              level: "error",
-              autohide: true,
-            });
-          }
-          this._fetchData();
-        });
-        this.resetcontactForm();
-        this.closeContactModal();
-      } else if (this.actionType == "Edit") {
-        this.toastr.success("edited sucessful!");
-
-        this.testServ.updateATestimonial(data).subscribe((val) => {
-          this.toastr.success("Contact added successfully!");
-
-          if (val["isSuccess"] == true) {
-            this.notifyServ.addNotification({
-              text: "Contact Update Successfully",
-              level: "success",
-              autohide: true,
-            });
-          } else {
-            this.notifyServ.addNotification({
-              text: "Error while Updating Contact",
-              level: "error",
-              autohide: true,
-            });
-          }
-          this._fetchData();
-        });
-        this.resetcontactForm();
-        this.closeContactModal();
-      }
-    }
-    // this._fetchData();
   }
 
   // reset form and file
@@ -463,16 +371,6 @@ export class ContactComponent implements OnInit {
     // form reset
     this.contactForm.reset();
   }
-
-  srcToFile(src: any, fileName: any, mimeType: any) {
-    return fetch(src)
-      .then(function (res) {
-        return res.arrayBuffer();
-      })
-      .then(function (buf) {
-        return new File([buf], fileName, { type: mimeType });
-      });
-  };
 
   showmarritalDropdown: boolean = false;
   togglemarried(selection: string): void {
