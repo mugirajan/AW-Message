@@ -68,9 +68,9 @@ export class FilterContactComponent implements OnInit {
       (data: any) => {
         this.loading = false;
         let d = new Date();
-        d.setMonth(d.getMonth() - 2);
+        d.setMonth(d.getMonth() + 2);
         this.records = data.filter((a: any) => { 
-          return new Date(a.t_endsub) > new Date(d);
+          return new Date(a.t_endsub) < new Date(d);
         })
       }
     );
@@ -97,8 +97,8 @@ export class FilterContactComponent implements OnInit {
 
       {
         name: "t_date",
-        label: "Membership Date",
-        formatter: (order: Testimonial) => order.t_date,
+        label: "Membership End Date",
+        formatter: (order: any) => order.t_endsub,
       },
       {
         name: "active_status",

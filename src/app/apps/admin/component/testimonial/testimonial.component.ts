@@ -10,7 +10,6 @@ import { Testimonial, TestimonialModel2 } from "../../models/testimonial.model";
 import { ContactService } from "../../service/testimonial.service";
 import { Subscription } from "rxjs";
 import { NotificationService } from "src/app/layout/shared/service/notification.service";
-import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-testimonial",
@@ -47,7 +46,6 @@ export class ContactComponent implements OnInit {
 
   // Constructor
   constructor(
-    private toastr: ToastrService,
     private sanitizer: DomSanitizer,
     private modalService: NgbModal,
     private fb: FormBuilder,
@@ -100,17 +98,15 @@ export class ContactComponent implements OnInit {
   submitForm() {
     console.log("add data ", this.contactForm.value)
     console.log("add data ", this.contactForm.valid)
+
     if(this.contactForm.valid){
       this.testServ.createContacts(this.contactForm.value).subscribe(
         (response) => {
-          console.log("success");
           this._fetchData();
           this.closeContactModal();
-
         },
         (error) => {
           console.error("Error in Contact:", error);
-          console.log("error");
         }
       );
     }
@@ -245,31 +241,12 @@ export class ContactComponent implements OnInit {
     this.openVerticallyCentered(this.positionModal);
   }
 
-  deleteCon() {
-    if (this.testimonialId) {
-      this.testServ.deleteCon(this.testimonialId).subscribe(
-        (response) => {
-          this.toastr.success("Delete successful!");
-          console.log("Delete successful", response);
-        },
-        (error) => {
-          this.toastr.success("Error deleting contact!");
-          console.error("Error deleting contact", error);
-        }
-      );
-    } else {
-      console.error("contact missing.");
-    }
-  }
-
   openVerticallyCentered(content: TemplateRef<NgbModal>): void {
     this.modalService.open(content, { centered: true });
   }
 
   deletedSeletedContact() {
     this.testServ.deleteCon(this.testimoialDeleteID).subscribe((val) => {
-      this.toastr.success("Delete successful!");
-
       if (val["isSuccess"] == true) {
         this.notifyServ.addNotification({
           text: "contact Deleted Successfully",
@@ -330,21 +307,6 @@ export class ContactComponent implements OnInit {
     this.contactForm.patchValue({ ...data });
   }
 
-  updateContact() {
-    if(this.contactForm.valid){
-      
-      this.testServ.updateContact(this.contactForm.value).subscribe(
-        (response) => {
-          this.toastr.success("update successfully!");
-          this._fetchData();
-        },
-        (error) => {
-          this.toastr.error("error");
-        }
-      );
-    }
-  }
-
   //  convenience getter for easy access to form fields
   get form1() {
     return this.contactForm.controls;
@@ -362,6 +324,54 @@ export class ContactComponent implements OnInit {
 
   getcontactFormValue() {
     return this.contactForm.value;
+  }
+
+  //  gets the form details
+  submitcontactForm(modal: TemplateRef<NgbModal>) {
+    // prepping data for service
+    if(this.contactForm.valid){
+      let data: Testimonial = this.contactForm.value;
+      if (this.actionType == "Add New") {
+        this.testServ.putATestiomonial(data).subscribe((val) => {
+          if (val["isSuccess"] == true) {
+            this.notifyServ.addNotification({
+              text: "Contact Created Successfully",
+              level: "success",
+              autohide: true,
+            });
+          } else {
+            this.notifyServ.addNotification({
+              text: "Error While Creating Contact",
+              level: "error",
+              autohide: true,
+            });
+          }
+          this._fetchData();
+        });
+        this.resetcontactForm();
+        this.closeContactModal();
+      } else if (this.actionType == "Edit") {
+        this.testServ.updateATestimonial(data).subscribe((val) => {
+          if (val["isSuccess"] == true) {
+            this.notifyServ.addNotification({
+              text: "Contact Update Successfully",
+              level: "success",
+              autohide: true,
+            });
+          } else {
+            this.notifyServ.addNotification({
+              text: "Error While Updating Contact",
+              level: "error",
+              autohide: true,
+            });
+          }
+          this._fetchData();
+        });
+        this.resetcontactForm();
+        this.closeContactModal();
+      }
+    }
+    // this._fetchData();
   }
 
   // reset form and file
