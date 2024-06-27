@@ -6,21 +6,21 @@ import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
 import { User } from '../models/auth.models';
 
 /**
- * @returns registered user list
+ * @returns registered user list 
  */
 function getUsers(): User[] {
     // array in session storage for registered users
     let users: User[] = JSON.parse(sessionStorage.getItem('users')!) || [
         {
-            id: 1, username: 'admin', email: 'fusionfitness@gmail.com', password: 'fitness', firstName: 'Admin', lastName: 'Fusion',
+            id: 1, username: 'admin', email: 'fusion24iyptkl@gmail.com', password: 'FusionIyptkl', firstName: 'Admin', lastName: 'Fusion',
             avatar: 'assets/images/users/businessman-avatar.jpg', location: 'Chennai, India', title: 'Admin Head'
         },
         {
-            id: 2, username: 'admin', email: 'admin@fusionfitness.com', password: 'admin', firstName: 'Admin', lastName: 'Fusion',
+            id: 2, username: 'admin', email: 'admin@fusion24iyptkl.com', password: 'adminIyptkl', firstName: 'Admin', lastName: 'Fusion',
             avatar: 'assets/images/users/businessman-avatar.jpg', location: 'Chennai, India', title: 'Admin Head'
         },
         {
-            id: 3, username: 'user', email: 'fusiongym@gmail.com', password: 'fusion', firstName: 'User', lastName: 'Fusion',
+            id: 3, username: 'user', email: 'fusiongym24iyptkl@gmail.com', password: 'fusion24', firstName: 'User', lastName: 'Fusion',
             avatar: 'assets/images/users/businessman-avatar.jpg', location: 'Chennai, India', title: 'User '
         }
     ];
