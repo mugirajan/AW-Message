@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   demo: 'default',
-  apiUrl: "http://localhost:8080/festa-api/",  
+  // apiUrl: "http://localhost:8080/festa-api/",  
+  apiUrl: "http://15.206.66.93:6000/festa-api/", 
   GOOGLE_MAPS_API_KEY: 'AIzaSyDpgQMpcfx1QU-8SM-ljcgjG4xrYtIYby4'
 };
 
