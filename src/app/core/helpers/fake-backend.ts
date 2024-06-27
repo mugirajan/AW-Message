@@ -12,15 +12,15 @@ function getUsers(): User[] {
     // array in session storage for registered users
     let users: User[] = JSON.parse(sessionStorage.getItem('users')!) || [
         {
-            id: 1, username: 'admin', email: 'fusionfitness@gmail.com', password: 'fitness', firstName: 'Admin', lastName: 'Fusion',
+            id: 1, username: 'admin', email: 'admin@blackitechs.com', password: 'AdminBITS', firstName: 'Admin', lastName: 'Bits',
             avatar: 'assets/images/users/businessman-avatar.jpg', location: 'Chennai, India', title: 'Admin Head'
         },
         {
-            id: 2, username: 'admin', email: 'admin@fusionfitness.com', password: 'admin', firstName: 'Admin', lastName: 'Fusion',
+            id: 2, username: 'admin', email: 'blackitechs@gmail.com', password: 'blackitechs', firstName: 'Admin', lastName: 'Bits',
             avatar: 'assets/images/users/businessman-avatar.jpg', location: 'Chennai, India', title: 'Admin Head'
         },
         {
-            id: 3, username: 'user', email: 'fusiongym@gmail.com', password: 'fusion', firstName: 'User', lastName: 'Fusion',
+            id: 3, username: 'user', email: 'user@blackitechs.com ', password: 'UserBITS', firstName: 'User', lastName: 'Bits',
             avatar: 'assets/images/users/businessman-avatar.jpg', location: 'Chennai, India', title: 'User '
         }
     ];
