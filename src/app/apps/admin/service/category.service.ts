@@ -13,8 +13,8 @@ export class CategoryService {
   // private apiUrl = 'http://localhost:3000/list/'; 
   // private apicontactUrl ='http://localhost:3000/contacts'
 
-  private apiUrl = 'http://13.235.132.13/list/'; 
-  private apicontactUrl ='http://13.235.132.13/contacts'
+  private apiUrl = 'http://13.126.175.153/list/'; 
+  private apicontactUrl ='http://13.126.175.153/contacts'
 
   // private url: string = env.environment.apiUrl + "category/";
 

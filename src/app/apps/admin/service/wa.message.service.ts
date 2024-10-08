@@ -10,7 +10,7 @@ import { Observable } from "rxjs";
 export class WAMesssagingService {
   // private apicontactUrl ='http://localhost:3000/list'
 
-  private apicontactUrl = "http://13.235.132.13/list";
+  private apicontactUrl = "http://13.126.175.153/list";
 
   url = env.WAEnds.url + env.WAEnds.version + "/" + env.WAEnds.PhnID + "/messages";
 

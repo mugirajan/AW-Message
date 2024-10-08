@@ -9,7 +9,7 @@ $token = "EABrZA7KDKk6sBOzurAORQ8ZBfFLmYxVK520Xrxe2AZACdobvqbYQgkvh5lSxd3N3vE26o
 $PhnID = "248510075002931";
 
 
-$jobs = json_decode(file_get_contents("http://13.235.132.13/scheduledmsg"), true);
+$jobs = json_decode(file_get_contents("http://13.126.175.153/scheduledmsg"), true);
 
 $url = $url . $version . "/" . $PhnID . "/messages";
 
@@ -42,7 +42,7 @@ foreach ($jobs as $job) {
 
   if ($currentDate->format('d-m-Y H:i') == $dob->format('d-m-Y H:i')) {
             foreach ($cst_list as $cont) {
-      $contact = json_decode(file_get_contents("http://13.235.132.13/contacts?id=" . $cont), true);
+      $contact = json_decode(file_get_contents("http://13.126.175.153/contacts?id=" . $cont), true);
       print_r($contact);
       echo '<br/>';
       echo '<br/>';

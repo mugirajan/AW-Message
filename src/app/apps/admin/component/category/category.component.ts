@@ -49,7 +49,7 @@ export class CategoryComponent implements OnInit {
   // localhost URL
   // url = "http://localhost:3000/";
   //Production URL
-  url = "http://13.235.132.13/";
+  url = "http://13.126.175.153/";
 
   selectedOptions: string[] = [];
 
