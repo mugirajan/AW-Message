@@ -49,9 +49,9 @@ export class SendCustomMessageComponent implements OnInit {
   contacts: any[] = [];
   checklistorcontact: string = "";
   // localhost URL
-  // url = "http://localhost:3000/";
+  url = "http://localhost/";
   //Production URL
-  url = "http://13.126.175.153/";
+  // url = "http://13.126.175.153/";
 
   senderResource: Select2Group[] = [
     {

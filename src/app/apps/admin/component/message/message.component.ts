@@ -40,9 +40,9 @@ export class MessageComponent implements OnInit {
 
 
   // localhost URL
-  // url = "http://localhost:3000/";
+  url = "http://localhost/";
   //Production URL
-  url = "http://13.126.175.153/";
+  // url = "http://13.126.175.153/";
 
 
   @ViewChild('sizeableModal')

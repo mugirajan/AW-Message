@@ -21,7 +21,6 @@ import { ToastrService } from "ngx-toastr";
   styleUrls: ["./category.component.scss"],
 })
 export class CategoryComponent implements OnInit {
-
   pageTitle: BreadcrumbItem[] = [];
   records: CategoryMOdel2[] = [];
   columns: Column[] = [];
@@ -47,9 +46,9 @@ export class CategoryComponent implements OnInit {
   contacts: any[] = [];
 
   // localhost URL
-  // url = "http://localhost:3000/";
+  url = "http://localhost/";
   //Production URL
-  url = "http://13.126.175.153/";
+  // url = "http://13.126.175.153/";
 
   selectedOptions: string[] = [];
 
@@ -92,12 +91,13 @@ export class CategoryComponent implements OnInit {
   }
 
   getcontacts() {
-    this.http.get<any>(this.url + "contacts").subscribe((data) => {
-      this.contacts = data.contacts;
-    });
-
-    this.catServ.getContacts().subscribe((contacts) => {
-      this.contacts = contacts;
+    this.catServ.getContacts().subscribe((response: any) => {
+      if (response.success) {
+        console.log(response.data); // This will log the array of contacts
+        this.contacts = response.data; // Assign the contacts data to your variable
+      } else {
+        console.error("Error:", response.message); // Handle the error message if success is false
+      }
     });
   }
 
@@ -130,19 +130,18 @@ export class CategoryComponent implements OnInit {
     const contact = this.contacts.find((contact) => contact.id === id);
     return contact ? contact.t_role : "";
   }
-  getNameFromId(id:string):string{
+  getNameFromId(id: string): string {
     const contact = this.contacts.find((contact) => contact.id === id);
     return contact ? contact.t_name : "";
   }
 
   ListForm() {
-    console.log("List added successfully:",this.categoryList.valid );
+    console.log("List added successfully:", this.categoryList.valid);
 
-    if(this.categoryList.valid){
-
+    if (this.categoryList.valid) {
       const formData = this.categoryList.value;
       formData.selectedOptions = this.selectedOptions;
-      this.catServ.createCatergory(formData).subscribe(
+      this.catServ.createCategory(formData).subscribe(
         (response) => {
           console.log("List added successfully:", response);
           this.categoryList.reset();
@@ -153,7 +152,7 @@ export class CategoryComponent implements OnInit {
           // get Categories
           this._fetchData();
           this.closeListModal();
-
+          this.toastr.success("List Added Successfully!");
         },
         (error) => {
           this.toastr.error("Error adding List!");
@@ -164,18 +163,17 @@ export class CategoryComponent implements OnInit {
   }
 
   _fetchData(): void {
-    this.catServ.getCategory().subscribe((data: any) => {
-      if (data.length > 0) {
-        this.records = data;
+    this.catServ.getCategory().subscribe((response: any) => {
+      if (response.success) {
+        if (response.data.length > 0) {
+          this.records = response.data; // Assign data to records
+        } else {
+          console.warn("No categories found.");
+        }
+      } else {
+        console.error("Error:", response.message); // Handle the error message
       }
     });
-
-    // this.catServ.getContacts().subscribe((data: any) =>{
-    //   console.log("asdfghj")
-    //   if(data.length > 0) {
-    //     this.records =  data;
-    //   }
-    // });
   }
 
   initTableCofig(): void {
@@ -235,7 +233,7 @@ export class CategoryComponent implements OnInit {
     console.log(row);
     return (
       // row.id?.toString().includes(term) ||
-      row.c_name.toString().toLowerCase().includes(term)||
+      row.c_name.toString().toLowerCase().includes(term) ||
       row.c_number.toString().toLowerCase().includes(term)
       // row.c_number.toString().includes(term)
       // this._matchesActiveStatus(row, term)
@@ -378,19 +376,20 @@ export class CategoryComponent implements OnInit {
   }
 
   editCategoryName(data: any) {
-    console.log("edit triggered", data.selectedOptions)
+    console.log("edit triggered", data.selectedOptions);
     this.modalService.open(this.sizeableModal, { size: "xl" });
     this.selectedOptions = data.selectedOptions;
     this.categoryList.patchValue({ ...data });
   }
 
   UpdateCategory() {
-    if(this.categoryList.valid){
-      this.catServ.UpdateCategory(this.categoryList.value).subscribe(
+    if (this.categoryList.valid) {
+      this.catServ.updateCategory(this.categoryList.value).subscribe(
         (response) => {
           console.log("Update response:", response);
           this.modalService.dismissAll();
-          this._fetchData()
+          this._fetchData();
+          this.toastr.success("List Edited Successfully!"); // Corrected spelling
         },
         (error) => {
           console.error("Error updating contact:", error);
@@ -410,6 +409,4 @@ export class CategoryComponent implements OnInit {
     // form reset
     this.categoryList.reset();
   }
-
-  
 }

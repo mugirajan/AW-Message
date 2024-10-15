@@ -44,9 +44,9 @@ export class automatTempComponent  implements OnInit {
     TemplateForm!: FormGroup;
     contacts: any[] =[];
     // localhost URL
-    // url = "http://localhost:3000/";
+    url = "http://localhost/";
     //Production URL
-    url = "http://13.126.175.153/";
+    // url = "http://13.126.175.153/";
 
 
     senderResource: Select2Group[] = [
@@ -122,7 +122,7 @@ export class automatTempComponent  implements OnInit {
   
       this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Default Message', path: '/', active: true }];
 
-      this.http.get<any>(this.url+'contacts').subscribe(data => {
+      this.http.get<any>(this.url+'getContacts.php').subscribe(data => {
         data.forEach( (con: any, ind: number) => {
           this.senderResource[0].options.push( 
             { label: con.t_name, value: con.t_role } 
@@ -172,7 +172,7 @@ export class automatTempComponent  implements OnInit {
 
       //list started
 
-      this.http.get<any[]>('list').subscribe(data => {
+      this.http.get<any[]>('getList.php').subscribe(data => {
       this.senderResourcelist[0].options = [];
           data.forEach((con: any) => {
             this.senderResourcelist[0].options.push({ label: con.c_name, value:con.id, id:con.id });
@@ -180,7 +180,7 @@ export class automatTempComponent  implements OnInit {
     });
 
     //list 
-    this.http.get<any[]>(this.url+'list').subscribe(data => {
+    this.http.get<any[]>(this.url+'getList.php').subscribe(data => {
       this.senderResourcelistarray[0].options = [];
           data.forEach((con: any) => {
             this.senderResourcelistarray[0].options.push({ label: con.c_name, value:con.selectedOptions });
@@ -188,7 +188,7 @@ export class automatTempComponent  implements OnInit {
     });
 
      //contact id array
-     this.http.get<any>(this.url+'contacts').subscribe(data => {
+     this.http.get<any>(this.url+'getContacts.php').subscribe(data => {
       data.forEach((con: any) => {
         this.senderResourcecontactarray[0].options.push({ label: con.t_name, value: con.id });
       });
@@ -266,10 +266,10 @@ export class automatTempComponent  implements OnInit {
       const msg = this.messageForm.value.message;
       const selectedSenderValue = this.messageForm.value.sender
   
-      this.http.get<any>(this.url+`list/${this.selectedValue}`).subscribe((item) => {
+      this.http.get<any>(this.url+`getAList.php/${this.selectedValue}`).subscribe((item) => {
         const selectedOptions: string[] = item.selectedOptions;
         selectedOptions.forEach(id => {
-          this.http.get<any>(this.url+`contacts/${id}`).subscribe((data) => {
+          this.http.get<any>(this.url+`getAContact.php/${id}`).subscribe((data) => {
             console.log("hello");
             this.msgServ.sendWACustomTemplateMessage(data.t_role, data.t_name, msg).subscribe((resp: any) => {
               this.toastr.success('Message sent successfully!');
@@ -301,7 +301,7 @@ export class automatTempComponent  implements OnInit {
       if (this.scheduledmsg.valid) {
         const formData = this.scheduledmsg.value;
         formData.cont_list = Array.isArray(formData.cont_list) ? formData.cont_list : [formData.cont_list];
-        this.http.post<AutoTemp>(this.url + 'scheduledmsg', formData).subscribe(data => {
+        this.http.post<AutoTemp>(this.url + 'postScheduledmsg.php', formData).subscribe(data => {
           this.storedData.push(data);
           this.scheduledmsg.reset();
         });
@@ -310,14 +310,14 @@ export class automatTempComponent  implements OnInit {
     
   
     fetchData() {
-      this.http.get<AutoTemp[]>(this.url+'scheduledmsg').subscribe(data => {
+      this.http.get<AutoTemp[]>(this.url+'getScheduledmsg.php').subscribe(data => {
         this.storedData = data;
       });
     }
 
 
     deleteTemp(id: string): Observable<void> {
-      return this.http.delete<void>(this.url+'scheduledmsg/'+id);
+      return this.http.delete<void>(this.url+'delScheduledmsg.php');
     }
 
     deleteAutoTemp(id: string): void {

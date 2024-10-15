@@ -6,9 +6,9 @@ import { AddTemplate } from '../models/addTemplate.model';
   providedIn: 'root'
 })
 export class AddTemplateService {
-  // private apiUrl = 'http://localhost:3000/template'; 
+  apiUrl = 'http://localhost/template'; 
 
-  private apiUrl = 'http://13.126.175.153/template'; 
+  // private apiUrl = 'http://13.126.175.153/template'; 
 
 
   constructor(private http: HttpClient) { }
@@ -38,7 +38,7 @@ export class AddTemplateService {
   }
   
   
-   UpdateTemp(data: any): Observable<any> {
+  UpdateTemp(data: any): Observable<any> {
     const updateUrl = `${this.apiUrl}/${data.id}`;
     return this.http.put(updateUrl, data);
   }
