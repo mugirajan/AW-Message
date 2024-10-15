@@ -42,7 +42,7 @@ export class ContactComponent implements OnInit {
   testimonials: Testimonial[] = [];
   testimonialToDelete: any;
   testimonialId: string | null = null;
-  isbool: any ;
+  isbool: any;
 
   // Constructor
   constructor(
@@ -70,7 +70,7 @@ export class ContactComponent implements OnInit {
       t_role: ["", Validators.required],
       t_date: ["", Validators.required],
       t_marriage: [],
-      t_membership:["", Validators.required],
+      t_membership: ["", Validators.required],
       t_msg: [""],
       t_address: ["", Validators.required],
       t_city: ["", Validators.required],
@@ -82,24 +82,13 @@ export class ContactComponent implements OnInit {
       active_status: ["", Validators.required],
     });
 
-    this.testServ.getContacts().subscribe(
-      (data: Testimonial[]) => {
-        this.testimonials = data;
-        this.loading = false;
-      },
-      (error) => {
-        console.error("Error fetching contacts:", error);
-        this.loading = false;
-      }
-    );
-
     this.resetcontactForm();
   }
   submitForm() {
-    console.log("add data ", this.contactForm.value)
-    console.log("add data ", this.contactForm.valid)
+    console.log("add data ", this.contactForm.value);
+    console.log("add data ", this.contactForm.valid);
 
-    if(this.contactForm.valid){
+    if (this.contactForm.valid) {
       this.testServ.createContacts(this.contactForm.value).subscribe(
         (response) => {
           this._fetchData();
@@ -110,15 +99,24 @@ export class ContactComponent implements OnInit {
         }
       );
     }
-    
   }
 
   _fetchData(): void {
-    this.testServ.getContacts().subscribe((data: any) => {
-      if (data.length > 0) {
-        this.records = data;
+    this.testServ.getContacts().subscribe(
+      (response: any) => {
+        if (response.success) {
+          this.records = response.data; // Assign the fetched data
+          console.log("Contacts data:", this.testimonials);
+        } else {
+          console.error("Error:", response.message); // Handle the error message
+        }
+        this.loading = false;
+      },
+      (error) => {
+        console.error("Error fetching contacts:", error); // Handle any HTTP errors
+        this.loading = false;
       }
-    });
+    );
   }
 
   initTableCofig(): void {
@@ -200,7 +198,7 @@ export class ContactComponent implements OnInit {
 
   /**
    * Search Method
-   */ 
+   */
   searchData(searchTerm: string): void {
     if (searchTerm === "") {
       this._fetchData();
@@ -256,7 +254,6 @@ export class ContactComponent implements OnInit {
       } else {
       }
       this._fetchData();
-
     });
     this.testimoialDeleteID = -1;
     this.closeContactModal();
@@ -297,11 +294,10 @@ export class ContactComponent implements OnInit {
    */
   editcontactForm(data: Testimonial) {
     console.log(data);
-    if(data.t_marriage == null){
-      this.togglemarried('single');
-    }
-    else{
-      this.togglemarried('married');
+    if (data.t_marriage == null) {
+      this.togglemarried("single");
+    } else {
+      this.togglemarried("married");
     }
     this.modalService.open(this.sizeableModal, { size: "xl" });
     this.contactForm.patchValue({ ...data });
@@ -329,7 +325,7 @@ export class ContactComponent implements OnInit {
   //  gets the form details
   submitcontactForm(modal: TemplateRef<NgbModal>) {
     // prepping data for service
-    if(this.contactForm.valid){
+    if (this.contactForm.valid) {
       let data: Testimonial = this.contactForm.value;
       if (this.actionType == "Add New") {
         this.testServ.putATestiomonial(data).subscribe((val) => {
@@ -384,12 +380,12 @@ export class ContactComponent implements OnInit {
 
   showmarritalDropdown: boolean = false;
   togglemarried(selection: string): void {
-    if (selection === 'married') {
-        this.isbool = true;
-        this.showmarritalDropdown = true;
-    } else if(selection === 'single'){
-        this.isbool = false;
-        this.showmarritalDropdown = false;
+    if (selection === "married") {
+      this.isbool = true;
+      this.showmarritalDropdown = true;
+    } else if (selection === "single") {
+      this.isbool = false;
+      this.showmarritalDropdown = false;
     }
   }
 }

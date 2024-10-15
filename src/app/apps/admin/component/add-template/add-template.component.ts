@@ -69,7 +69,7 @@ export class AddTemplateComponent implements OnInit {
   }
 
   ScheduleForm() {
-    if(this.templateform.valid){
+    if (this.templateform.valid) {
       const formData = this.templateform.value;
       this.tempServ.createTemp(formData).subscribe((response) => {
         console.log("Rep:  ", response);
@@ -82,9 +82,15 @@ export class AddTemplateComponent implements OnInit {
   }
 
   _fetchData(): void {
-    this.tempServ.getTemp().subscribe((data: any) => {
-      if (data.length > 0) {
-        this.records = data;
+    this.tempServ.getTemp().subscribe((response: any) => {
+      if (response.success) {
+        if (response.data.length > 0) {
+          this.records = response.data; // Assign data to records
+        } else {
+          console.warn("No categories found.");
+        }
+      } else {
+        console.error("Error:", response.message); // Handle the error message
       }
     });
   }
@@ -144,14 +150,13 @@ export class AddTemplateComponent implements OnInit {
     if (searchTerm === "") {
       this._fetchData();
     } else {
-      console.log(searchTerm)
-      searchTerm.toLowerCase()
+      console.log(searchTerm);
+      searchTerm.toLowerCase();
       let updatedData = this.records;
       updatedData = updatedData.filter((product: any) =>
         this.matches(product, searchTerm)
       );
       this.records = updatedData;
-
     }
   }
 
@@ -237,24 +242,16 @@ export class AddTemplateComponent implements OnInit {
   edittemplateform(data: any) {
     // if(this.templateform.valid){
 
-      this.resettemplateform();
-      this.modalService.open(this.sizeableModal, { size: "xl" });
+    this.resettemplateform();
+    this.modalService.open(this.sizeableModal, { size: "xl" });
 
-      this.templateform.patchValue({
-        id: data.id,
-        temp_name: data.temp_name,
-        temp_body: data.temp_body,
-        active_status: data.active_status ? "true" : "false",
-      });
-      this.tempServ.UpdateTemp(this.templateform.value).subscribe(
-        (response) => {
-          console.log("updated successfully:", response);
-        },
-        (error) => {
-          console.error("Error updating AddTemplate:", error);
-        }
-      );
-    // }
+    this.templateform.patchValue({
+      id: data.id,
+      temp_name: data.temp_name,
+      temp_body: data.temp_body,
+      active_status: data.active_status ? "true" : "false",
+    });
+    
   }
 
   gettemplateformValue(): any {

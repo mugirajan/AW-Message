@@ -40,9 +40,9 @@ export class MessageComponent implements OnInit {
 
 
   // localhost URL
-  // url = "http://localhost:3000/";
+  url = "http://localhost/";
   //Production URL
-  url = "http://13.235.132.13/";
+  // url = "http://13.126.175.153/";
 
 
   @ViewChild('sizeableModal')
@@ -69,11 +69,20 @@ export class MessageComponent implements OnInit {
 
     this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Custom Message', path: '/', active: true }];
 
-    this.http.get<any[]>(this.url+'list').subscribe(data => {
-      this.senderResource[0].options = [];
-      data.forEach((con: any) => {
-        this.senderResource[0].options.push({ label: con.c_name, value: con.id, id: con.id });
-      });
+    this.http.get<any[]>(this.url+'api/lists/getLists.php').subscribe((response:any) => {
+      if (response.success) {
+        if (response.data.length > 0) {
+          this.senderResource[0].options = [];
+          response.data.forEach((con: any) => {
+            this.senderResource[0].options.push({ label: con.c_name, value: con.id, id: con.id });
+          });
+        } else {
+          console.warn("No categories found.");
+        }
+      } else {
+        console.error("Error:", response.message); // Handle the error message
+      }
+      
     });
 
     this._fetchData();

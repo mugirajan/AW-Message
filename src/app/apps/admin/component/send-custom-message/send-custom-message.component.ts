@@ -19,11 +19,10 @@ import { Observable } from "rxjs";
 
 import { ToastrService } from "ngx-toastr";
 
-
 @Component({
-  selector: 'app-send-custom-message',
-  templateUrl: './send-custom-message.component.html',
-  styleUrls: ['./send-custom-message.component.scss']
+  selector: "app-send-custom-message",
+  templateUrl: "./send-custom-message.component.html",
+  styleUrls: ["./send-custom-message.component.scss"],
 })
 export class SendCustomMessageComponent implements OnInit {
   messageForm!: FormGroup;
@@ -49,9 +48,9 @@ export class SendCustomMessageComponent implements OnInit {
   contacts: any[] = [];
   checklistorcontact: string = "";
   // localhost URL
-  // url = "http://localhost:3000/";
+  url = "http://localhost/api/";
   //Production URL
-  url = "http://13.235.132.13/";
+  // url = "http://13.126.175.153/";
 
   senderResource: Select2Group[] = [
     {
@@ -129,15 +128,25 @@ export class SendCustomMessageComponent implements OnInit {
       { label: "Default Message", path: "/", active: true },
     ];
 
-    this.http.get<any>(this.url + "contacts").subscribe((data) => {
-      data.forEach((con: any, ind: number) => {
-        this.senderResource[0].options.push({
-          label: con.t_name,
-          value: con.t_role,
-          id: con.id
-        });
+    this.http
+      .get<any>(this.url + "lists/getLists.php")
+      .subscribe((response: any) => {
+        if (response.success) {
+          if (response.data.length > 0) {
+            response.data.forEach((con: any, ind: number) => {
+              this.senderResource[0].options.push({
+                label: con.t_name,
+                value: con.t_role,
+                id: con.id,
+              });
+            });
+          } else {
+            console.warn("Not found.");
+          }
+        } else {
+          console.error("Error:", response.message); // Handle the error message
+        }
       });
-    });
 
     this.msgServ.getContacts().subscribe((contacts) => {
       this.contacts = contacts;
@@ -156,17 +165,27 @@ export class SendCustomMessageComponent implements OnInit {
     });
 
     //template start
-    this.http.get<any[]>(this.url + "template").subscribe((data) => {
-      // console.log("temp data :", data)
-      this.senderResourceMessage[0].options = [];
-      data.forEach((cus: any) => {
-        this.senderResourceMessage[0].options.push({
-          label: cus.temp_name,
-          value: cus.temp_body,
-          id: cus.id,
-        });
+    this.http
+      .get<any[]>(this.url + "template/getTemplates.php")
+      .subscribe((response: any) => {
+        if (response.success) {
+          if (response.data.length > 0) {
+            this.senderResourceMessage[0].options = [];
+            response.data.forEach((cus: any) => {
+              this.senderResourceMessage[0].options.push({
+                label: cus.temp_name,
+                value: cus.temp_body,
+                id: cus.id,
+              });
+            });
+          } else {
+            console.warn("No categories found.");
+          }
+        } else {
+          console.error("Error:", response.message); // Handle the error message
+        }
+        // console.log("temp data :", data)
       });
-    });
 
     this.templateform = this.fb.group({
       temp_name: [""],
@@ -174,42 +193,56 @@ export class SendCustomMessageComponent implements OnInit {
     });
     //template end
 
-    //list started
-
-    // this.http.get<any[]>('list').subscribe(data => {
-    //   this.senderResourcelist[0].options = [];
-    //   data.forEach((con: any) => {
-    //     this.senderResourcelist[0].options.push({ label: con.c_name, value: con.id, id: con.id });
-    //   });
-    // });
-
     //list
-    this.http.get<any[]>(this.url + "list").subscribe((data) => {
-      // console.log("list data :", data);
-      this.senderResourcelistarray[0].options = [];
-      data.forEach((con: any) => {
-        this.senderResourcelistarray[0].options.push({
-          label: con.c_name,
-          value: con.selectedOptions,
-          id: con.id,
-        });
+    this.http
+      .get<any[]>(this.url + "lists/getLists.php")
+      .subscribe((response: any) => {
+        if (response.success) {
+          if (response.data.length > 0) {
+            // console.log("list data :", data);
+            this.senderResourcelistarray[0].options = [];
+            response.data.forEach((con: any) => {
+              this.senderResourcelistarray[0].options.push({
+                label: con.c_name,
+                value: con.selectedOptions,
+                id: con.id,
+              });
+            });
+          } else {
+            console.warn("No categories found.");
+          }
+        } else {
+          console.error("Error:", response.message); // Handle the error message
+        }
       });
-    });
 
     //contact id array
-    this.http.get<any>(this.url + "contacts").subscribe((data) => {
-      data.forEach((con: any) => {
-        this.senderResourcecontactarray[0].options.push({
-          label: con.t_name,
-          value: con.id,
-        });
+    this.http
+      .get<any>(this.url + "contacts/getContacts.php")
+      .subscribe((response: any) => {
+        if (response.success) {
+          if (response.data.length > 0) {
+            response.data.forEach((con: any) => {
+              this.senderResourcecontactarray[0].options.push({
+                label: con.t_name,
+                value: con.id,
+              });
+            });
+            this.contactID = this.contactID.concat(
+              response.data.map((con: any) => [con.id])
+            );
+          } else {
+            console.warn("No categories found.");
+          }
+        } else {
+          console.error("Error:", response.message); // Handle the error message
+        }
+
+        // console.log('contact id', this.contactID);
       });
-      this.contactID = this.contactID.concat(data.map((con: any) => [con.id]));
-      // console.log('contact id', this.contactID);
-    });
 
     // get Variants
-    this.fetchData();
+    // this.fetchData();
 
     // product form
     this.messageForm = this.fb.group({
@@ -231,7 +264,7 @@ export class SendCustomMessageComponent implements OnInit {
   }
 
   onSenderSelectedcontactarray(da: Select2UpdateEvent) {
-    console.log('Selected da:', da.options[0]);
+    console.log("Selected da:", da.options[0]);
     this.selectedValue = da.options[0].value;
     // this.contactID.push(selectedarray);
   }
@@ -247,62 +280,37 @@ export class SendCustomMessageComponent implements OnInit {
     this.TemplateForm.patchValue({ message: selectedcon });
   }
 
-  // sendMessage() {
-  //   // console.log("sender", this.TemplateForm.value)
-  //   const msg = this.TemplateForm.value.message;
-  //   this.msgServ.sendWACustomTemplateMessage(
-  //     this.TemplateForm.value['sender'], this.selectedLabel, this.TemplateForm.value['message']
-  //   ).subscribe(
-  //     (resp: any) => {
-  //       if (resp) {
-  //         this.toastr.success('Message sent successfully!');
-  //         this.resetMessageForm()
-  //       }
-  //       else {
-  //         this.toastr.error('Message not sent!');
-  //       }
-  //     }
-
-  //   );
-  // }
-
   sendMessagelist(): void {
     console.log("list :", this.selectedValue);
     console.log("template :", this.selectedValuetmp);
     console.log("checklistorcontact :", this.checklistorcontact);
 
-
     if (this.checklistorcontact == "contact") {
       this.http
-              .get<any>(this.url + `contacts/${this.selectedValue}`)
-              .subscribe((data) => {
-                this.msgServ
-                  .customTemplate(
-                    data.t_role,
-                    data.t_name,
-                    this.selectedValuetmp
-                  )
-                  .subscribe((resp: any) => {
-                    this.toastr.success("Message sent successfully!");
-                    this.resetMessageForm();
-                  });
-              });
+        .get<any>(this.url + `contacts/getAContact.php?id=${this.selectedValue}`)
+        .subscribe((data) => {
+          this.msgServ
+            .customTemplate(data.t_role, data.t_name, this.selectedValuetmp)
+            .subscribe((resp: any) => {
+              this.toastr.success("Message sent successfully!");
+              this.resetMessageForm();
+            });
+        });
     } else {
       this.http
-        .get<any>(this.url + `list/${this.selectedValue}`)
+        .get<any>(this.url + `lists/getAList.php?id=${this.selectedValue}`)
         .subscribe((item) => {
           const selectedOptions: string[] = item.selectedOptions;
           selectedOptions.forEach((id) => {
             this.http
-              .get<any>(this.url + `contacts/${id}`)
+              .get<any>(this.url + `contacts/getContacts.php?id=${id}`)
               .subscribe((data) => {
                 this.msgServ
                   .customTemplate(
                     data.t_role,
                     data.t_name,
                     this.selectedValuetmp
-                  )
-                  .subscribe((resp: any) => {
+                  ).subscribe((resp: any) => {
                     this.toastr.success("Message sent successfully!");
                     this.resetMessageForm();
                   });
@@ -313,7 +321,6 @@ export class SendCustomMessageComponent implements OnInit {
   }
 
   //radio button for contact or list
-
   showContactDropdown: boolean = false;
   showListDropdown: boolean = false;
 
@@ -329,43 +336,52 @@ export class SendCustomMessageComponent implements OnInit {
     }
   }
 
-  //radio button for custom or fb template
+  // //radio button for custom or fb template
+  // submitSendCustom() {
+  //   if (this.sendCustom.valid) {
+  //     const formData = this.sendCustom.value;
+  //     formData.cont_list = Array.isArray(formData.cont_list)
+  //       ? formData.cont_list
+  //       : [formData.cont_list];
+  //     console.log("data:", formData);
+  //     this.http.post<sendCustom>(this.url + "/sendCustom/createSendCustom.php", formData)
+  //       .subscribe((data) => {
+  //         this.storedData.push(data);
+  //         this.sendCustom.reset();
+  //       });
+  //   }
+  // }
 
-  submitSendCustom() {
-    if (this.sendCustom.valid) {
-      const formData = this.sendCustom.value;
-      formData.cont_list = Array.isArray(formData.cont_list)
-        ? formData.cont_list
-        : [formData.cont_list];
-      this.http
-        .post<sendCustom>(this.url + "sendCustom", formData)
-        .subscribe((data) => {
-          this.storedData.push(data);
-          this.sendCustom.reset();
-        });
-    }
-  }
+  // fetchData() {
+  //   this.http
+  //     .get<sendCustom[]>(this.url + "sendCustom/getSendCustom.php")
+  //     .subscribe((response: any) => {
+  //       if (response.success) {
+  //         if (response.data.length > 0) {
+  //           this.storedData = response.data;
+  //         } else {
+  //           console.warn("Not found.");
+  //         }
+  //       } else {
+  //         console.error("Error:", response.message); // Handle the error message
+  //       }
+  //     });
+  // }
 
-  fetchData() {
-    this.http.get<sendCustom[]>(this.url + "sendCustom").subscribe((data) => {
-      this.storedData = data;
-    });
-  }
+  // deleteTemp(id: string): Observable<void> {
+  //   return this.http.delete<void>(this.url + "sendCustom/" + id);
+  // }
 
-  deleteTemp(id: string): Observable<void> {
-    return this.http.delete<void>(this.url + "sendCustom/" + id);
-  }
-
-  deleteAutoTemp(id: string): void {
-    this.deleteTemp(id).subscribe(
-      () => {
-        this.storedData = this.storedData.filter((item) => item.id !== id);
-        this.toastr.success("Item deleted successfully!");
-      },
-      (error) => {
-        console.error("Error deleting item:", error);
-        this.toastr.error("Failed to delete item. Please try again.");
-      }
-    );
-  }
+  // deleteAutoTemp(id: string): void {
+  //   this.deleteTemp(id).subscribe(
+  //     () => {
+  //       this.storedData = this.storedData.filter((item) => item.id !== id);
+  //       this.toastr.success("Item deleted successfully!");
+  //     },
+  //     (error) => {
+  //       console.error("Error deleting item:", error);
+  //       this.toastr.error("Failed to delete item. Please try again.");
+  //     }
+  //   );
+  // }
 }
