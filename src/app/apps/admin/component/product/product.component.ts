@@ -56,7 +56,7 @@ export class ProductComponent implements OnInit {
   valname: string = "";
   senderResource: Select2Group[] = [
     {
-      label: "Kamalraj Ganesan",
+      label: "Select Contact",
       options: [
         // { value: "918056221146", label: "Kamalraj Ganesan" }
       ],
@@ -118,13 +118,22 @@ export class ProductComponent implements OnInit {
       { label: "Contact Message", path: "/", active: true },
     ];
 
-    this.http.get<any>(this.url + "contacts").subscribe((data) => {
-      data.forEach((con: any, ind: number) => {
-        this.senderResource[0].options.push({
-          label: con.t_name,
-          value:  con.t_role + "|" +con.t_name,
-        });
-      });
+    this.http.get<any>(this.url + "api/contacts/getContacts.php").subscribe((response:any) => {
+      if (response.success) {
+        if (response.data.length > 0) {
+          response.data.forEach((con: any, ind: number) => {
+            this.senderResource[0].options.push({
+              label: con.t_name,
+              value:  con.t_role + "|" +con.t_name,
+            });
+          });
+        } else {
+          console.warn("Not found.");
+        }
+      } else {
+        console.error("Error:", response.message); // Handle the error message
+      }
+      
     });
 
     this.msgServ.getContacts().subscribe((contacts) => {

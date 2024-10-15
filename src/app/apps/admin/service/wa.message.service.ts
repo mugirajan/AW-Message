@@ -8,7 +8,7 @@ import { Observable } from "rxjs";
   providedIn: "root",
 })
 export class WAMesssagingService {
-  private apicontactUrl ='http://localhost/list'
+  private apicontactUrl ='http://localhost/api/lists/getLists.php'
 
   // private apicontactUrl = "http://13.126.175.153/list";
 
@@ -207,4 +207,5 @@ export class WAMesssagingService {
     };
     return this.http.post(this.url, content, { headers });
   }
+  
 }

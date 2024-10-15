@@ -9,7 +9,7 @@ import { ToastrService } from "ngx-toastr";
   providedIn: "root",
 })
 export class CategoryService {
-  private apiUrl = "http://localhost/api/list/";
+  private apiUrl = "http://localhost/api/lists/";
   private apicontactUrl = "http://localhost/api/contacts/";
 
   // private apiUrl = 'http://13.126.175.153/list/';

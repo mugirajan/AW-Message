@@ -1,5 +1,6 @@
 <?php
-$file = 'data.json'; // File name
+
+$file = '../ams_db/contacts.json'; // File name
 $valid = array('success' => false, 'message' => "");
 
 try {
