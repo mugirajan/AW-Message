@@ -65,11 +65,11 @@ export class FilterContactComponent implements OnInit {
 
   _fetchData() {
     this.testServ.getContacts().subscribe(
-      (data: any) => {
+      (response: any) => {
         this.loading = false;
         let d = new Date();
         d.setMonth(d.getMonth() + 2);
-        this.records = data.filter((a: any) => { 
+        this.records = response.data.filter((a: any) => { 
           return new Date(a.t_endsub) < new Date(d);
         })
       }
