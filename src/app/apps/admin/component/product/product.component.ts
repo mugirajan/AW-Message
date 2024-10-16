@@ -84,7 +84,7 @@ export class ProductComponent implements OnInit {
   requestData: any[] = [];
 
   // localhost URL
-  url = "http://localhost/";
+  url = "https://fusion24fitness-avadi.blackitechs.in/api_avd/";
   //Production URL
   // url = "http://13.126.175.153/";
 
@@ -118,7 +118,7 @@ export class ProductComponent implements OnInit {
       { label: "Contact Message", path: "/", active: true },
     ];
 
-    this.http.get<any>(this.url + "api/contacts/getContacts.php").subscribe((response:any) => {
+    this.http.get<any>(this.url + "contacts/getContacts.php").subscribe((response:any) => {
       if (response.success) {
         if (response.data.length > 0) {
           response.data.forEach((con: any, ind: number) => {

@@ -6,7 +6,7 @@ import { AddTemplate } from "../models/addTemplate.model";
   providedIn: "root",
 })
 export class AddTemplateService {
-  apiUrl = "http://localhost/api/template/";
+  apiUrl = "https://fusion24fitness-avadi.blackitechs.in/api_avd/template/";
 
   // private apiUrl = 'http://13.126.175.153/template';
 

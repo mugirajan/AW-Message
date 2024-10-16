@@ -7,7 +7,7 @@ import { sendCustom } from '../models/autotemp.model';
   providedIn: 'root'
 })
 export class sendCustomService {
-  private apiUrl = 'http://localhost/scheduledmsg/';
+  private apiUrl = 'https://fusion24fitness-avadi.blackitechs.in/api_avd/scheduledmsg/';
 
   // private apiUrl = 'http://13.126.175.153/sendcustom/';
 

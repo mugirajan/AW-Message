@@ -9,8 +9,8 @@ import { ToastrService } from "ngx-toastr";
   providedIn: "root",
 })
 export class CategoryService {
-  private apiUrl = "http://localhost/api/lists/";
-  private apicontactUrl = "http://localhost/api/contacts/";
+  private apiUrl = "https://fusion24fitness-avadi.blackitechs.in/api_avd/lists/";
+  private apicontactUrl = "https://fusion24fitness-avadi.blackitechs.in/api_avd/contacts/";
 
   // private apiUrl = 'http://13.126.175.153/list/';
   // private apicontactUrl ='http://13.126.175.153/contacts'

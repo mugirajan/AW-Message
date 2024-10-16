@@ -48,7 +48,7 @@ export class SendCustomMessageComponent implements OnInit {
   contacts: any[] = [];
   checklistorcontact: string = "";
   // localhost URL
-  url = "http://localhost/api/";
+  url = "https://fusion24fitness-avadi.blackitechs.in/api_avd/";
   //Production URL
   // url = "http://13.126.175.153/";
 
@@ -179,7 +179,7 @@ export class SendCustomMessageComponent implements OnInit {
               });
             });
           } else {
-            console.warn("No categories found.");
+            console.warn("Not found.");
           }
         } else {
           console.error("Error:", response.message); // Handle the error message
@@ -209,7 +209,7 @@ export class SendCustomMessageComponent implements OnInit {
               });
             });
           } else {
-            console.warn("No categories found.");
+            console.warn("Not found.");
           }
         } else {
           console.error("Error:", response.message); // Handle the error message
