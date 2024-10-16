@@ -10,7 +10,7 @@ import { ToastrService } from "ngx-toastr";
   providedIn: "root",
 })
 export class ContactService {
-  private apiUrl = "http://localhost:80/api/contacts/";
+  private apiUrl = "https://fusion24fitness-iyyappanthangal.blackitechs.in/api_iyp/contacts/";
 
   // private apiUrl = 'http://13.126.175.153/contacts/';
 

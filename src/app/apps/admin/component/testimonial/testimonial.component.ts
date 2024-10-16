@@ -103,7 +103,7 @@ export class ContactComponent implements OnInit {
 
   _fetchData(): void {
     this.testServ.getContacts().subscribe(
-      (response) => {
+      (response: any) => {
         if (response.success) {
           this.records = response.data; // Assign the fetched data
           console.log("Contacts data:", this.testimonials);

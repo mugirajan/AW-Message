@@ -142,7 +142,7 @@ export class CategoryComponent implements OnInit {
       const formData = this.categoryList.value;
       formData.selectedOptions = this.selectedOptions;
       this.catServ.createCategory(formData).subscribe(
-        (response) => {
+        (response: any) => {
           console.log("List added successfully:", response);
           this.categoryList.reset();
           this.selectedOptions = [];
@@ -154,7 +154,7 @@ export class CategoryComponent implements OnInit {
           this.closeListModal();
           this.toastr.success("List Added Successfully!");
         },
-        (error) => {
+        (error: any) => {
           this.toastr.error("Error adding List!");
           console.error("Error adding List:", error);
         }
@@ -385,13 +385,13 @@ export class CategoryComponent implements OnInit {
   UpdateCategory() {
     if (this.categoryList.valid) {
       this.catServ.updateCategory(this.categoryList.value).subscribe(
-        (response) => {
+        (response: any) => {
           console.log("Update response:", response);
           this.modalService.dismissAll();
           this._fetchData();
           this.toastr.success("List Edited Successfully!"); // Corrected spelling
         },
-        (error) => {
+        (error: any) => {
           console.error("Error updating contact:", error);
         }
       );

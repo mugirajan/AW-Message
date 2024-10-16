@@ -46,7 +46,7 @@ export class automatTempComponent implements OnInit {
   TemplateForm!: FormGroup;
   contacts: any[] = [];
   // localhost URL
-  url = "http://localhost/api/";
+  url = "https://fusion24fitness-iyyappanthangal.blackitechs.in/api_iyp/";
   //Production URL
   // url = "http://13.126.175.153/";
 

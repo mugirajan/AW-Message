@@ -40,7 +40,7 @@ export class MessageComponent implements OnInit {
 
 
   // localhost URL
-  url = "http://localhost/";
+  url = "https://fusion24fitness-iyyappanthangal.blackitechs.in/api_iyp/";
   //Production URL
   // url = "http://13.126.175.153/";
 
@@ -69,7 +69,7 @@ export class MessageComponent implements OnInit {
 
     this.pageTitle = [{ label: 'Admin', path: '/apps/' }, { label: 'Custom Message', path: '/', active: true }];
 
-    this.http.get<any[]>(this.url+'api/lists/getLists.php').subscribe((response:any) => {
+    this.http.get<any[]>(this.url+'lists/getLists.php').subscribe((response:any) => {
       if (response.success) {
         if (response.data.length > 0) {
           this.senderResource[0].options = [];
