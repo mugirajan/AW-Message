@@ -1,32 +1,42 @@
 [
     {
-        "id": "3c09",
-        "cust_temp": "Hi, Keep pushing forward, and don\u2019t let any obstacles get in your way!  You\u2019ve got this!  TEAM, Fusion24",
-        "cont_list": [
-            ""
-        ],
-        "temp_name": "STAY STRONG ",
-        "date": "2024-10-18",
-        "time": "12:00"
+      "id": "3c09",
+      "cust_temp": "Hi   I hope this message finds you well!  Just a quick reminder to stay on track with your gym routine. Consistency is key to achieving your fitness goals, and each workout you complete brings you closer to them. I know it can be challenging at times, but remember that every session counts and contributes to your progress.  If you ever need support or have any questions, don’t hesitate to reach out. Keep pushing forward, and don’t let any obstacles get in your way!  You’ve got this!  TEAM, Fusion24",
+      "cont_list": [
+        ""
+      ],
+      "temp_name": "STAY STRONG ",
+      "date": "",
+      "time": "12:00"
     },
     {
-        "cust_temp": "Helooooooo skadlfasklf;sdanf a sf jkdsfjask fsdak adsklf adsjf",
-        "cont_list": [
-            "3"
-        ],
-        "temp_name": "New",
-        "date": "2024-10-11",
-        "time": "08:00",
-        "id": "4"
+      "id": "6de6",
+      "cust_temp": "🤸🏻‍♀Join us every Friday for an exciting Weekly competition! 🤸🏻‍♀️  🌟Compete against fellow members in a series of fun and challenging exercises to earn points and climb to the top of the leaderboard🌟  🎖️At the end of the month, the top performers will be rewarded with fantastic prizes🎖️  Don't miss out on the chance to push yourself, have some fun, and win big. See you there!   🔥 Challenge yourself and have fun! 💪   🏋️‍♀️Stay fit and stay motivated!  💪",
+      "cont_list": [
+        null
+      ],
+      "temp_name": "FRIDAY COMPETITION",
+      "date": null,
+      "time": "12:00"
     },
     {
-        "cust_temp": "adskl adsk k;faksf dkfl;jkfsda jflksdajflkasdf lsakdfj lk",
-        "cont_list": [
-            "3"
-        ],
-        "temp_name": "Ganesh",
-        "date": "2024-10-26",
-        "time": "19:00",
-        "id": "5"
+      "id": "8f38",
+      "cust_temp": "🤸🏻‍♀️Join Us for an Exciting Boot Camp and CrossFit Session! 🤸🏻‍♂️ Session 1:Boot camp and crossfit team ⏰7:30 am - 8:30 am Session 2: Boot camp and CrossFit team ⏰ 7:30 pm - 8:30 pm 🔥 Challenge yourself and have fun! 💪 🌟Don't miss out on this chance to be part of an amazing team. See you at the Boot Camp and CrossFit sessions tomorrow! 🙌🏻 🏋️‍♀️Stay fit and stay motivated! 💪",
+      "cont_list": [
+        null
+      ],
+      "temp_name": "CROSSFIT & BOOTCAMP",
+      "date": null,
+      "time": "12:00"
+    },
+    {
+      "id": "ece8",
+      "cust_temp": " Cheers to a birthday that's as fulfilling as a great workout session. Wishing you a year of wellness, happiness, and fitness milestones. Team -FUSION24",
+      "cont_list": [
+        "214a"
+      ],
+      "temp_name": "BIRTHDAY WISHES",
+      "date": "2024-08-13",
+      "time": "12:30"
     }
-]
+  ]

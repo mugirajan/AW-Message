@@ -1,32 +1,38 @@
 [
     {
-        "id": "6cb3",
-        "temp_name": "Birthday Template 1",
-        "temp_body": "hey mugirajan",
-        "active_status": "true"
+      "id": "aa66",
+      "temp_name": "Morning motivation",
+      "temp_body": "Remember everyday, some ordinary person does something extraordinary. Today, it's your turn.",
+      "active_status": "true"
     },
     {
-        "temp_name": "asfd fas fd",
-        "temp_body": "afda fas sdafsafasdfd",
-        "active_status": "true",
-        "id": "12"
+      "id": "9c2f",
+      "temp_name": "Birthday Template",
+      "temp_body": "Happy Birthday",
+      "active_status": "true"
     },
     {
-        "temp_name": "new template",
-        "temp_body": " adf af adf adfasdf asdf asdf",
-        "active_status": "true",
-        "id": "9"
+      "id": "0c9e",
+      "temp_name": "Diwali Message",
+      "temp_body": "Happy Diwali Everyone",
+      "active_status": "true"
     },
     {
-        "temp_name": "a f 1fdsafd a",
-        "temp_body": " adf new data",
-        "active_status": "true",
-        "id": "13"
+      "id": "ce58",
+      "temp_name": "FRIDAY COMPETITION",
+      "temp_body": "Join us every Friday for an exciting Weekly competition! 🤸🏻‍♀️  🌟Compete against fellow members in a series of fun and challenging exercises to earn points and climb to the top of the leaderboard🌟  🎖️At the end of the month, the top performers will be rewarded with fantastic prizes🎖️  Don't miss out on the chance to push yourself, have some fun, and win big. See you there!   🔥 Challenge yourself and have fun! 💪   🏋️‍♀️Stay fit and stay motivated!  💪                                            -Teamfusion24",
+      "active_status": "true"
     },
     {
-        "temp_name": "hey",
-        "temp_body": "hellooo",
-        "active_status": "true",
-        "id": "14"
+      "id": "50b7",
+      "temp_name": "BOOT CAMP AND CROSSFIT",
+      "temp_body": "Join Us for an Exciting Boot Camp and CrossFit Session! 🤸🏻‍♂️  Session 1:Boot camp and crossfit team ⏰7:30 am - 8:30 am   Session 2: Boot camp and CrossFit team  ⏰ 7:30 pm - 8:30 pm    🔥 Challenge yourself and have fun! 💪  🌟Don't miss out on this chance to be part of an amazing team. See you at the Boot Camp and CrossFit sessions tomorrow! 🙌🏻  🏋️‍♀️Stay fit and stay motivated!  💪                                            -Teamfusion24",
+      "active_status": "true"
+    },
+    {
+      "id": "2e61",
+      "temp_name": "DUE PAY",
+      "temp_body": "HI MAM/SIR THIS IS MESSAGE FOR DUE PAY .KINDLY PAY THE DAUE AMOUNT BECAUSE OUR SYSTEM HAS BEEN UPDATE OR EXTENT TO 3MONTH PACKAGE AMOUNT.THANKYOU:)  TEAM - FUSION24",
+      "active_status": "true"
     }
-]
+  ]
