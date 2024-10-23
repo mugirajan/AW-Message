@@ -120,7 +120,7 @@ function sendWhatsAppMessage($data, $token, $url)
 // Log function to store responses and errors
 function writeLog($message)
 {
-    $logFile = 'aniversary_msg_log.log';
+    $logFile = 'anniversary_msg_log.txt'; // Change the filename here
     $time = date('Y-m-d H:i:s');
     $entry = "[$time] $message" . PHP_EOL;
     file_put_contents($logFile, $entry, FILE_APPEND);

@@ -6,6 +6,7 @@ $url = "https://graph.facebook.com/";
 $token = "EABrZA7KDKk6sBO6MBAblJQnpJzJGOY5zlsS6k8sgZBp7ZCFJOfuWl18iee1n99jHSsrXAbTFYRD377fH1BmNwkX2jgWYGW6je5sruSNgQrOADycxIsqxZAAImmaRGeLW4uFg5LtX04oBuEDz0Wvld7kaCFw1Ynoo9hZA00ZC6PT0dB1FpQroZBYYcufjW11eUirs9wsMpJJ17eJZAt8E";
 $PhnID = "248510075002931";
 
+// Fetch contacts
 $contacts = json_decode(file_get_contents("https://fusion24fitness-avadi.blackitechs.in/api_avd/contacts/getContacts.php"), true)['data'];
 
 $url = $url . $version . "/" . $PhnID . "/messages";
@@ -17,25 +18,24 @@ foreach ($contacts as $cont) {
     $pno = $cont['t_role'];
     $pname = $cont['t_name'];
     $pdob = $cont['t_endsub'];
-    $pterm = $cont['t_term'];
     $dob = new DateTime($pdob);
     $today = new DateTime();
 
-    $date = new DateTime($pdob);
-    $addate = $date->format('Y-m-d');
-    $time = strtotime($addate);
-    $weektime = strtotime('-7 day', $time);
-    $monthtime = strtotime('-1 month', $time);
+    // Calculate date ranges
+    $weektime = (clone $dob)->modify('-7 days');
+    $monthtime = (clone $dob)->modify('-1 month');
 
-    $admmesg = $pname . " | Subscription end date " . $date->format('d-m-Y') . " | " . $pno;
+    $admmesg = "$pname | Subscription end date " . $dob->format('d-m-Y') . " | $pno";
     $admno1 = "919841755020";
 
-    if ($today <= $dob && $today >= (new DateTime())->setTimestamp($weektime)) {
-        sendWACustomTemplateMessage($pno, $pname, $addate, $token, $url);
+    // Check if today is within one week or one month of the subscription end date
+    if ($today >= $weektime && $today < $dob) {
+        sendWACustomTemplateMessage($pno, $pname, $dob->format('d-m-Y'), $token, $url);
         sendWAAdminTemplateMessage($admno1, $admmesg, $token, $url);
     }
-    if ($today <= $dob && $today == (new DateTime())->setTimestamp($monthtime)) {
-        sendWACustomTemplateMessage($pno, $pname, $addate, $token, $url);
+
+    if ($today >= $monthtime && $today < $dob && $today->format('d') == $dob->format('d')) {
+        sendWACustomTemplateMessage($pno, $pname, $dob->format('d-m-Y'), $token, $url);
         sendWAAdminTemplateMessage($admno1, $admmesg, $token, $url);
     }
 }
@@ -133,9 +133,15 @@ function sendWAAdminTemplateMessage(string $to, string $msg, string $token, stri
 /* Function to Write Logs to a File */
 function writeLog($message)
 {
-    $logFile = 'whatsapp_messages.log';
+    $logFile = 'subscription_msg_avd.txt';  // Set the log file to .txt format
     $time = date('Y-m-d H:i:s');
     $entry = "[$time] $message" . PHP_EOL;
+
+    // Create log file if it doesn't exist
+    if (!file_exists($logFile)) {
+        file_put_contents($logFile, "Log file created on $time" . PHP_EOL, FILE_APPEND);
+    }
+
     file_put_contents($logFile, $entry, FILE_APPEND);
 }
 
