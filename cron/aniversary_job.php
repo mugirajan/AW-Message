@@ -9,6 +9,9 @@ $config = [
     'admin_numbers' => ['919841755020'],
 ];
 
+$version = 'v17.0';  // Set API version
+$logFile = 'aniversary_msg_log.txt';  // Log file path
+
 $contacts = json_decode(file_get_contents("https://fusion24fitness-avadi.blackitechs.in/api_avd/contacts/getContacts.php"), true);
 $contacts = $contacts['data'];
 $url = "https://graph.facebook.com/{$version}/{$config['phone_id']}/messages";
@@ -18,15 +21,17 @@ foreach ($contacts as $cont) {
     $pname = $cont['t_name'];
     $pdob = $cont['t_marriage'];
     $dob = new DateTime($pdob);
-    $today   = new DateTime('today');
+    $today = new DateTime('today');
     $year = $dob->diff($today)->y;
 
     if (date('m-d') == date('m-d', strtotime($pdob))) {
         $admmesg = "{$pname} | {$year}th Anniversary | {$pno}";
 
+        logMessage($logFile, "Sending message to {$pno}: {$admmesg}");
         sendWACustomTemplateMessage($pno, $pname, $admmesg, $config['token'], $url);
 
         foreach ($config['admin_numbers'] as $admin_number) {
+            logMessage($logFile, "Sending admin message to {$admin_number}: {$admmesg}");
             sendWAAdminTemplateMessage($admin_number, $admmesg, $config['token'], $url);
         }
     }
@@ -114,13 +119,26 @@ function sendWhatsAppMessage($data, $token, $url)
     curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
 
     $response = curl_exec($curl);
+    $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
     if (curl_errno($curl)) {
-        echo 'Error:' . curl_error($curl);
+        $error_message = 'Curl error: ' . curl_error($curl);
+        logMessage('whatsapp_log.txt', $error_message);
+        echo $error_message;
+    } else {
+        logMessage('whatsapp_log.txt', "Response ({$http_code}): " . $response);
     }
 
     curl_close($curl);
 
     return json_decode($response);
 }
+
+// Function to log messages to the log file
+function logMessage($file, $message)
+{
+    $time = date('Y-m-d H:i:s');
+    file_put_contents($file, "[{$time}] {$message}\n", FILE_APPEND);
+}
+
 ?>
