@@ -1,16 +1,17 @@
 <?php
 print_r("----------------------------------------------------------------------------------------------------------------------------");
+
+echo '<br/>';
 date_default_timezone_set('Asia/Kolkata');
 
 $WABI = "247124335131424";
 $version = "v19.0";
 $url = "https://graph.facebook.com/";  // /v18.0/214842615044313/messages",
-$token = "EABrZA7KDKk6sBOzurAORQ8ZBfFLmYxVK520Xrxe2AZACdobvqbYQgkvh5lSxd3N3vE26ouxXfO8R5Lvx5dZBXZBZAMSVdYLqblDCPVDbCdenMZAOqvB6IfgcgbFOPsZAJDUTlnMCLgyZCcvNZB4unTcp3ydobZBQ1r97rrjwmRp6PfjMGOQMqCKQcc8JZAMJZCoZCBXStyEACVJojkRs2WBiwE";
+$token = "EABrZA7KDKk6sBO6MBAblJQnpJzJGOY5zlsS6k8sgZBp7ZCFJOfuWl18iee1n99jHSsrXAbTFYRD377fH1BmNwkX2jgWYGW6je5sruSNgQrOADycxIsqxZAAImmaRGeLW4uFg5LtX04oBuEDz0Wvld7kaCFw1Ynoo9hZA00ZC6PT0dB1FpQroZBYYcufjW11eUirs9wsMpJJ17eJZAt8E";
 $PhnID = "248510075002931";
 
 
-$jobs = json_decode(file_get_contents("http://13.126.175.153/scheduledmsg"), true);
-
+$jobs = json_decode(file_get_contents("https://fusion24fitness-iyyappanthangal.blackitechs.in/api_iyp/scheduledmsg/getScheduledmsg.php"), true)['data'];
 $url = $url . $version . "/" . $PhnID . "/messages";
 
 //To display the list of contacts fetched
@@ -28,21 +29,27 @@ foreach ($jobs as $job) {
   // $pno = '918056221146';
   $cst_msg = $job['cust_temp'];
   $cst_list = $job['cont_list'];
-  $time = $job['date']." ".$job['time'];
+  $time = $job['date'] . " " . $job['time'];
+
+  echo '<br/>';
+
   print_r($cst_list);
   $dob = new DateTime($time);
   $addate = $dob->format('d-m-Y');
   $currentDate = new DateTime();
-  echo($dob->format('d-m-Y H:i'));
+  echo ($dob->format('d-m-Y H:i'));
   echo '<br/>';
   echo '<br/>';
-  print_r($addate);
+  print_r($currentDate->format('d-m-Y H:i'));
   $timeday = strtotime($addate);
   echo '<br/>';
 
   if ($currentDate->format('d-m-Y H:i') == $dob->format('d-m-Y H:i')) {
-            foreach ($cst_list as $cont) {
-      $contact = json_decode(file_get_contents("http://13.126.175.153/contacts?id=" . $cont), true);
+    print_r("true");
+    echo '<br/>';
+    foreach ($cst_list as $cont) {
+      $contact = json_decode(file_get_contents("https://fusion24fitness-iyyappanthangal.blackitechs.in/api_iyp/contacts/getAContact.php?id=" . $cont), true)['data'];
+      echo ("Contact list");
       print_r($contact);
       echo '<br/>';
       echo '<br/>';
@@ -50,7 +57,9 @@ foreach ($jobs as $job) {
         $pname = $contact[0]['t_name'];
         $pcont = $contact[0]['t_role'];
         print_r("---------------------------------Mail Sending-------------------------------------");
-        print_r("Name - ".$pname." ______ Contact".$pcont);
+        echo '<br/>';
+        print_r("Name - " . $pname . " ______ Contact" . $pcont);
+        echo '<br/>';
         print_r(sendWACustomTemplateMessage($pcont, $pname, $cst_msg, $token, $url));
       }
       echo '<br/>';
@@ -117,4 +126,3 @@ function sendWACustomTemplateMessage(string $to, string $headerTxt, string $msg,
 
   return json_decode($resp);
 }
-?>

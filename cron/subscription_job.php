@@ -1,14 +1,14 @@
 <?php
 
 date_default_timezone_set('Asia/Kolkata');
-$WABI = "231667113353605";
+// $WABI = "247124335131424";
 $version = "v19.0";
 $url = "https://graph.facebook.com/";  // /v18.0/214842615044313/messages",
-$token = "EAANBTnz5WGwBO8zDfMVfeisOreLyo7knc33Xj0ozXMXCMnbOURLbZCZAjTHbGoeZAAmiBHpva0tJq4hPXdTsD5RVn239vFMa4ZA2fRUg6ZCtYuh92jipn8O6tCWtZAqsnSRBFQggl1Dc9hAgF6CjSpbDQw6cnn7jEHEhhVurZA5YtwW7vqCdsGiTOmO9nP4WzVyq6e4NK3QHsyUhwycNZCfyjsoituUC";
-$PhnID = "214842615044313";
+$token = "EABrZA7KDKk6sBO6MBAblJQnpJzJGOY5zlsS6k8sgZBp7ZCFJOfuWl18iee1n99jHSsrXAbTFYRD377fH1BmNwkX2jgWYGW6je5sruSNgQrOADycxIsqxZAAImmaRGeLW4uFg5LtX04oBuEDz0Wvld7kaCFw1Ynoo9hZA00ZC6PT0dB1FpQroZBYYcufjW11eUirs9wsMpJJ17eJZAt8E";
+$PhnID = "248510075002931";
 
 
-$contacts = json_decode(file_get_contents("http://localhost:3000/contacts"), true);
+$contacts = json_decode(file_get_contents("https://fusion24fitness-iyyappanthangal.blackitechs.in/api_iyp/contacts/getContacts.php"), true)['data'];
 
 $url = $url . $version . "/" . $PhnID . "/messages";
 
@@ -17,55 +17,46 @@ print_r($contacts);
 echo '<br/>';
 echo '<br/>';
 
-// To send message to users with birthday as today
+// To send message to users with subscription end date as today
 foreach ($contacts as $cont) {
 
-  // check number for testing
-  // $pno = '917338908955';
-  // $pno = '918056221146';
   $pno = $cont['t_role'];
   $pname = $cont['t_name'];
   $pdob = $cont['t_endsub'];
   $pterm = $cont['t_term'];
   $dob = new DateTime($pdob);
-  $today   = new DateTime('today');
+  $today = new DateTime();
   $year = $dob->diff($today)->y;
 
-  $date =  new DateTime($pdob);
+  $date = new DateTime($pdob);
 
-  // if ($pterm == 'One Year') {
-  //   $date->modify('+1 Year');
-  // } elseif ($pterm == 'Six Month') {
-  //   $date->modify('+6 months');
-  // }
   $addate = $date->format('Y-m-d');
-  print_r($addate);
   $time = strtotime($addate);
-  echo '<br/>';
   $weektime = strtotime('-7 day', $time);
   $monthtime = strtotime('-1 month', $time);
-  print_r($time);
 
-  if (date('m-d-y') == date('m-d-y', $weektime)) {
-    print_r(sendWACustomTemplateMessage($pno, $pname, $addate, $token, $url));
+  $admmesg = $pname . " | Subscription end date " . $date->format('d-m-Y') . " |" . $pno;
+  $admno1 = "919841755020";
+  // $admno2 = "919600427126";
+
+  if ($today <= $dob && $today >= (new DateTime())->setTimestamp($weektime)) {
+    sendWACustomTemplateMessage($pno, $pname, $addate, $token, $url);
+    sendWAAdminTemplateMessage($admno1, $admmesg, $token, $url);
+    sendWAAdminTemplateMessage($admno2, $admmesg, $token, $url);
   }
-  if(date('m-d-y') == date('m-d-y', $monthtime)){
-    print_r(sendWACustomTemplateMessage($pno, $pname, $addate, $token, $url));
+  if ($today <= $dob && $today == (new DateTime())->setTimestamp($monthtime)) {
+    sendWACustomTemplateMessage($pno, $pname, $addate, $token, $url);
+    sendWAAdminTemplateMessage($admno1, $admmesg, $token, $url);
+    sendWAAdminTemplateMessage($admno2, $admmesg, $token, $url);
   }
 
-  // if (date('m-d') == date('m-d', $time)) {
-  //   print_r(sendWACustomTemplateMessage($pno, $pname, $year, $token, $url));
   echo '<br/>';
   echo '<br/>';
-  // }
-
 }
 
-
-/* Birthday wishes */
+/* Function to send WhatsApp Custom Template Message */
 function sendWACustomTemplateMessage(string $to, string $headerTxt, string $msg, string $token, string $url)
 {
-
   $curl = curl_init();
   curl_setopt($curl, CURLOPT_URL, $url);
   curl_setopt($curl, CURLOPT_POST, true);
@@ -103,16 +94,72 @@ function sendWACustomTemplateMessage(string $to, string $headerTxt, string $msg,
     ]
   ];
 
-  $headers = array(
+  $headers = [
     "Accept: application/json",
     "Content-Type: application/json",
     "Authorization: Bearer " . $token,
-  );
+  ];
 
   curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-  curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
+  curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
   $resp = curl_exec($curl);
+  $error = curl_error($curl);
   curl_close($curl);
 
-  return json_decode($resp);
+  if ($error) {
+    echo "cURL Error: " . $error;
+  } else {
+    return json_decode($resp);
+  }
 }
+
+/* Function to send WhatsApp Admin Template Message */
+function sendWAAdminTemplateMessage(string $to, string $msg, string $token, string $url)
+{
+  $curl = curl_init();
+  curl_setopt($curl, CURLOPT_URL, $url);
+  curl_setopt($curl, CURLOPT_POST, true);
+  curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+  $data = [
+    "messaging_product" => "whatsapp",
+    "to" => $to,
+    "type" => "template",
+    "template" => [
+      "name" => "fusion24_fitness_studio",
+      "language" => [
+        "code" => "en"
+      ],
+      "components" => [
+        [
+          "type" => "body",
+          "parameters" => [
+            [
+              "type" => "text",
+              "text" => $msg
+            ]
+          ]
+        ]
+      ]
+    ]
+  ];
+
+  $headers = [
+    "Accept: application/json",
+    "Content-Type: application/json",
+    "Authorization: Bearer " . $token,
+  ];
+
+  curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+  curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+  $resp = curl_exec($curl);
+  $error = curl_error($curl);
+  curl_close($curl);
+
+  if ($error) {
+    echo "cURL Error: " . $error;
+  } else {
+    return json_decode($resp);
+  }
+}
+?>
