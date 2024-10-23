@@ -2,20 +2,21 @@
 
 date_default_timezone_set('Asia/Kolkata');
 
-// Example of storing sensitive data securely
+// Store configuration and sensitive data
 $config = [
     'token' => 'EABrZA7KDKk6sBO6MBAblJQnpJzJGOY5zlsS6k8sgZBp7ZCFJOfuWl18iee1n99jHSsrXAbTFYRD377fH1BmNwkX2jgWYGW6je5sruSNgQrOADycxIsqxZAAImmaRGeLW4uFg5LtX04oBuEDz0Wvld7kaCFw1Ynoo9hZA00ZC6PT0dB1FpQroZBYYcufjW11eUirs9wsMpJJ17eJZAt8E',
     'phone_id' => '248510075002931',
     'admin_numbers' => ['919841755020'],
 ];
 
-$version = 'v17.0';  // Set API version
-$logFile = 'aniversary_msg_log.txt';  // Log file path
+// Fetch contacts
+$contacts = json_decode(file_get_contents("https://fusion24fitness-avadi.blackitechs.in/api_avd/contacts/getContacts.php"), true)['data'];
+$url = "https://graph.facebook.com/v19.0/{$config['phone_id']}/messages";
 
-$contacts = json_decode(file_get_contents("https://fusion24fitness-avadi.blackitechs.in/api_avd/contacts/getContacts.php"), true);
-$contacts = $contacts['data'];
-$url = "https://graph.facebook.com/{$version}/{$config['phone_id']}/messages";
+// Log the fetched contacts
+writeLog("Fetched Contacts: " . print_r($contacts, true));
 
+// Process contacts and send anniversary messages
 foreach ($contacts as $cont) {
     $pno = $cont['t_role'];
     $pname = $cont['t_name'];
@@ -27,16 +28,19 @@ foreach ($contacts as $cont) {
     if (date('m-d') == date('m-d', strtotime($pdob))) {
         $admmesg = "{$pname} | {$year}th Anniversary | {$pno}";
 
-        logMessage($logFile, "Sending message to {$pno}: {$admmesg}");
-        sendWACustomTemplateMessage($pno, $pname, $admmesg, $config['token'], $url);
+        // Send custom template message to user
+        $response = sendWACustomTemplateMessage($pno, $pname, $admmesg, $config['token'], $url);
+        writeLog("Custom message sent to {$pno}. Response: " . json_encode($response));
 
+        // Send admin notification messages
         foreach ($config['admin_numbers'] as $admin_number) {
-            logMessage($logFile, "Sending admin message to {$admin_number}: {$admmesg}");
-            sendWAAdminTemplateMessage($admin_number, $admmesg, $config['token'], $url);
+            $response = sendWAAdminTemplateMessage($admin_number, $admmesg, $config['token'], $url);
+            writeLog("Admin message sent to {$admin_number}. Response: " . json_encode($response));
         }
     }
 }
 
+// Send WhatsApp Custom Template Message
 function sendWACustomTemplateMessage($to, $headerTxt, $msg, $token, $url)
 {
     $data = [
@@ -45,27 +49,15 @@ function sendWACustomTemplateMessage($to, $headerTxt, $msg, $token, $url)
         "type" => "template",
         "template" => [
             "name" => "anniversary_fusion",
-            "language" => [
-                "code" => "en"
-            ],
+            "language" => ["code" => "en"],
             "components" => [
                 [
                     "type" => "header",
-                    "parameters" => [
-                        [
-                            "type" => "text",
-                            "text" => $headerTxt
-                        ]
-                    ]
+                    "parameters" => [["type" => "text", "text" => $headerTxt]]
                 ],
                 [
                     "type" => "body",
-                    "parameters" => [
-                        [
-                            "type" => "text",
-                            "text" => $msg
-                        ]
-                    ]
+                    "parameters" => [["type" => "text", "text" => $msg]]
                 ]
             ]
         ]
@@ -74,6 +66,7 @@ function sendWACustomTemplateMessage($to, $headerTxt, $msg, $token, $url)
     return sendWhatsAppMessage($data, $token, $url);
 }
 
+// Send WhatsApp Admin Template Message
 function sendWAAdminTemplateMessage($to, $msg, $token, $url)
 {
     $data = [
@@ -82,18 +75,11 @@ function sendWAAdminTemplateMessage($to, $msg, $token, $url)
         "type" => "template",
         "template" => [
             "name" => "fusion24_fitness_studio",
-            "language" => [
-                "code" => "en"
-            ],
+            "language" => ["code" => "en"],
             "components" => [
                 [
                     "type" => "body",
-                    "parameters" => [
-                        [
-                            "type" => "text",
-                            "text" => $msg
-                        ]
-                    ]
+                    "parameters" => [["type" => "text", "text" => $msg]]
                 ]
             ]
         ]
@@ -102,6 +88,7 @@ function sendWAAdminTemplateMessage($to, $msg, $token, $url)
     return sendWhatsAppMessage($data, $token, $url);
 }
 
+// Send WhatsApp Message (Common function)
 function sendWhatsAppMessage($data, $token, $url)
 {
     $curl = curl_init();
@@ -119,26 +106,24 @@ function sendWhatsAppMessage($data, $token, $url)
     curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
 
     $response = curl_exec($curl);
-    $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
-    if (curl_errno($curl)) {
-        $error_message = 'Curl error: ' . curl_error($curl);
-        logMessage('whatsapp_log.txt', $error_message);
-        echo $error_message;
-    } else {
-        logMessage('whatsapp_log.txt', "Response ({$http_code}): " . $response);
-    }
-
+    $error = curl_error($curl);
     curl_close($curl);
 
-    return json_decode($response);
+    if ($error) {
+        writeLog("cURL Error: " . $error);
+        return ['error' => $error];
+    }
+
+    return json_decode($response, true);
 }
 
-// Function to log messages to the log file
-function logMessage($file, $message)
+// Log function to store responses and errors
+function writeLog($message)
 {
+    $logFile = 'aniversary_msg_log.log';
     $time = date('Y-m-d H:i:s');
-    file_put_contents($file, "[{$time}] {$message}\n", FILE_APPEND);
+    $entry = "[$time] $message" . PHP_EOL;
+    file_put_contents($logFile, $entry, FILE_APPEND);
 }
 
 ?>
