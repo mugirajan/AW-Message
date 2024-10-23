@@ -122,7 +122,11 @@ function writeLog($message)
 {
     $logFile = 'anniversary_msg_log.txt'; // Change the filename here
     $time = date('Y-m-d H:i:s');
-    $entry = "[$time] $message" . PHP_EOL;
+    // Sanitize the message to ensure it contains only text
+    $sanitizedMessage = strip_tags($message); // Removes HTML and PHP tags
+    $sanitizedMessage = preg_replace('/[^A-Za-z0-9.,:;?!()\'"\s-]/', '', $sanitizedMessage); // Allows specific characters
+
+    $entry = "[$time] $sanitizedMessage" . PHP_EOL;
     file_put_contents($logFile, $entry, FILE_APPEND);
 }
 

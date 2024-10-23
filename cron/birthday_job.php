@@ -5,9 +5,9 @@ date_default_timezone_set('Asia/Kolkata');
 
 // Configuration variables
 $version = "v19.0";
-$url = "https://graph.facebook.com/";
+$baseUrl = "https://graph.facebook.com/";
 $token = "EABrZA7KDKk6sBO6MBAblJQnpJzJGOY5zlsS6k8sgZBp7ZCFJOfuWl18iee1n99jHSsrXAbTFYRD377fH1BmNwkX2jgWYGW6je5sruSNgQrOADycxIsqxZAAImmaRGeLW4uFg5LtX04oBuEDz0Wvld7kaCFw1Ynoo9hZA00ZC6PT0dB1FpQroZBYYcufjW11eUirs9wsMpJJ17eJZAt8E";
-$PhnID = "248510075002931";
+$phoneId = "248510075002931";
 
 // Log file path
 $logFile = 'birthday_msg_log_avd.txt';
@@ -21,17 +21,20 @@ function logMessage($message)
     file_put_contents($logFile, $logEntry, FILE_APPEND);
 }
 
-// Function to fetch contacts
-$contacts = json_decode(file_get_contents("https://fusion24fitness-avadi.blackitechs.in/api_avd/contacts/getContacts"), true)['data'];
+// Fetch contacts
+$contactsJson = file_get_contents("https://fusion24fitness-avadi.blackitechs.in/api_avd/contacts/getContacts");
+$contactsData = json_decode($contactsJson, true);
 
 // Check if contacts were fetched successfully
-if (!$contacts) {
+if (empty($contactsData['data'])) {
     logMessage("Error fetching contacts.");
     die("Error fetching contacts.");
 }
 
+$contacts = $contactsData['data'];
+
 // URL for sending messages
-$url = $url . $version . "/" . $PhnID . "/messages";
+$messageUrl = "{$baseUrl}{$version}/{$phoneId}/messages";
 
 // Function to send WhatsApp message using a custom template
 function sendWACustomTemplateMessage(string $to, string $headerTxt, string $msg, string $token, string $url)
@@ -107,25 +110,29 @@ foreach ($contacts as $cont) {
     $pno = $cont['t_role'];
     $pname = $cont['t_name'];
     $pdob = $cont['t_dob'];
+    
+    // Skip if the date of birth is invalid
+    if (!$pdob) {
+        logMessage("Invalid date of birth for contact: $pname");
+        continue;
+    }
+
     $dob = new DateTime($pdob);
     $today = new DateTime('today');
     $year = $dob->diff($today)->y;
 
+    // Check if today is the birthday
     if (date('m-d') == date('m-d', strtotime($pdob))) {
         $admmesg = "$pname | $year th Birthday | $pno";
-        $admno1 = "919841755020";
-        // $admno2 = "919600427126";
+        $admno1 = "919841755020"; // Add admin numbers as needed
 
         // Send custom template message to user
-        $result1 = sendWACustomTemplateMessage($pno, $pname, $year, $token, $url);
+        $result1 = sendWACustomTemplateMessage($pno, $pname, "Happy $year th Birthday!", $token, $messageUrl);
         logMessage("Sent to user $pno: " . json_encode($result1));
 
         // Send admin messages
-        $result2 = sendWAAdminTemplateMessage($admno1, $admmesg, $token, $url);
+        $result2 = sendWAAdminTemplateMessage($admno1, $admmesg, $token, $messageUrl);
         logMessage("Sent to admin $admno1: " . json_encode($result2));
-
-        // $result3 = sendWAAdminTemplateMessage($admno2, $admmesg, $token, $url);
-        // logMessage("Sent to admin $admno2: " . json_encode($result3));
     }
 }
 

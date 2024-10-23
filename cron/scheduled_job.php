@@ -1,52 +1,58 @@
 <?php
+// Set up initial configurations
 print_r("----------------------------------------------------------------------------------------------------------------------------");
-
 echo '<br/>';
 date_default_timezone_set('Asia/Kolkata');
 
+// Configuration variables
 $WABI = "247124335131424";
 $version = "v19.0";
-$url = "https://graph.facebook.com/";
+$baseUrl = "https://graph.facebook.com/";
 $token = "EABrZA7KDKk6sBO6MBAblJQnpJzJGOY5zlsS6k8sgZBp7ZCFJOfuWl18iee1n99jHSsrXAbTFYRD377fH1BmNwkX2jgWYGW6je5sruSNgQrOADycxIsqxZAAImmaRGeLW4uFg5LtX04oBuEDz0Wvld7kaCFw1Ynoo9hZA00ZC6PT0dB1FpQroZBYYcufjW11eUirs9wsMpJJ17eJZAt8E";
-$PhnID = "248510075002931";
+$phoneId = "248510075002931";
 
-$log_file = "scheduled_msg_log.txt"; // Define log file
+$logFile = "scheduled_msg_log.txt"; // Define log file
+$messageUrl = $baseUrl . $version . "/" . $phoneId . "/messages"; // URL for sending messages
 
-$jobs = json_decode(file_get_contents("https://fusion24fitness-avadi.blackitechs.in/api_avd/scheduledmsg/getScheduledmsg.php"), true)['data'];
-$url = $url . $version . "/" . $PhnID . "/messages";
+// Fetch scheduled messages
+$jobsJson = file_get_contents("https://fusion24fitness-avadi.blackitechs.in/api_avd/scheduledmsg/getScheduledmsg.php");
+$jobsData = json_decode($jobsJson, true)['data'];
 
 // Log fetched jobs
-logMessage($log_file, "Fetched Jobs: " . json_encode($jobs));
+logMessage($logFile, "Fetched Jobs: " . json_encode($jobsData));
 
-// To send message to users with birthday as today
-foreach ($jobs as $job) {
-    $cst_msg = $job['cust_temp'];
-    $cst_list = $job['cont_list'];
-    $time = $job['date'] . " " . $job['time'];
+// Current date and time
+$currentDateTime = new DateTime();
 
-    $dob = new DateTime($time);
-    $currentDate = new DateTime();
-    
-    if ($currentDate->format('d-m-Y H:i') == $dob->format('d-m-Y H:i')) {
-        logMessage($log_file, "Message scheduled for: " . $dob->format('d-m-Y H:i'));
+// To send messages to users with birthdays as today
+foreach ($jobsData as $job) {
+    $cstMsg = $job['cust_temp'];
+    $cstList = $job['cont_list'];
+    $scheduledTime = new DateTime($job['date'] . " " . $job['time']);
 
-        foreach ($cst_list as $cont) {
-            $contact = json_decode(file_get_contents("https://fusion24fitness-avadi.blackitechs.in/api_avd/contacts/getAContact.php?id=" . $cont), true)['data'];
+    // Check if the current date matches the scheduled time
+    if ($currentDateTime->format('d-m-Y H:i') == $scheduledTime->format('d-m-Y H:i')) {
+        logMessage($logFile, "Message scheduled for: " . $scheduledTime->format('d-m-Y H:i'));
 
-            if (!empty($contact)) {
-                $pname = $contact[0]['t_name'];
-                $pcont = $contact[0]['t_role'];
+        // Send messages to each contact
+        foreach ($cstList as $contId) {
+            $contactJson = file_get_contents("https://fusion24fitness-avadi.blackitechs.in/api_avd/contacts/getAContact.php?id=" . $contId);
+            $contactData = json_decode($contactJson, true)['data'];
 
-                $response = sendWACustomTemplateMessage($pcont, $pname, $cst_msg, $token, $url);
-                logMessage($log_file, "Sent to $pname ($pcont): " . json_encode($response));
+            if (!empty($contactData)) {
+                $pname = $contactData[0]['t_name'];
+                $pcont = $contactData[0]['t_role'];
+
+                $response = sendWACustomTemplateMessage($pcont, $pname, $cstMsg, $token, $messageUrl);
+                logMessage($logFile, "Sent to $pname ($pcont): " . json_encode($response));
             } else {
-                logMessage($log_file, "Contact ID $cont not found.");
+                logMessage($logFile, "Contact ID $contId not found.");
             }
         }
     }
 }
 
-/* Custom template */
+/* Function to send WhatsApp Custom Template Message */
 function sendWACustomTemplateMessage(string $to, string $headerTxt, string $msg, string $token, string $url)
 {
     $curl = curl_init();
@@ -89,10 +95,16 @@ function sendWACustomTemplateMessage(string $to, string $headerTxt, string $msg,
     curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
     curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
 
-    $resp = curl_exec($curl);
+    $response = curl_exec($curl);
+    $error = curl_error($curl);
     curl_close($curl);
 
-    return json_decode($resp, true);
+    if ($error) {
+        logMessage("Error sending message to $to: $error");
+        return ["success" => false, "error" => $error];
+    }
+
+    return json_decode($response, true);
 }
 
 /* Logging Function */
