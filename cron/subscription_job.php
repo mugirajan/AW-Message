@@ -8,7 +8,7 @@ $token = "EABrZA7KDKk6sBO6MBAblJQnpJzJGOY5zlsS6k8sgZBp7ZCFJOfuWl18iee1n99jHSsrXA
 $PhnID = "248510075002931";
 
 
-$contacts = json_decode(file_get_contents("https://fusion24fitness-iyyappanthangal.blackitechs.in/api_iyp/contacts/getContacts.php"), true)['data'];
+$contacts = json_decode(file_get_contents("https://fusion24fitness-avadi.blackitechs.in/api_avd/contacts/getContacts.php"), true)['data'];
 
 $url = $url . $version . "/" . $PhnID . "/messages";
 

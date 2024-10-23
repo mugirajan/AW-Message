@@ -10,7 +10,7 @@ $config = [
 ];
 
 $contacts = json_decode(file_get_contents(
-    "https://fusion24fitness-iyyappanthangal.blackitechs.in/api_iyp/contacts/getContacts.php"), true
+    "https://fusion24fitness-avadi.blackitechs.in/api_avd/contacts/getContacts.php"), true
 );
 
 if (!$contacts || !isset($contacts['data'])) {

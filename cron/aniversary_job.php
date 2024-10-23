@@ -9,7 +9,7 @@ $config = [
     'admin_numbers' => ['919841755020'],
 ];
 
-$contacts = json_decode(file_get_contents("https://fusion24fitness-iyyappanthangal.blackitechs.in/api_iyp/contacts/getContacts.php"), true);
+$contacts = json_decode(file_get_contents("https://fusion24fitness-avadi.blackitechs.in/api_avd/contacts/getContacts.php"), true);
 $contacts = $contacts['data'];
 $url = "https://graph.facebook.com/{$version}/{$config['phone_id']}/messages";
 
